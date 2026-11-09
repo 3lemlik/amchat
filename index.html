@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover,interactive-widget=resizes-content">
-<meta name="app-build" content="2026.11.10-2">
+<meta name="app-build" content="2026.11.10-4">
 <meta name="theme-color" content="#0b0c10">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
@@ -1690,10 +1690,10 @@ function pushState(){if(DEMO)return 'demo';if(!VAPID_KEY||!PUSH_URL)return 'nose
  if(Notification.permission==='granted')return ls.get('amc-push')?'on':'granted';if(Notification.permission==='denied')return 'denied';return 'ask'}
 async function enablePush(){if(isIOS&&!isStandalone())return iosHomeSheet();if(!('Notification' in window))return toast('جهازك ما يدعم الإشعارات هنا','bad');
  let p;try{p=await Notification.requestPermission()}catch(e){}if(p!=='granted'){toast('ما سمحت بالإشعارات — تگدر تفعّلها من إعدادات الجهاز','bad');renderPushBan();return}
- toast('ديفعّل الإشعارات…');const ok=await registerPush();toast(ok?'تفعّلت الإشعارات 🔔 هسه توصلك الرسائل حتى لو التطبيق مسدود':'ما گدرت أفعّل الإشعارات، جرّب مرة ثانية',ok?'':'bad');renderPushBan();renderSettings()}
-async function registerPush(){if(DEMO||!VAPID_KEY)return false;try{if(!firebase.messaging)await loadScript(FB_BASE+'firebase-messaging-compat.js');if(!(await firebase.messaging.isSupported()))return false;
+ toast('ديفعّل الإشعارات…');const ok=await registerPush();if(ok)toast('تفعّلت الإشعارات 🔔 هسه توصلك الرسائل حتى لو التطبيق مسدود');else openSheet('ما تفعّلت الإشعارات',`<p style="color:var(--dim);line-height:1.7;margin:0 0 10px">صار خطأ وقت التفعيل. صوّر هاي الرسالة ودزها:</p><div class="num" style="direction:ltr;text-align:left;background:var(--panel2);padding:10px;border-radius:10px;font-size:12.5px;overflow-wrap:anywhere">${esc(S.pushErr||'unknown')}<br>${esc(navigator.userAgent.slice(0,120))}<br>v${APP.build} · sw:${'serviceWorker' in navigator} · push:${'PushManager' in window} · standalone:${isStandalone()}</div>`,`<button class="btn pri block" data-act="closesheet">زين</button>`);renderPushBan();renderSettings()}
+async function registerPush(){S.pushErr='';if(DEMO||!VAPID_KEY)return false;try{if(!firebase.messaging)await loadAny(FB_CDNS('10.12.5'),'firebase-messaging-compat.js');if(!(await firebase.messaging.isSupported())){S.pushErr='المتصفح ما يدعم الإشعارات';return false}
  const reg=await navigator.serviceWorker.register('sw.js');await navigator.serviceWorker.ready;const tok=await firebase.messaging().getToken({vapidKey:VAPID_KEY,serviceWorkerRegistration:reg});if(!tok)return false;
- const old=ls.get('amc-push');const tokens={[tok]:now()};if(old&&old!==tok)tokens[old]=OP.del();await store.set('pushTokens/'+S.me,{tokens},{merge:true});ls.set('amc-push',tok);return true}catch(e){console.warn('push',e);return false}}
+ const old=ls.get('amc-push');const tokens={[tok]:now()};if(old&&old!==tok)tokens[old]=OP.del();await store.set('pushTokens/'+S.me,{tokens},{merge:true});ls.set('amc-push',tok);return true}catch(e){console.warn('push',e);S.pushErr=String(e&&(e.code||'')+' '+(e.message||e)).replace('messaging/','').slice(0,140);return false}}
 async function unregisterPush(){const t=ls.get('amc-push');if(!t||DEMO)return;try{await store.set('pushTokens/'+S.me,{tokens:{[t]:OP.del()}},{merge:true})}catch(e){}localStorage.removeItem('amc-push')}
 async function pushTest(){if(DEMO||!PUSH_URL)return toast('الإشعارات تحتاج إعداد','bad');try{toast('ديدز إشعار تجريبي… سدّ التطبيق هسه');const t=await firebase.auth().currentUser.getIdToken();const r=await fetch(PUSH_URL,{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+t},body:JSON.stringify({test:true,delay:5})});const j=await r.json().catch(()=>({}));
  if(j.ok&&j.sent)toast(`انرسل ✓ (${j.sent}) — لازم يوصلك خلال ثواني`);else if(j.ok)toast('ماكو جهاز مسجّل — دوس تفعيل الإشعارات أول','bad');else toast('خطأ بالسيرفر: '+(j.error||r.status),'bad')}catch(e){toast('ما گدرت أوصل للسيرفر: '+e.message,'bad')}}
@@ -1813,7 +1813,7 @@ function bindEvents(){
 /* ================= PWA + التحديث التلقائي ================= */
 function pwa(){const st=matchMedia('(display-mode: standalone)').matches||navigator.standalone;if(st){const gap=screen.height-innerHeight;if(gap>=4&&gap<40)document.documentElement.style.setProperty('--sab',`max(0px, calc(env(safe-area-inset-bottom,0px) - ${gap}px))`)}
  if(!/^https?:/.test(location.protocol))return;if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});
- const chk=async()=>{try{const r=await fetch(location.pathname+'?v='+now(),{cache:'no-store'});const t=await r.text();const m=t.match(/name="app-build" content="([^"]+)"/);if(m&&m[1]!==APP.build){saveDraft();location.reload()}}catch(e){}};setInterval(chk,60000);document.addEventListener('visibilitychange',()=>{if(!document.hidden)chk()})}
+ const chk=async()=>{try{const r=await fetch(location.pathname+'?v='+now(),{cache:'no-store'});const t=await r.text();const m=t.match(/name="app-build" content="([^"]+)"/);if(m&&m[1]!==APP.build){saveDraft();location.reload()}}catch(e){}};setInterval(chk,60000);setTimeout(chk,1500);document.addEventListener('visibilitychange',()=>{if(!document.hidden)chk()})}
 
 /* ================= تحميل Firebase (ويّا بدائل إذا موقع انحجب) ================= */
 const FB_CDNS=v=>[`https://www.gstatic.com/firebasejs/${v}/`,`https://cdn.jsdelivr.net/npm/firebase@${v}/`,`https://unpkg.com/firebase@${v}/`];
