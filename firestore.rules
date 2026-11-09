@@ -3,21 +3,28 @@ service cloud.firestore {
   match /databases/{database}/documents {
     function authed() { return request.auth != null; }
 
-    // حجز أسماء المستخدمين (حتى ما يتكرر الاسم)
     match /usernames/{name} {
       allow read: if true;
       allow create: if authed() && request.resource.data.uid == request.auth.uid;
     }
-    // الملف الشخصي: الكل يقرا، بس صاحبه يعدّل
     match /users/{uid} {
       allow read: if authed();
       allow create, update: if authed() && request.auth.uid == uid;
     }
-    // إعدادات خاصة (التثبيت، الكتم، المحذوفة) — صاحبها بس
     match /prefs/{uid} {
       allow read, write: if authed() && request.auth.uid == uid;
     }
-    // المحادثات: بس الأعضاء
+    // توكنات الإشعارات — صاحبها بس
+    match /pushTokens/{uid} {
+      allow read, write: if authed() && request.auth.uid == uid;
+    }
+    // القصص — تنحذف من حالها بعد 24 ساعة
+    match /stories/{sid} {
+      allow read: if authed();
+      allow create: if authed() && request.resource.data.uid == request.auth.uid;
+      allow update: if authed() && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['views']);
+      allow delete: if authed() && resource.data.uid == request.auth.uid;
+    }
     match /chats/{cid} {
       allow get: if authed() && (resource == null || request.auth.uid in resource.data.members);
       allow list: if authed() && request.auth.uid in resource.data.members;
@@ -29,7 +36,7 @@ service cloud.firestore {
         allow read: if member();
         allow create: if member() && request.resource.data.from == request.auth.uid;
         allow update: if member() && (resource.data.from == request.auth.uid
-                      || request.resource.data.diff(resource.data).affectedKeys().hasOnly(['reactions']));
+                      || request.resource.data.diff(resource.data).affectedKeys().hasOnly(['reactions', 'played']));
       }
     }
   }
