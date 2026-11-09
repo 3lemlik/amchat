@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover,interactive-widget=resizes-content">
-<meta name="app-build" content="2026.11.09-9">
+<meta name="app-build" content="2026.11.09-10">
 <meta name="theme-color" content="#0b0c10">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
@@ -1137,7 +1137,7 @@ function FireStore(fs){
  return {
   newId:c=>fs.collection(c||'x').doc().id,
   get:async p=>data(await fs.doc(p).get()),
-  set:(p,d,o)=>fs.doc(p).set(conv(d),o||{}).catch(fail),
+  set:(p,d,o)=>{const {quiet,...oo}=o||{};return fs.doc(p).set(conv(d),oo).catch(quiet?(e=>console.warn(p,e)):fail)},
   update:(p,d)=>fs.doc(p).update(conv(d)).catch(fail),
   del:p=>fs.doc(p).delete().catch(fail),
   query:async(c,q)=>(await build(c,q).get()).docs.map(s=>({id:s.id,...data(s)})),
@@ -1264,12 +1264,13 @@ function setupLogin(){$('#lgWm').innerHTML=`${APP.w1}<em>${APP.w2}</em>`;{const 
   if(!/^[a-z0-9_]{4,24}$/.test(user))return bad($('#lgUser'),'اسم المستخدم: 4 أحرف إنگليزية أو أرقام على الأقل');
   if(pw.length<6)return bad($('#lgPass'),'الرمز لازم 6 أحرف أو أكثر');document.activeElement&&document.activeElement.blur();
   $('#lgProg').classList.add('on');$('#lgBtn').disabled=true;
-  try{let uid;
-   if(lgMode==='up'){let taken=null;try{taken=await Promise.race([store.get('usernames/'+user),new Promise(r=>setTimeout(()=>r(null),6000))])}catch(x){}if(taken)throw Object.assign(new Error(),{code:'exists'});uid=await auth.signUp(user,pw);
-    await store.set('users/'+uid,{name,username:user,bio:'',photo:'',createdAt:OP.now(),lastSeen:OP.now(),online:true,accent:S.accent});
-    await store.set('usernames/'+user,{uid});await store.set('prefs/'+uid,{pins:[],muted:[],hidden:{}});if(store.local)await seedDemo(uid)}
+  try{let uid;const getT=(p,ms=7000)=>Promise.race([Promise.resolve().then(()=>store.get(p)).catch(()=>null),new Promise(r=>setTimeout(()=>r(undefined),ms))]);
+   if(lgMode==='up'){try{uid=await auth.signUp(user,pw)}catch(e){if(e.code==='exists'){try{uid=await auth.signIn(user,pw)}catch(_){throw e}}else throw e}}
    else uid=await auth.signIn(user,pw);
-   const md=await store.get('users/'+uid);$('#wcTxt').textContent='أهلاً وسهلاً '+firstName(md&&md.name||name||user);$('#welcome').classList.add('on');
+   let md=await getT('users/'+uid);
+   if(!md){const nm=lgMode==='up'&&name?name:(md===undefined?null:user);const prof={username:user,lastSeen:OP.now(),online:true};if(nm)prof.name=nm;if(md===null||lgMode==='up'){prof.createdAt=OP.now();prof.bio='';prof.photo='';prof.accent=S.accent;if(!prof.name)prof.name=name||user}
+    store.set('users/'+uid,prof,{merge:true});store.set('usernames/'+user,{uid},{quiet:true});store.set('prefs/'+uid,{pins:[],muted:[],hidden:{}},{merge:true,quiet:true});if(store.local)await seedDemo(uid);md=prof}
+   $('#wcTxt').textContent='أهلاً وسهلاً '+firstName(md&&md.name||name||user);$('#welcome').classList.add('on');
    setTimeout(()=>{startApp(uid);setTimeout(()=>$('#welcome').classList.remove('on'),150)},850)}
   catch(er){const c=er.code;if(c==='exists')bad($('#lgUser'),'اسم المستخدم محجوز، جرّب غيره');else if(c==='weak')bad($('#lgPass'),'الرمز ضعيف، خليه أطول');else if(c==='net')toast('ماكو انترنت','bad');else if(c==='many')toast('محاولات هواية، انتظر شوية','bad');else if(c==='wrong'||!c){bad($('#lgPass'),(lgMode==='up'?'ما انسوّى الحساب':'اسم المستخدم أو الرمز غلط')+(er.raw?' ('+String(er.raw).replace('auth/','')+')':''));$('#lgUser').classList.add('err')}else{console.warn(er);toast((lgMode==='up'?'ما انسوّى الحساب: ':'ما گدرت أدخل: ')+String(er.raw||er.code||er.message).replace('auth/',''),'bad')}}
   finally{$('#lgProg').classList.remove('on');$('#lgBtn').disabled=false}}}
@@ -1818,11 +1819,11 @@ function pwa(){const st=matchMedia('(display-mode: standalone)').matches||naviga
  bindEvents();pwa();setupLogin();
  try{if(DEMO){store=LocalStore();auth=LocalAuth()}
   else{const v='10.12.5',b=`https://www.gstatic.com/firebasejs/${v}/`;await loadScript(b+'firebase-app-compat.js');await Promise.all([loadScript(b+'firebase-auth-compat.js'),loadScript(b+'firebase-firestore-compat.js')]);
-   firebase.initializeApp(FIREBASE_CONFIG);const fs=firebase.firestore();try{fs.settings({experimentalAutoDetectLongPolling:true,merge:true})}catch(e){}try{await fs.enablePersistence({synchronizeTabs:true})}catch(e){}store=FireStore(fs);auth=FireAuth(firebase.auth());
+   firebase.initializeApp(FIREBASE_CONFIG);const fs=firebase.firestore();try{fs.settings({experimentalForceLongPolling:true,merge:true})}catch(e){}try{await fs.enablePersistence({synchronizeTabs:true})}catch(e){}store=FireStore(fs);auth=FireAuth(firebase.auth());
    addEventListener('online',()=>sync(true));addEventListener('offline',()=>sync(false));sync(navigator.onLine)}}
  catch(e){console.error(e);$('#login').classList.remove('hide');toast('ما گدرت أتصل بـ Firebase — تأكد من الانترنت','bad');return}
  if(DEMO)addEventListener('online',()=>sync(true));
- const uid=await auth.init();if(uid&&await store.get('users/'+uid).catch(()=>null))startApp(uid);else $('#login').classList.remove('hide')})();
+ const uid=await auth.init();if(uid)startApp(uid);else $('#login').classList.remove('hide')})();
 function sync(on){$$('[data-sync]').forEach(d=>d.classList.toggle('off',!on));$$('[data-synct]').forEach(d=>d.textContent=on?(DEMO?'وضع تجريبي · محلي':'متصل ومتزامن'):'ماكو انترنت — راح يرسل من يرجع')}
 
 </script>
