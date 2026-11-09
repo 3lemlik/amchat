@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover,interactive-widget=resizes-content">
-<meta name="app-build" content="2026.11.09-6">
+<meta name="app-build" content="2026.11.09-7">
 <meta name="theme-color" content="#0b0c10">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
@@ -731,6 +731,95 @@ html[data-theme="light"] .m.in .bub{box-shadow:0 1px .5px rgba(16,22,34,.14)}
 #login h2{font-weight:800;font-family:var(--f-b);font-size:26px}
 .field label{font-size:13px;font-weight:500}
 
+/* ===== v3 "Liquid HUD Glass" ===== */
+.gl{position:relative;background:color-mix(in srgb,var(--panel) 58%,transparent);backdrop-filter:blur(22px) saturate(1.9);-webkit-backdrop-filter:blur(22px) saturate(1.9);border:.5px solid rgba(255,255,255,.13);box-shadow:inset 0 1px 0 rgba(255,255,255,.09),0 6px 22px rgba(0,0,0,.30)}
+html[data-theme="light"] .gl{background:rgba(255,255,255,.66);border-color:rgba(255,255,255,.75);box-shadow:inset 0 1px 0 rgba(255,255,255,.95),0 6px 22px rgba(16,22,34,.13)}
+.gl.hud::before{content:"";position:absolute;inset:-.5px;border-radius:inherit;padding:1px;background:linear-gradient(115deg,rgba(var(--acc-rgb),.85),rgba(var(--acc-rgb),0) 28%,rgba(var(--acc-rgb),0) 72%,rgba(var(--acc-rgb),.6));-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none;opacity:.75}
+.circ{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;color:var(--ink);flex:none;transition:transform .15s}
+.circ:active{transform:scale(.9)}
+.circ svg{width:21px;height:21px}
+.circ.acc{background:var(--accent);color:var(--accent-ink);border-color:transparent;box-shadow:0 6px 18px var(--accent-glow),inset 0 1px 0 rgba(255,255,255,.25)}
+.pill{height:44px;border-radius:22px;padding:0 14px;display:flex;align-items:center;gap:8px;flex:none}
+
+/* chat header: floating */
+#chatView{position:relative}
+.chead{position:absolute;top:0;left:0;right:0;z-index:5;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:8px;padding:10px 12px 18px;min-height:0;background:linear-gradient(to bottom,color-mix(in srgb,var(--void) 75%,transparent),transparent);border:0;backdrop-filter:none;-webkit-backdrop-filter:none}
+.chead .ch-av{justify-self:start;cursor:pointer}
+.chead .ch-av .av{--s:44px!important;box-shadow:0 4px 14px rgba(0,0,0,.3),0 0 0 2px color-mix(in srgb,var(--panel) 60%,transparent)!important}
+.chead .who{height:46px;border-radius:23px;padding:0 20px;display:flex;align-items:center;justify-content:center;min-width:0;max-width:min(62vw,420px);flex:none;cursor:pointer}
+.chead .who .x{text-align:center;min-width:0}
+.chead .nm{justify-content:center;font-size:16px;line-height:1.2}
+.chead .st{font-size:12.5px;line-height:1.3;text-align:center}
+.chead .ch-l{justify-self:end;display:flex;gap:8px;align-items:center}
+.chead .back{display:none;padding:0 12px 0 10px;gap:6px}
+.chead .back svg{width:22px;height:22px;stroke-width:2.4}
+.chead .back .bn{min-width:24px;height:24px;border-radius:12px;background:var(--ink);color:var(--void);font-size:13px;font-weight:700;display:grid;place-items:center;padding:0 6px}
+#msgs{padding-top:74px}
+#chatView.pinned #msgs{padding-top:126px}
+.pinbar{position:absolute;top:70px;left:12px;right:12px;z-index:4;border-radius:16px;padding:8px 12px;border:.5px solid rgba(255,255,255,.13)}
+html[data-theme="light"] .pinbar{border-color:rgba(255,255,255,.75)}
+.dsep{top:70px}
+
+/* composer: circle · pill · circle */
+.comp{padding:6px 10px calc(10px + var(--sab));background:linear-gradient(to top,color-mix(in srgb,var(--void) 70%,transparent),transparent)}
+.comp .wrap{display:flex;flex-direction:column;gap:6px}
+.cbar{position:relative;display:flex;align-items:flex-end;gap:8px}
+.cbar .circ{width:46px;height:46px}
+.cbar .box{flex:1;min-width:0;display:flex;align-items:flex-end;gap:2px;border-radius:23px;padding:3px 6px 3px 4px;min-height:46px;box-shadow:inset 0 1px 0 rgba(255,255,255,.09),0 6px 22px rgba(0,0,0,.30)}
+.cbar .box textarea{height:40px;padding:9px 10px 9px 4px}
+.cbar .box .ib{width:40px;height:40px}
+.sendb{width:46px!important;height:46px!important;background:color-mix(in srgb,var(--panel) 58%,transparent)!important;color:var(--ink)!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.09),0 6px 22px rgba(0,0,0,.3)!important}
+html[data-theme="light"] .sendb{background:rgba(255,255,255,.66)!important}
+.comp[data-has="1"] .sendb,.comp[data-rec="1"] .sendb{background:var(--accent)!important;color:var(--accent-ink)!important;box-shadow:0 6px 18px var(--accent-glow)!important;border-color:transparent}
+.comp[data-rec="1"] .att{display:none}
+.lockp{left:auto!important;right:2px!important;bottom:62px!important;width:46px!important}
+.rbar{border-radius:18px!important;border:.5px solid rgba(255,255,255,.13)!important;margin:0}
+.rbar+.cbar .box{border-top-left-radius:23px;border-top-right-radius:23px}
+.emoji{border-radius:22px}
+.fab{bottom:78px}
+.fab.on{background:color-mix(in srgb,var(--panel) 60%,transparent);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
+.comp[data-rec="1"]:not([data-lock="1"]) .rec{padding-left:6px;padding-right:6px}
+
+/* phone chrome */
+@media (max-width:900px){
+ #topbar{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:8px;padding:calc(6px + var(--sat)) 12px 16px;background:linear-gradient(to bottom,var(--void) 30%,color-mix(in srgb,var(--void) 0%,transparent));border:0;backdrop-filter:none;-webkit-backdrop-filter:none}
+ #topbar .tb-acts{justify-self:start;display:flex;gap:8px}
+ #topbar .tb-title{display:flex;align-items:center;gap:7px;font-size:17px;font-weight:700}
+ #topbar .tb-title .logo{width:24px;height:24px}
+ #topbar .tb-st{justify-self:end;display:flex;gap:8px;align-items:center}
+ #topbar .tb-st .pill{padding:0 12px;gap:7px;height:40px}
+ #topbar .tb-st .circ{width:40px;height:40px}
+ #topbar .tclock{font-size:13px;color:var(--ink)}
+ #listCol{padding-top:calc(62px + var(--sat));padding-bottom:0}
+ .phead .row,#pane-settings .phead{display:none}
+ .phead{padding-top:4px}
+ .list{padding-bottom:calc(100px + var(--sab))}
+ .set{padding-bottom:calc(110px + var(--sab))}
+ #bnav{display:block;position:absolute;left:0;right:0;bottom:0;height:auto;padding:0 0 calc(10px + var(--sab));background:none;border:0;backdrop-filter:none;-webkit-backdrop-filter:none;pointer-events:none;z-index:6}
+ #bnav .tabbar{pointer-events:auto;position:relative;margin:0 auto;width:min(380px,calc(100% - 28px));height:64px;border-radius:32px;display:grid;grid-template-columns:repeat(4,1fr);padding:4px}
+ #bnav button{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;color:var(--dim);font-size:10.5px;font-weight:600;border-radius:28px;transition:color .25s}
+ #bnav button svg{width:25px;height:25px;transition:transform .35s cubic-bezier(.3,1.6,.5,1)}
+ #bnav button.on{color:var(--accent)}
+ #bnav button.on svg{transform:translateY(-1px) scale(1.08);animation:none}
+ #bnav .badge{top:4px;left:calc(50% - 26px)}
+ #bnav .lens{position:absolute;top:4px;bottom:4px;right:4px;width:calc((100% - 8px)/4);border-radius:28px;background:linear-gradient(180deg,rgba(var(--acc-rgb),.20),rgba(var(--acc-rgb),.10));box-shadow:inset 0 0 0 1px rgba(var(--acc-rgb),.35),inset 0 1px 0 rgba(255,255,255,.18),0 0 18px rgba(var(--acc-rgb),.25);transition:transform .5s cubic-bezier(.3,1.35,.45,1);z-index:0}
+ #bnav .lens::after{content:"";position:absolute;left:30%;right:30%;bottom:3px;height:2px;border-radius:2px;background:var(--accent);box-shadow:0 0 8px var(--accent)}
+ html.kb #bnav{display:none}
+ .chead{padding:calc(6px + var(--sat)) 10px 18px}
+ .chead .back{display:flex}
+ .chead .dk{display:none}
+ #msgs{padding-top:calc(68px + var(--sat))}
+ #chatView.pinned #msgs{padding-top:calc(120px + var(--sat))}
+ .pinbar{top:calc(64px + var(--sat))}
+ .dsep{top:calc(64px + var(--sat))}
+ .comp{padding:4px 8px calc(8px + var(--sab))}
+}
+@media (min-width:901px){.chead .who{max-width:440px}}
+.cbar .box{background:color-mix(in srgb,var(--panel) 58%,transparent);border:.5px solid rgba(255,255,255,.13)}
+html[data-theme="light"] .cbar .box{background:rgba(255,255,255,.7);border-color:rgba(255,255,255,.8);box-shadow:inset 0 1px 0 rgba(255,255,255,.95),0 6px 22px rgba(16,22,34,.13)}
+.rbar{background:color-mix(in srgb,var(--panel) 62%,transparent)!important}
+html[data-theme="light"] .rbar{background:rgba(255,255,255,.75)!important}
+
 </style>
 </head>
 <body>
@@ -834,10 +923,9 @@ html[data-theme="light"] .m.in .bub{box-shadow:0 1px .5px rgba(16,22,34,.14)}
  </aside>
 
  <div id="topbar">
-  <svg class="logo"><use href="#i-logo"/></svg><span class="wm" id="tbWm"></span>
-  <i class="dot" data-sync></i>
-  <span class="tclock num" data-clock>--:--</span>
-  <button class="ib" data-modetog><svg class="i"><use href="#i-moon"/></svg></button>
+  <div class="tb-acts"><button class="gl circ acc hud" data-act="newchat" title="محادثة جديدة"><svg class="i"><use href="#i-pen"/></svg></button><button class="gl circ" data-act="addstory" title="قصة جديدة"><svg class="i"><use href="#i-camera"/></svg></button></div>
+  <div class="tb-title"><svg class="logo"><use href="#i-logo"/></svg><b id="tbTitle">المحادثات</b></div>
+  <div class="tb-st"><div class="gl pill"><i class="dot" data-sync></i><span class="tclock num" data-clock>--:--</span></div><button class="gl circ" data-modetog><svg class="i"><use href="#i-moon"/></svg></button></div>
  </div>
 
  <section id="listCol">
@@ -875,25 +963,26 @@ html[data-theme="light"] .m.in .bub{box-shadow:0 1px .5px rgba(16,22,34,.14)}
   </div>
   <div id="chatView">
    <div class="chead">
-    <button class="ib back" data-act="closechat"><svg class="i"><use href="#i-back"/></svg></button>
-    <div class="who" data-act="info"><div id="chAv"></div><div class="x"><div class="nm" id="chName"></div><div class="st" id="chSt"></div></div></div>
-    <button class="ib" data-act="info" title="المعلومات"><svg class="i"><use href="#i-info"/></svg></button>
-    <button class="ib" data-act="chatmenu" title="المزيد"><svg class="i"><use href="#i-more"/></svg></button>
+    <div class="ch-av" data-act="info"><div id="chAv"></div></div>
+    <div class="who gl hud" data-act="info"><div class="x"><div class="nm" id="chName"></div><div class="st" id="chSt"></div></div></div>
+    <div class="ch-l"><button class="gl pill back" data-act="closechat"><svg class="i"><use href="#i-chev"/></svg><span class="bn num hide" id="backN"></span></button><button class="gl circ dk" data-act="info" title="المعلومات"><svg class="i"><use href="#i-info"/></svg></button><button class="gl circ dk" data-act="chatmenu" title="المزيد"><svg class="i"><use href="#i-more"/></svg></button></div>
    </div>
-   <div class="pinbar hide" id="pinbar"><div class="bar"></div><svg class="i" style="color:var(--accent);width:18px"><use href="#i-pin"/></svg><div class="x"><div class="t">رسالة مثبّتة</div><div class="s" id="pinTxt"></div></div><button class="ib" data-act="unpin" style="width:32px;height:32px"><svg class="i" style="width:16px"><use href="#i-close"/></svg></button></div>
+   <div class="pinbar gl hide" id="pinbar"><div class="bar"></div><svg class="i" style="color:var(--accent);width:18px"><use href="#i-pin"/></svg><div class="x"><div class="t">رسالة مثبّتة</div><div class="s" id="pinTxt"></div></div><button class="ib" data-act="unpin" style="width:32px;height:32px"><svg class="i" style="width:16px"><use href="#i-close"/></svg></button></div>
    <div id="msgs" class="scroll"><div class="inner" id="msgInner"></div></div>
    <button class="fab" id="fab"><svg class="i"><use href="#i-down"/></svg><span class="badge hide" id="fabN"></span></button>
    <div class="comp" id="comp" data-has="0">
     <div class="emoji" id="emoji"></div>
     <div class="wrap">
-     <div class="rbar hide" id="rbar"><svg class="i lead" id="rbarIc"><use href="#i-reply"/></svg><div class="x"><div class="t" id="rbarT"></div><div class="s" id="rbarS"></div></div><button class="ib" data-act="cancelreply" data-keep style="width:32px;height:32px"><svg class="i" style="width:16px"><use href="#i-close"/></svg></button></div>
-     <div class="box">
-      <button class="ib tb" data-act="emoji" title="إيموجي" data-keep><svg class="i"><use href="#i-smile"/></svg></button>
-      <textarea id="txt" rows="1" placeholder="اكتب رسالة…" enterkeyhint="send"></textarea>
-      <div class="rec"><button class="ib rdel" data-act="reccancel" data-keep><svg class="i"><use href="#i-trash"/></svg></button><i class="rd"></i><span class="tt num" id="recT">0:00</span><canvas id="recWave"></canvas><span class="slide" id="recSlide"><svg class="i" style="width:16px;height:16px;transform:scaleX(-1)"><use href="#i-chev"/></svg>اسحب للإلغاء</span></div>
-      <button class="ib tb" data-act="attach" title="صورة"><svg class="i"><use href="#i-clip"/></svg></button>
-      <button class="ib sendb" id="sendBtn" title="إرسال"><svg class="i s-send"><use href="#i-send"/></svg><svg class="i s-mic"><use href="#i-mic"/></svg><svg class="i s-micb"><use href="#i-mic"/></svg></button>
-      <div class="lockp" id="lockP"><svg class="i"><use href="#i-lock"/></svg><svg class="i ar"><use href="#i-up"/></svg></div>
+     <div class="rbar gl hide" id="rbar"><svg class="i lead" id="rbarIc"><use href="#i-reply"/></svg><div class="x"><div class="t" id="rbarT"></div><div class="s" id="rbarS"></div></div><button class="ib" data-act="cancelreply" data-keep style="width:32px;height:32px"><svg class="i" style="width:16px"><use href="#i-close"/></svg></button></div>
+     <div class="cbar">
+      <button class="gl circ sendb" id="sendBtn" title="إرسال"><svg class="i s-send"><use href="#i-send"/></svg><svg class="i s-mic"><use href="#i-mic"/></svg><svg class="i s-micb"><use href="#i-mic"/></svg></button>
+      <div class="box gl hud">
+       <textarea id="txt" rows="1" placeholder="اكتب رسالة…" enterkeyhint="send"></textarea>
+       <div class="rec"><button class="ib rdel" data-act="reccancel" data-keep><svg class="i"><use href="#i-trash"/></svg></button><i class="rd"></i><span class="tt num" id="recT">0:00</span><canvas id="recWave"></canvas><span class="slide" id="recSlide"><svg class="i" style="width:16px;height:16px"><use href="#i-chev"/></svg>اسحب للإلغاء</span></div>
+       <button class="ib tb" data-act="emoji" title="إيموجي"><svg class="i"><use href="#i-smile"/></svg></button>
+      </div>
+      <button class="gl circ tb att" data-act="attach" title="صورة"><svg class="i"><use href="#i-clip"/></svg></button>
+      <div class="lockp gl" id="lockP"><svg class="i"><use href="#i-lock"/></svg><svg class="i ar"><use href="#i-up"/></svg></div>
      </div>
     </div>
    </div>
@@ -906,13 +995,12 @@ html[data-theme="light"] .m.in .bub{box-shadow:0 1px .5px rgba(16,22,34,.14)}
   <div class="ibody scroll" id="infoBody"></div>
  </div></aside>
 
- <nav id="bnav">
+ <nav id="bnav"><div class="tabbar gl hud"><i class="lens"></i>
   <button data-nav="chats" class="on"><svg class="i"><use href="#i-chat"/></svg><span class="bl">المحادثات</span><span class="badge hide" data-unread></span></button>
   <button data-nav="contacts"><svg class="i"><use href="#i-users"/></svg><span class="bl">الأشخاص</span></button>
-  <button class="mid" data-act="newchat"><i><svg class="i"><use href="#i-pen"/></svg></i><span class="bl">جديدة</span></button>
   <button data-nav="saved"><svg class="i"><use href="#i-bookmark"/></svg><span class="bl">المحفوظة</span></button>
   <button data-nav="settings"><svg class="i"><use href="#i-gear"/></svg><span class="bl">الإعدادات</span></button>
- </nav>
+ </div></nav>
 </div>
 
 <div id="sheetWrap"><div id="sheet" class="card br"><div class="grab"></div><div class="sh"><b id="shT"></b><button class="ib" data-act="closesheet"><svg class="i"><use href="#i-close"/></svg></button></div><div class="sb scroll" id="shB"></div><div class="sf hide" id="shF"></div></div></div>
@@ -1188,7 +1276,7 @@ function setupLogin(){$('#lgWm').innerHTML=`${APP.w1}<em>${APP.w2}</em>`;if(DEMO
 
 /* ================= تشغيل التطبيق ================= */
 async function startApp(uid){S.me=uid;$('#login').classList.add('hide');$('#app').classList.remove('hide');
- ['#sdWm','#tbWm'].forEach(s=>$(s).innerHTML=`${APP.w1}<em>${APP.w2}</em>`);
+ ['#sdWm','#tbWm'].forEach(s=>{const e=$(s);if(e)e.innerHTML=`${APP.w1}<em>${APP.w2}</em>`});
  S.unsub.push(store.watchDoc('users/'+uid,d=>{S.meDoc=d||{};S.users[uid]={id:uid,...S.meDoc};if(S.meDoc.accent&&S.meDoc.accent!==S.accent)applyTheme(S.meDoc.accent);renderMe();schedule()}));
  S.unsub.push(store.watchDoc('prefs/'+uid,d=>{S.prefs=d||{};schedule()}));
  S.unsub.push(store.watchQuery('chats',{where:[['members','array-contains',uid]]},list=>{S.chats=list;S.chatMap={};list.forEach(c=>S.chatMap[c.id]=c);onChats();schedule()}));
@@ -1250,13 +1338,14 @@ function closeChat(){popNav('chat')}
 function doCloseChat(){saveDraft();S.open=null;delete $('#app').dataset.open;if(S.msgUnsub)S.msgUnsub();S.msgUnsub=null;stopAudio();if(S.recording)stopRec(false);doCloseInfo();renderChatList()}
 function saveDraft(){if(!S.open)return;S.drafts=S.drafts||{};S.drafts[S.open]=S.edit?'':$('#txt').value}
 
-function renderHeader(){const c=S.chatMap[S.open];if(!c)return;const i=chatInfo(c);$('#chAv').innerHTML=chatAv(c,42);$('#chName').innerHTML=esc(i.title)+(i.verified?ico('vf','vf'):'')+(isMuted(c.id)?ico('mute','i mt'):'');
+function renderHeader(){const c=S.chatMap[S.open];if(!c)return;const i=chatInfo(c);$('#chAv').innerHTML=chatAv(c,44);$('#chName').innerHTML=esc(i.title)+(i.verified?ico('vf','vf'):'')+(isMuted(c.id)?ico('mute','i mt'):'');
  const st=$('#chSt'),ty=typers(c);let t='',on=false;
  if(ty.length){on=true;t=(c.type==='group'?esc(firstName(U(ty[0]).name))+' يكتب':'يكتب')+'<span class="typing-dots"><i></i><i></i><i></i></span>'}
  else if(c.type==='saved')t='رسائلك الخاصة بيك بس';else if(c.type==='group'){const n=(c.members||[]).length,o=(c.members||[]).filter(u=>u!==S.me&&isOn(U(u))).length;t=`<span class="num">${n}</span> عضو`+(o?` · <span class="num">${o}</span> متصل`:'')}
  else{const u=i.user;on=isOn(u);t=esc(seenTxt(u))}
  st.innerHTML=t;st.classList.toggle('on',on);
- const pb=$('#pinbar');if(c.pinned&&c.pinned.id){pb.classList.remove('hide');$('#pinTxt').textContent=c.pinned.text||'📎 مرفق';pb.dataset.jump=c.pinned.id}else pb.classList.add('hide');
+ {let n=0;S.chats.forEach(x=>{if(x.id!==c.id&&!isMuted(x.id)&&visible(x)&&unreadOf(x)>0)n++});const bn=$('#backN');bn.textContent=n;bn.classList.toggle('hide',!n)}
+ const pb=$('#pinbar');$('#chatView').classList.toggle('pinned',!!(c.pinned&&c.pinned.id));if(c.pinned&&c.pinned.id){pb.classList.remove('hide');$('#pinTxt').textContent=c.pinned.text||'📎 مرفق';pb.dataset.jump=c.pinned.id}else pb.classList.add('hide');
  const member=(c.members||[]).includes(S.me);$('#comp').classList.toggle('hide',!member);$('#readonly').classList.toggle('hide',member)}
 
 /* ================= الرسائل ================= */
@@ -1370,8 +1459,8 @@ function finishRec(R){if(R.done)return;R.done=1;clearInterval(R.iv);try{R.st.get
 function downsample(a,n){if(!a.length)return [];const out=[];for(let i=0;i<n;i++){const s=Math.floor(i*a.length/n),e=Math.max(s+1,Math.floor((i+1)*a.length/n));let m=0;for(let k=s;k<e&&k<a.length;k++)m=Math.max(m,a[k]);out.push(m)}const mx=Math.max(...out,.05);return out.map(v=>Math.round(10+90*Math.pow(v/mx,.75)))}
 function setupSendBtn(){const b=$('#sendBtn');let g=null;
  const down=(x,y)=>{if(S.recording&&S.recording.locked){g={mode:'stop'};return}if($('#txt').value.trim()){g={mode:'send'};return}g={mode:'rec',x,y,t:now()};recStart()};
- const move=(x,y)=>{if(!g||g.mode!=='rec'||!S.recording||S.recording.locked)return;const dx=x-g.x,dy=y-g.y;const sl=$('#recSlide');sl.style.transform=`translateX(${Math.max(0,dx)}px)`;sl.style.opacity=String(1-Math.min(1,Math.max(0,dx)/120));$('#lockP').style.transform=`translateY(${Math.max(-60,Math.min(0,dy))}px)`;
-  if(dx>120){g=null;REC.held=false;recStop(false);vib(20);toast('انلغت البصمة')}else if(dy<-75){S.recording.locked=true;$('#comp').dataset.lock='1';resetRecUI();vib(15);g=null;REC.held=false}};
+ const move=(x,y)=>{if(!g||g.mode!=='rec'||!S.recording||S.recording.locked)return;const dx=x-g.x,dy=y-g.y;const sl=$('#recSlide');sl.style.transform=`translateX(${Math.min(0,dx)}px)`;sl.style.opacity=String(1-Math.min(1,Math.max(0,-dx)/120));$('#lockP').style.transform=`translateY(${Math.max(-60,Math.min(0,dy))}px)`;
+  if(dx<-120){g=null;REC.held=false;recStop(false);vib(20);toast('انلغت البصمة')}else if(dy<-75){S.recording.locked=true;$('#comp').dataset.lock='1';resetRecUI();vib(15);g=null;REC.held=false}};
  const up=()=>{REC.held=false;if(!g)return;const gg=g;g=null;if(gg.mode==='send')sendText();else if(gg.mode==='stop')recStop(true);else if(gg.mode==='rec'){if(!S.recording)return;if(now()-gg.t<400||now()-S.recording.t0<1200){S.recording.locked=true;$('#comp').dataset.lock='1';toast('ديسجّل… دوس ➤ للإرسال أو 🗑 للإلغاء')}else recStop(true)}resetRecUI()};
  b.addEventListener('touchstart',e=>{e.preventDefault();const t=e.touches[0];down(t.clientX,t.clientY)},{passive:false});
  b.addEventListener('touchmove',e=>{e.preventDefault();const t=e.touches[0];move(t.clientX,t.clientY)},{passive:false});
@@ -1516,8 +1605,11 @@ function renderSettings(){const m=S.meDoc||{};const mode=ls.get('amc-mode','dark
  $('#fsIn').oninput=e=>{ls.set('amc-fs',e.target.value);document.documentElement.style.setProperty('--msg-fs',e.target.value+'px');$$('.preview-bubbles .bub').forEach(b=>b.style.fontSize=e.target.value+'px')};$('#fsIn').onchange=()=>renderSettings()}
 
 /* ================= التنقل ================= */
+const NAVT={chats:'المحادثات',contacts:'الأشخاص',settings:'الإعدادات'};
+function moveLens(k){const tb=$('#bnav .tabbar');if(!tb)return;const bs=[...tb.querySelectorAll('button')];const i=bs.findIndex(b=>b.dataset.nav===k);if(i<0)return;const w=bs[0].offsetWidth;tb.querySelector('.lens').style.transform=`translateX(${-i*w}px)`}
+addEventListener('resize',()=>{const a=$('#bnav button.on');if(a)moveLens(a.dataset.nav)});
 function setNav(k){if(k==='saved'){API.ensureSaved().then(id=>openChat(id));return}const cur=$('.pane.on');const next=$('#pane-'+k);
- $$('[data-nav]').forEach(b=>b.classList.toggle('on',b.dataset.nav===k));if(cur===next)return;
+ $$('[data-nav]').forEach(b=>b.classList.toggle('on',b.dataset.nav===k));moveLens(k);const tt=$('#tbTitle');if(tt)tt.textContent=NAVT[k]||'';if(cur===next)return;
  if(cur){$$('input',cur).forEach(i=>{if(i.type!=='file'&&i.type!=='range'&&i.type!=='color')i.value=''});$$('.scroll,.list',cur).forEach(s=>s.scrollTop=0);if(cur.id==='pane-chats'){S.folder='all';renderChatList();renderFolders()}}
  $$('.pane').forEach(p=>p.classList.toggle('on',p===next));warp();const h=$('h1',next);if(h){h.classList.remove('flick');void h.offsetWidth;h.classList.add('flick')}
  if(k==='contacts')renderContacts();if(k==='settings')renderSettings();const lst=$('.list',next)||$('.set',next);if(lst)stagger(lst)}
