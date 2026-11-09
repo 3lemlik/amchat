@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover,interactive-widget=resizes-content">
-<meta name="app-build" content="2026.11.10-1">
+<meta name="app-build" content="2026.11.10-2">
 <meta name="theme-color" content="#0b0c10">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
@@ -1270,7 +1270,7 @@ function setupLogin(){$('#lgWm').innerHTML=`${APP.w1}<em>${APP.w2}</em>`;{const 
    else uid=await auth.signIn(user,pw);
    let md=await getT('users/'+uid);
    if(!md){const nm=lgMode==='up'&&name?name:(md===undefined?null:user);const prof={username:user,lastSeen:OP.now(),online:true};if(nm)prof.name=nm;if(md===null||lgMode==='up'){prof.createdAt=OP.now();prof.bio='';prof.photo='';prof.accent=S.accent;if(!prof.name)prof.name=name||user}
-    store.set('users/'+uid,prof,{merge:true});store.set('usernames/'+user,{uid},{quiet:true});store.set('prefs/'+uid,{pins:[],muted:[],hidden:{}},{merge:true,quiet:true});if(store.local)await seedDemo(uid);md=prof}
+    try{store.set('users/'+uid,prof,{merge:true});store.set('usernames/'+user,{uid},{quiet:true});store.set('prefs/'+uid,{pins:[],muted:[],hidden:{}},{merge:true,quiet:true})}catch(x){console.warn(x)}if(store.local)await seedDemo(uid);md=prof}
    $('#wcTxt').textContent='أهلاً وسهلاً '+firstName(md&&md.name||name||user);$('#welcome').classList.add('on');
    setTimeout(()=>{startApp(uid);setTimeout(()=>$('#welcome').classList.remove('on'),150)},850)}
   catch(er){const c=er.code;if(c==='exists')bad($('#lgUser'),'اسم المستخدم محجوز، جرّب غيره');else if(c==='weak')bad($('#lgPass'),'الرمز ضعيف، خليه أطول');else if(c==='net')toast('ماكو انترنت','bad');else if(c==='many')toast('محاولات هواية، انتظر شوية','bad');else if(c==='wrong'||(!c&&!er.message)){bad($('#lgPass'),(lgMode==='up'?'ما انسوّى الحساب':'اسم المستخدم أو الرمز غلط')+(er.raw?' ('+String(er.raw).replace('auth/','')+')':''));$('#lgUser').classList.add('err')}else{console.warn(er);toast((lgMode==='up'?'ما انسوّى الحساب: ':'ما گدرت أدخل: ')+String(er.raw||er.code||er.message||er).replace('auth/','').slice(0,90),'bad')}}
@@ -1826,7 +1826,6 @@ function initFirebase(){if(store&&auth)return Promise.resolve();if(fbIniting)ret
   if(!firebase.firestore)await loadAny(urls,'firebase-firestore-compat.js');
   if(!firebase.apps.length)firebase.initializeApp(FIREBASE_CONFIG);
   const fs=firebase.firestore();try{fs.settings({experimentalForceLongPolling:true,merge:true})}catch(e){}
-  try{await Promise.race([fs.enablePersistence({synchronizeTabs:true}),new Promise(r=>setTimeout(r,3000))])}catch(e){}
   store=FireStore(fs);auth=FireAuth(firebase.auth());$('#fbErr')&&$('#fbErr').remove()})();
  fbIniting.catch(()=>{fbIniting=null});return fbIniting}
 function fbFail(e){let b=$('#fbErr');if(!b){b=document.createElement('div');b.id='fbErr';b.className='demo-note';b.style.color='var(--bad)';b.style.background='rgba(242,89,106,.1)';$('#login .box').insertBefore(b,$('#login .credit'))}
