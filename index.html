@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover,interactive-widget=resizes-content">
-<meta name="app-build" content="2026.11.09-10">
+<meta name="app-build" content="2026.11.10-1">
 <meta name="theme-color" content="#0b0c10">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
@@ -1063,7 +1063,7 @@ const isTouch=matchMedia('(pointer:coarse)').matches;
 const isPhone=()=>innerWidth<=900;
 
 let toastT;
-function toast(msg,kind,onclick){const t=$('#toast');t.className=kind||'';$('span',t).textContent=msg;t.onclick=()=>{t.classList.remove('on');onclick&&onclick()};requestAnimationFrame(()=>t.classList.add('on'));clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove('on'),onclick?4200:2600)}
+function toast(msg,kind,onclick){const t=$('#toast');t.className=kind||'';$('span',t).textContent=msg;t.onclick=()=>{t.classList.remove('on');onclick&&onclick()};requestAnimationFrame(()=>t.classList.add('on'));clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove('on'),onclick?4200:kind==='bad'?5000:2600)}
 function warp(){const w=$('#warp');w.classList.remove('go');void w.offsetWidth;w.classList.add('go')}
 function stagger(box){box.classList.add('enter');[...box.children].slice(0,14).forEach((c,i)=>c.style.animationDelay=(i*55)+'ms');setTimeout(()=>{box.classList.remove('enter');[...box.children].forEach(c=>c.style.animationDelay='')},1300)}
 
@@ -1163,7 +1163,7 @@ function FireAuth(fa){
   signIn:async(u,p)=>{try{return (await fa.signInWithEmailAndPassword(em(u),p)).user.uid}catch(e){throw map(e)}},
   signOut:()=>fa.signOut()};
 }
-function loadScript(src){return new Promise((res,rej)=>{const s=document.createElement('script');s.src=src;s.onload=res;s.onerror=rej;document.head.appendChild(s)})}
+function loadScript(src){return new Promise((res,rej)=>{const s=document.createElement('script');s.src=src;s.onload=res;s.onerror=()=>{s.remove();rej(new Error('ما انحمل '+src.split('/').pop()+' من '+new URL(src).host))};document.head.appendChild(s)})}
 
 /* ================= الحالة ================= */
 const S={me:null,meDoc:{},prefs:{},users:{},uw:{},chats:[],chatMap:{},open:null,msgs:[],msgLimit:60,hasMore:false,unsub:[],msgUnsub:null,
@@ -1264,6 +1264,7 @@ function setupLogin(){$('#lgWm').innerHTML=`${APP.w1}<em>${APP.w2}</em>`;{const 
   if(!/^[a-z0-9_]{4,24}$/.test(user))return bad($('#lgUser'),'اسم المستخدم: 4 أحرف إنگليزية أو أرقام على الأقل');
   if(pw.length<6)return bad($('#lgPass'),'الرمز لازم 6 أحرف أو أكثر');document.activeElement&&document.activeElement.blur();
   $('#lgProg').classList.add('on');$('#lgBtn').disabled=true;
+  if(!DEMO&&!(store&&auth)){try{await initFirebase()}catch(x){$('#lgProg').classList.remove('on');$('#lgBtn').disabled=false;fbFail(x);return}}
   try{let uid;const getT=(p,ms=7000)=>Promise.race([Promise.resolve().then(()=>store.get(p)).catch(()=>null),new Promise(r=>setTimeout(()=>r(undefined),ms))]);
    if(lgMode==='up'){try{uid=await auth.signUp(user,pw)}catch(e){if(e.code==='exists'){try{uid=await auth.signIn(user,pw)}catch(_){throw e}}else throw e}}
    else uid=await auth.signIn(user,pw);
@@ -1272,7 +1273,7 @@ function setupLogin(){$('#lgWm').innerHTML=`${APP.w1}<em>${APP.w2}</em>`;{const 
     store.set('users/'+uid,prof,{merge:true});store.set('usernames/'+user,{uid},{quiet:true});store.set('prefs/'+uid,{pins:[],muted:[],hidden:{}},{merge:true,quiet:true});if(store.local)await seedDemo(uid);md=prof}
    $('#wcTxt').textContent='أهلاً وسهلاً '+firstName(md&&md.name||name||user);$('#welcome').classList.add('on');
    setTimeout(()=>{startApp(uid);setTimeout(()=>$('#welcome').classList.remove('on'),150)},850)}
-  catch(er){const c=er.code;if(c==='exists')bad($('#lgUser'),'اسم المستخدم محجوز، جرّب غيره');else if(c==='weak')bad($('#lgPass'),'الرمز ضعيف، خليه أطول');else if(c==='net')toast('ماكو انترنت','bad');else if(c==='many')toast('محاولات هواية، انتظر شوية','bad');else if(c==='wrong'||!c){bad($('#lgPass'),(lgMode==='up'?'ما انسوّى الحساب':'اسم المستخدم أو الرمز غلط')+(er.raw?' ('+String(er.raw).replace('auth/','')+')':''));$('#lgUser').classList.add('err')}else{console.warn(er);toast((lgMode==='up'?'ما انسوّى الحساب: ':'ما گدرت أدخل: ')+String(er.raw||er.code||er.message).replace('auth/',''),'bad')}}
+  catch(er){const c=er.code;if(c==='exists')bad($('#lgUser'),'اسم المستخدم محجوز، جرّب غيره');else if(c==='weak')bad($('#lgPass'),'الرمز ضعيف، خليه أطول');else if(c==='net')toast('ماكو انترنت','bad');else if(c==='many')toast('محاولات هواية، انتظر شوية','bad');else if(c==='wrong'||(!c&&!er.message)){bad($('#lgPass'),(lgMode==='up'?'ما انسوّى الحساب':'اسم المستخدم أو الرمز غلط')+(er.raw?' ('+String(er.raw).replace('auth/','')+')':''));$('#lgUser').classList.add('err')}else{console.warn(er);toast((lgMode==='up'?'ما انسوّى الحساب: ':'ما گدرت أدخل: ')+String(er.raw||er.code||er.message||er).replace('auth/','').slice(0,90),'bad')}}
   finally{$('#lgProg').classList.remove('on');$('#lgBtn').disabled=false}}}
 
 /* ================= تشغيل التطبيق ================= */
@@ -1814,14 +1815,30 @@ function pwa(){const st=matchMedia('(display-mode: standalone)').matches||naviga
  if(!/^https?:/.test(location.protocol))return;if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});
  const chk=async()=>{try{const r=await fetch(location.pathname+'?v='+now(),{cache:'no-store'});const t=await r.text();const m=t.match(/name="app-build" content="([^"]+)"/);if(m&&m[1]!==APP.build){saveDraft();location.reload()}}catch(e){}};setInterval(chk,60000);document.addEventListener('visibilitychange',()=>{if(!document.hidden)chk()})}
 
+/* ================= تحميل Firebase (ويّا بدائل إذا موقع انحجب) ================= */
+const FB_CDNS=v=>[`https://www.gstatic.com/firebasejs/${v}/`,`https://cdn.jsdelivr.net/npm/firebase@${v}/`,`https://unpkg.com/firebase@${v}/`];
+function loadAny(urls,file){return urls.reduce((p,u)=>p.catch(()=>loadScript(u+file)),Promise.reject())}
+let fbIniting=null;
+function initFirebase(){if(store&&auth)return Promise.resolve();if(fbIniting)return fbIniting;
+ fbIniting=(async()=>{const urls=FB_CDNS('10.12.5');
+  if(!window.firebase||!firebase.initializeApp)await loadAny(urls,'firebase-app-compat.js');
+  if(!firebase.auth)await loadAny(urls,'firebase-auth-compat.js');
+  if(!firebase.firestore)await loadAny(urls,'firebase-firestore-compat.js');
+  if(!firebase.apps.length)firebase.initializeApp(FIREBASE_CONFIG);
+  const fs=firebase.firestore();try{fs.settings({experimentalForceLongPolling:true,merge:true})}catch(e){}
+  try{await Promise.race([fs.enablePersistence({synchronizeTabs:true}),new Promise(r=>setTimeout(r,3000))])}catch(e){}
+  store=FireStore(fs);auth=FireAuth(firebase.auth());$('#fbErr')&&$('#fbErr').remove()})();
+ fbIniting.catch(()=>{fbIniting=null});return fbIniting}
+function fbFail(e){let b=$('#fbErr');if(!b){b=document.createElement('div');b.id='fbErr';b.className='demo-note';b.style.color='var(--bad)';b.style.background='rgba(242,89,106,.1)';$('#login .box').insertBefore(b,$('#login .credit'))}
+ b.innerHTML=`ما گدر يتصل بالسيرفر من هذا الجهاز.<br><small class="num" style="opacity:.8">${esc(String(e&&(e.code||e.message)||e||'').slice(0,120))}</small><br><button class="btn tint" style="height:34px;margin-top:6px" id="fbRetry">حاول مرة ثانية</button>`;
+ $('#fbRetry').onclick=async()=>{b.innerHTML='ديحاول يتصل…';try{await initFirebase();toast('انربط ✓ كمّل');const uid=await auth.init();if(uid)startApp(uid)}catch(x){fbFail(x)}}}
+
 /* ================= البداية ================= */
 (async function boot(){document.documentElement.dataset.wall=ls.get('amc-wall','1');document.documentElement.style.setProperty('--msg-fs',ls.get('amc-fs','16')+'px');applyTheme(S.accent);setMode(ls.get('amc-mode','dark'));
  bindEvents();pwa();setupLogin();
  try{if(DEMO){store=LocalStore();auth=LocalAuth()}
-  else{const v='10.12.5',b=`https://www.gstatic.com/firebasejs/${v}/`;await loadScript(b+'firebase-app-compat.js');await Promise.all([loadScript(b+'firebase-auth-compat.js'),loadScript(b+'firebase-firestore-compat.js')]);
-   firebase.initializeApp(FIREBASE_CONFIG);const fs=firebase.firestore();try{fs.settings({experimentalForceLongPolling:true,merge:true})}catch(e){}try{await fs.enablePersistence({synchronizeTabs:true})}catch(e){}store=FireStore(fs);auth=FireAuth(firebase.auth());
-   addEventListener('online',()=>sync(true));addEventListener('offline',()=>sync(false));sync(navigator.onLine)}}
- catch(e){console.error(e);$('#login').classList.remove('hide');toast('ما گدرت أتصل بـ Firebase — تأكد من الانترنت','bad');return}
+  else{await initFirebase();addEventListener('online',()=>sync(true));addEventListener('offline',()=>sync(false));sync(navigator.onLine)}}
+ catch(e){console.error(e);$('#login').classList.remove('hide');fbFail(e);return}
  if(DEMO)addEventListener('online',()=>sync(true));
  const uid=await auth.init();if(uid)startApp(uid);else $('#login').classList.remove('hide')})();
 function sync(on){$$('[data-sync]').forEach(d=>d.classList.toggle('off',!on));$$('[data-synct]').forEach(d=>d.textContent=on?(DEMO?'وضع تجريبي · محلي':'متصل ومتزامن'):'ماكو انترنت — راح يرسل من يرجع')}
