@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover,interactive-widget=resizes-content">
-<meta name="app-build" content="2026.11.09-7">
+<meta name="app-build" content="2026.11.09-8">
 <meta name="theme-color" content="#0b0c10">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
@@ -1157,7 +1157,7 @@ function LocalAuth(){
 }
 function FireAuth(fa){
  const em=u=>u+'@'+APP.domain;
- const map=e=>{const c=e&&e.code||'';return Object.assign(new Error(c),{code:c.includes('already-in-use')?'exists':c.includes('weak-password')?'weak':c.includes('network')?'net':c.includes('too-many')?'many':'wrong'})};
+ const map=e=>{const c=e&&e.code||String(e&&e.message||e);return Object.assign(new Error(c),{raw:c,code:c.includes('already-in-use')?'exists':c.includes('weak-password')?'weak':c.includes('network')?'net':c.includes('too-many')?'many':/invalid-credential|wrong-password|user-not-found|invalid-login|invalid-email/.test(c)?'wrong':'other'})};
  return {init:()=>new Promise(res=>{const un=fa.onAuthStateChanged(u=>{un();res(u?u.uid:null)})}),
   signUp:async(u,p)=>{try{return (await fa.createUserWithEmailAndPassword(em(u),p)).user.uid}catch(e){throw map(e)}},
   signIn:async(u,p)=>{try{return (await fa.signInWithEmailAndPassword(em(u),p)).user.uid}catch(e){throw map(e)}},
@@ -1265,13 +1265,13 @@ function setupLogin(){$('#lgWm').innerHTML=`${APP.w1}<em>${APP.w2}</em>`;if(DEMO
   if(pw.length<6)return bad($('#lgPass'),'الرمز لازم 6 أحرف أو أكثر');document.activeElement&&document.activeElement.blur();
   $('#lgProg').classList.add('on');$('#lgBtn').disabled=true;
   try{let uid;
-   if(lgMode==='up'){if(await store.get('usernames/'+user))throw Object.assign(new Error(),{code:'exists'});uid=await auth.signUp(user,pw);
+   if(lgMode==='up'){let taken=null;try{taken=await Promise.race([store.get('usernames/'+user),new Promise(r=>setTimeout(()=>r(null),6000))])}catch(x){}if(taken)throw Object.assign(new Error(),{code:'exists'});uid=await auth.signUp(user,pw);
     await store.set('users/'+uid,{name,username:user,bio:'',photo:'',createdAt:OP.now(),lastSeen:OP.now(),online:true,accent:S.accent});
     await store.set('usernames/'+user,{uid});await store.set('prefs/'+uid,{pins:[],muted:[],hidden:{}});if(store.local)await seedDemo(uid)}
    else uid=await auth.signIn(user,pw);
    const md=await store.get('users/'+uid);$('#wcTxt').textContent='أهلاً وسهلاً '+firstName(md&&md.name||name||user);$('#welcome').classList.add('on');
    setTimeout(()=>{startApp(uid);setTimeout(()=>$('#welcome').classList.remove('on'),150)},850)}
-  catch(er){const c=er.code;if(c==='exists')bad($('#lgUser'),'اسم المستخدم محجوز، جرّب غيره');else if(c==='weak')bad($('#lgPass'),'الرمز ضعيف، خليه أطول');else if(c==='net')toast('ماكو انترنت','bad');else if(c==='many')toast('محاولات هواية، انتظر شوية','bad');else{bad($('#lgPass'),'اسم المستخدم أو الرمز غلط');$('#lgUser').classList.add('err')}}
+  catch(er){const c=er.code;if(c==='exists')bad($('#lgUser'),'اسم المستخدم محجوز، جرّب غيره');else if(c==='weak')bad($('#lgPass'),'الرمز ضعيف، خليه أطول');else if(c==='net')toast('ماكو انترنت','bad');else if(c==='many')toast('محاولات هواية، انتظر شوية','bad');else if(c==='wrong'||!c){bad($('#lgPass'),'اسم المستخدم أو الرمز غلط');$('#lgUser').classList.add('err')}else{console.warn(er);toast((lgMode==='up'?'ما انسوّى الحساب: ':'ما گدرت أدخل: ')+String(er.raw||er.code||er.message).replace('auth/',''),'bad')}}
   finally{$('#lgProg').classList.remove('on');$('#lgBtn').disabled=false}}}
 
 /* ================= تشغيل التطبيق ================= */
@@ -1818,7 +1818,7 @@ function pwa(){const st=matchMedia('(display-mode: standalone)').matches||naviga
  bindEvents();pwa();setupLogin();
  try{if(DEMO){store=LocalStore();auth=LocalAuth()}
   else{const v='10.12.5',b=`https://www.gstatic.com/firebasejs/${v}/`;await loadScript(b+'firebase-app-compat.js');await Promise.all([loadScript(b+'firebase-auth-compat.js'),loadScript(b+'firebase-firestore-compat.js')]);
-   firebase.initializeApp(FIREBASE_CONFIG);const fs=firebase.firestore();try{await fs.enablePersistence({synchronizeTabs:true})}catch(e){}store=FireStore(fs);auth=FireAuth(firebase.auth());
+   firebase.initializeApp(FIREBASE_CONFIG);const fs=firebase.firestore();try{fs.settings({experimentalAutoDetectLongPolling:true,merge:true})}catch(e){}try{await fs.enablePersistence({synchronizeTabs:true})}catch(e){}store=FireStore(fs);auth=FireAuth(firebase.auth());
    addEventListener('online',()=>sync(true));addEventListener('offline',()=>sync(false));sync(navigator.onLine)}}
  catch(e){console.error(e);$('#login').classList.remove('hide');toast('ما گدرت أتصل بـ Firebase — تأكد من الانترنت','bad');return}
  if(DEMO)addEventListener('online',()=>sync(true));
