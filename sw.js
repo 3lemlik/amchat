@@ -1,10 +1,11 @@
 // AM CHAT service worker — كاش (الشبكة أولاً) + إشعارات Push
-const C='amchat-v3';
+const C='amchat-v4';
 self.addEventListener('install',e=>{self.skipWaiting();e.waitUntil(caches.open(C).then(c=>c.addAll(['./','index.html','manifest.json','icon-192.png']).catch(()=>{})))});
 self.addEventListener('activate',e=>e.waitUntil((async()=>{const ks=await caches.keys();await Promise.all(ks.filter(k=>k!==C).map(k=>caches.delete(k)));await self.clients.claim()})()));
 self.addEventListener('fetch',e=>{const r=e.request;if(r.method!=='GET')return;const u=new URL(r.url);
   if(u.origin!==location.origin&&!/fonts\.(googleapis|gstatic)\.com/.test(u.host))return;
-  e.respondWith(fetch(r).then(res=>{if(res.ok&&!u.search){const cp=res.clone();caches.open(C).then(c=>c.put(r,cp))}return res}).catch(()=>caches.match(r).then(m=>m||caches.match('index.html'))))});
+  const fresh=r.mode==='navigate'||/\.html$|\/$|sw\.js$/.test(u.pathname);
+  e.respondWith(fetch(r,fresh?{cache:'no-cache'}:{}).then(res=>{if(res.ok&&!u.search){const cp=res.clone();caches.open(C).then(c=>c.put(r,cp))}return res}).catch(()=>caches.match(r).then(m=>m||caches.match('index.html'))))});
 
 // وصول إشعار — يشتغل حتى لو التطبيق مسدود
 self.addEventListener('push',e=>{let d={};try{d=e.data?e.data.json():{}}catch(x){try{d={data:{body:e.data.text()}}}catch(y){}}

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover,interactive-widget=resizes-content">
-<meta name="app-build" content="2026.11.09-8">
+<meta name="app-build" content="2026.11.09-9">
 <meta name="theme-color" content="#0b0c10">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
@@ -1252,7 +1252,7 @@ async function seedDemo(me){const T=now();const mk=async(id,u)=>{if(!await store
 
 /* ================= تسجيل الدخول ================= */
 let lgMode='in';
-function setupLogin(){$('#lgWm').innerHTML=`${APP.w1}<em>${APP.w2}</em>`;if(DEMO)$('#demoNote').classList.remove('hide');
+function setupLogin(){$('#lgWm').innerHTML=`${APP.w1}<em>${APP.w2}</em>`;{const v=document.createElement('div');v.className='credit num';v.style.marginTop='4px';v.textContent='v'+APP.build;$('#login .box').appendChild(v)}if(DEMO)$('#demoNote').classList.remove('hide');
  $('#lgSeg').onclick=e=>{const b=e.target.closest('[data-lg]');if(!b)return;lgMode=b.dataset.lg;$$('#lgSeg button').forEach(x=>x.classList.toggle('on',x===b));
   $$('.up-only').forEach(x=>x.classList.toggle('hide',lgMode!=='up'));$('#lgBtn').textContent=lgMode==='up'?'سوّي الحساب':'دخول';$('#lgTitle').textContent=lgMode==='up'?'حساب جديد':'أهلاً بيك';$('#lgSub').textContent=lgMode==='up'?'اختار اسم مستخدم يعرفوك بيه الناس':'سجّل دخولك وكمّل سوالفك';$('#lgPass').autocomplete=lgMode==='up'?'new-password':'current-password'};
  [['#lgName','#lgUser'],['#lgUser','#lgPass']].forEach(([a,b])=>$(a).addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();$(b).focus()}}));
@@ -1271,7 +1271,7 @@ function setupLogin(){$('#lgWm').innerHTML=`${APP.w1}<em>${APP.w2}</em>`;if(DEMO
    else uid=await auth.signIn(user,pw);
    const md=await store.get('users/'+uid);$('#wcTxt').textContent='أهلاً وسهلاً '+firstName(md&&md.name||name||user);$('#welcome').classList.add('on');
    setTimeout(()=>{startApp(uid);setTimeout(()=>$('#welcome').classList.remove('on'),150)},850)}
-  catch(er){const c=er.code;if(c==='exists')bad($('#lgUser'),'اسم المستخدم محجوز، جرّب غيره');else if(c==='weak')bad($('#lgPass'),'الرمز ضعيف، خليه أطول');else if(c==='net')toast('ماكو انترنت','bad');else if(c==='many')toast('محاولات هواية، انتظر شوية','bad');else if(c==='wrong'||!c){bad($('#lgPass'),'اسم المستخدم أو الرمز غلط');$('#lgUser').classList.add('err')}else{console.warn(er);toast((lgMode==='up'?'ما انسوّى الحساب: ':'ما گدرت أدخل: ')+String(er.raw||er.code||er.message).replace('auth/',''),'bad')}}
+  catch(er){const c=er.code;if(c==='exists')bad($('#lgUser'),'اسم المستخدم محجوز، جرّب غيره');else if(c==='weak')bad($('#lgPass'),'الرمز ضعيف، خليه أطول');else if(c==='net')toast('ماكو انترنت','bad');else if(c==='many')toast('محاولات هواية، انتظر شوية','bad');else if(c==='wrong'||!c){bad($('#lgPass'),(lgMode==='up'?'ما انسوّى الحساب':'اسم المستخدم أو الرمز غلط')+(er.raw?' ('+String(er.raw).replace('auth/','')+')':''));$('#lgUser').classList.add('err')}else{console.warn(er);toast((lgMode==='up'?'ما انسوّى الحساب: ':'ما گدرت أدخل: ')+String(er.raw||er.code||er.message).replace('auth/',''),'bad')}}
   finally{$('#lgProg').classList.remove('on');$('#lgBtn').disabled=false}}}
 
 /* ================= تشغيل التطبيق ================= */
