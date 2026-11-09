@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover,interactive-widget=resizes-content">
-<meta name="app-build" content="2026.11.09-3">
+<meta name="app-build" content="2026.11.09-6">
 <meta name="theme-color" content="#0b0c10">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
@@ -641,6 +641,96 @@ html[data-theme="light"] #hold .bg{background:rgba(240,242,246,.45)}
 .m .bub.media.only{padding:0;background:none!important;border-color:transparent!important;box-shadow:none!important}
 .m .bub.media.only img.ph{border-radius:16px;box-shadow:0 4px 18px rgba(0,0,0,.25)}
 
+/* v2.1: no horizontal drift */
+.scroll{overflow-x:hidden}
+#msgs{overflow-x:hidden;touch-action:pan-y}
+#chatCol,#listCol,.pane{overflow:hidden}
+.m .swipe-ic{left:auto!important;right:6px;z-index:0}
+.m .bub{z-index:1}
+.m:has(>.av) .swipe-ic{right:48px}
+
+/* ===== v2.2 typography & polish (iOS/Telegram-grade) ===== */
+html{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility}
+body{font-size:16px;letter-spacing:0}
+.btn{font-weight:600;font-size:15px;height:44px;border-radius:12px}
+.eyebrow{font-size:9.5px;letter-spacing:1.6px;opacity:.85}
+.phead{padding:12px 16px 6px;gap:10px}
+.phead h1{font-size:30px;font-weight:700;line-height:1.15;margin-top:2px}
+.search .inp{height:38px;font-size:16px;border-radius:12px;background:var(--panel2);border-color:transparent}
+.search .inp:focus{border-color:var(--accent)}
+.folders button{height:30px;padding:0 12px;font-size:14px;font-weight:600;font-family:var(--f-b)}
+.folders .c{font-size:11px;font-weight:700;line-height:16px;border-radius:8px}
+/* chat list rows */
+.list{padding:0 0 12px}
+.ci{gap:12px;padding:8px 12px 0 16px;border-radius:0;align-items:stretch}
+.ci .avw,.ci>.av{align-self:center;margin-bottom:8px}
+.ci .b{padding:2px 0 9px;border-bottom:.5px solid var(--line2);gap:2px;justify-content:center}
+.ci:last-child .b{border-bottom:0}
+.ci .nm{font-weight:600;font-size:16px;font-family:var(--f-b)}
+.ci .tm{font-size:13px;color:var(--faint)}
+.ci .pv{font-size:15px;line-height:1.35;color:var(--dim);white-space:normal;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.ci .pv b{font-weight:500;color:var(--ink)}
+.ci .r2{align-items:flex-start}
+.ci .r2 .badge,.ci .r2 .pin{margin-top:2px}
+.ci.on{background:var(--accent-soft)}
+.ci.on .b{border-bottom-color:transparent}
+.ci .av{--s:54px!important}
+.ci .avw.sr .av,.ci .avw.ss .av{--s:49px!important}
+.badge{min-width:21px;height:21px;font-size:12.5px;font-weight:600;font-family:var(--f-b);padding:0 6px}
+.st-i .nm{font-size:12px;font-weight:500}
+.sec-t{font-size:13px;font-weight:600;font-family:var(--f-b);text-transform:none;letter-spacing:0;padding:14px 16px 6px}
+/* chat header */
+.chead{min-height:56px;padding:6px 10px;gap:8px}
+.chead .nm{font-weight:600;font-size:16.5px;font-family:var(--f-b)}
+.chead .st{font-size:13px}
+.chead .av{--s:40px!important}
+/* bubbles */
+#msgs .inner{gap:2px}
+.bub{padding:6px 10px 6px;font-size:var(--msg-fs);line-height:1.38;border-radius:17px;box-shadow:0 1px .5px rgba(0,0,0,.13)}
+.m.out .bub{background:var(--accent);box-shadow:0 1px .5px rgba(0,0,0,.13)}
+.m.in .bub{border-color:transparent}
+html[data-theme="light"] .m.in .bub{box-shadow:0 1px .5px rgba(16,22,34,.14)}
+.m.first{margin-top:6px}
+.bub .from{font-size:14px;font-weight:600;font-family:var(--f-b)}
+.bub .meta{font-size:11.5px;bottom:5px}
+.bub .meta svg{width:15px;height:15px}
+.quote{font-size:14px;border-radius:6px}
+.quote b{font-size:13.5px;font-weight:600;font-family:var(--f-b)}
+.dsep{font-size:13px;font-weight:600;padding:3px 10px;border:0;background:color-mix(in srgb,var(--panel) 70%,transparent)}
+.sys{font-size:13px;font-weight:500;border:0}
+.reacts button{height:28px;font-size:15px}
+/* composer */
+.comp .box{border-radius:22px;padding:4px;box-shadow:0 2px 12px rgba(0,0,0,.18)}
+.comp textarea{font-size:17px;padding:8px 6px}
+.rbar .t,.pinbar .t{font-weight:600;font-family:var(--f-b);font-size:13.5px}
+.rbar .s,.pinbar .s{font-size:14px}
+/* phone chrome */
+@media (max-width:900px){
+ #topbar{padding:calc(6px + var(--sat)) 10px 6px}
+ #topbar .wm{font-size:13.5px;letter-spacing:1.6px}
+ #topbar .logo{width:26px;height:26px}
+ #topbar .tclock{font-size:12.5px}
+ #listCol{padding-top:calc(45px + var(--sat));padding-bottom:calc(60px + var(--sab))}
+ #bnav{height:calc(58px + var(--sab))}
+ #bnav button{font-size:10.5px;font-weight:500;font-family:var(--f-b);gap:2px}
+ #bnav button svg{width:25px;height:25px}
+ #bnav .mid i{width:48px;height:48px;margin-left:-24px;top:-16px;border-radius:13px}
+ #bnav .mid .bl{margin-top:28px}
+ .chead{padding:calc(4px + var(--sat)) 6px 6px}
+}
+/* sidebar & panes on desktop */
+.nav button{font-weight:600;font-family:var(--f-b);font-size:15px}
+.cta{font-weight:700;font-family:var(--f-b);font-size:15px}
+.ucard .nm,.prof .nm{font-weight:600;font-family:var(--f-b)}
+.ihero h3{font-weight:700;font-family:var(--f-b)}
+.ihead b,#sheet .sh b{font-weight:600;font-family:var(--f-b)}
+.set h4{font-weight:600;font-family:var(--f-b);font-size:15px}
+.opt{font-weight:500;font-family:var(--f-b);font-size:16px}
+.mem .nm{font-weight:600;font-size:16px}
+#emptyChat h3{font-weight:700;font-family:var(--f-b)}
+#login h2{font-weight:800;font-family:var(--f-b);font-size:26px}
+.field label{font-size:13px;font-weight:500}
+
 </style>
 </head>
 <body>
@@ -852,8 +942,8 @@ const FIREBASE_CONFIG = {
   appId: "1:750610308747:web:4a1be1382fec596901fe8e"
 };
 // إشعارات: مفتاح Web Push من Firebase › Cloud Messaging، ورابط Cloudflare Worker
-const VAPID_KEY = '';
-const PUSH_URL = '';
+const VAPID_KEY = 'BB3xBkZ1O0Z5SrTN114O0nPEYs2AXkNaFiGzrkkMWIFNGlBJmktA2z-cyR7W83HxJ76AjCU9DWpUf_Jr9QFQQp0';
+const PUSH_URL = 'https://amchat-push.alimalikmmaa21.workers.dev';
 const APP = {w1:'AM', w2:'CHAT', build:document.querySelector('meta[name=app-build]').content, domain:'amchat.app'};
 const DEMO = !FIREBASE_CONFIG;
 
@@ -1102,7 +1192,7 @@ async function startApp(uid){S.me=uid;$('#login').classList.add('hide');$('#app'
  S.unsub.push(store.watchDoc('users/'+uid,d=>{S.meDoc=d||{};S.users[uid]={id:uid,...S.meDoc};if(S.meDoc.accent&&S.meDoc.accent!==S.accent)applyTheme(S.meDoc.accent);renderMe();schedule()}));
  S.unsub.push(store.watchDoc('prefs/'+uid,d=>{S.prefs=d||{};schedule()}));
  S.unsub.push(store.watchQuery('chats',{where:[['members','array-contains',uid]]},list=>{S.chats=list;S.chatMap={};list.forEach(c=>S.chatMap[c.id]=c);onChats();schedule()}));
- API.ensureSaved();presence(true);watchStories();renderPushBan();if(['on','granted'].includes(pushState()))registerPush();setInterval(()=>presence(!document.hidden),45000);
+ API.ensureSaved();presence(true);watchStories();renderPushBan();if(['on','granted'].includes(pushState()))registerPush();setInterval(()=>{if(!document.hidden)presence(true)},20000);
  document.addEventListener('visibilitychange',()=>{presence(!document.hidden);if(!document.hidden&&S.open)API.markRead(S.open)});
  addEventListener('pagehide',()=>presence(false));
  setInterval(()=>{tickClock();schedule()},15000);setInterval(()=>{const sig=S.chats.map(c=>typers(c).join()).join('|');if(sig!==S._tsig){S._tsig=sig;schedule()}},1500);
@@ -1262,7 +1352,7 @@ async function recStart(){if(S.recording||REC.busy)return;REC.held=true;
  const ch=[];rec.ondataavailable=e=>{if(e.data&&e.data.size)ch.push(e.data)};
  let ac,an;try{ac=new (window.AudioContext||window.webkitAudioContext)();const src=ac.createMediaStreamSource(st);an=ac.createAnalyser();an.fftSize=1024;src.connect(an)}catch(e){}
  const R=S.recording={rec,st,ch,ac,an,t0:now(),peaks:[],locked:!REC.held,send:false,mime:rec.mimeType||mime};
- rec.onstop=()=>finishRec(R);try{rec.start(200)}catch(e){finishRec(R);return toast('ما گدرت أبدي التسجيل','bad')}
+ rec.onstop=()=>finishRec(R);try{rec.start()}catch(e){finishRec(R);return toast('ما گدرت أبدي التسجيل','bad')}try{ac&&ac.state==='suspended'&&ac.resume()}catch(e){}
  SND.play('rec');vib(15);stopAudio();const comp=$('#comp');comp.dataset.rec='1';comp.dataset.lock=R.locked?'1':'0';autosize();$('#recT').textContent='0:00';
  const buf=an?new Uint8Array(an.fftSize):null;
  R.iv=setInterval(()=>{const s=(now()-R.t0)/1000;$('#recT').textContent=fmtDur(s);let lvl=.05;if(an){an.getByteTimeDomainData(buf);let sum=0;for(let i=0;i<buf.length;i++){const v=(buf[i]-128)/128;sum+=v*v}lvl=Math.min(1,Math.sqrt(sum/buf.length)*3.5)}R.peaks.push(lvl);drawRecWave(R.peaks);if(s>=180){toast('وصلت الحد الأعلى (3 دقايق)');recStop(true)}},70)}
@@ -1274,7 +1364,7 @@ const stopRec=recStop;
 function resetRecUI(){const s=$('#recSlide');s.style.transform='';s.style.opacity='';$('#lockP').style.transform=''}
 function finishRec(R){if(R.done)return;R.done=1;clearInterval(R.iv);try{R.st.getTracks().forEach(t=>t.stop())}catch(e){}try{R.ac&&R.ac.close()}catch(e){}if(S.recording===R)S.recording=null;
  const comp=$('#comp');comp.dataset.rec='0';comp.dataset.lock='0';autosize();resetRecUI();if(!R.send)return;
- const dur=(now()-R.t0)/1000;if(dur<1){toast('اضغط مطوّل على المايك وسجّل');return}
+ const dur=(now()-R.t0)/1000;if(dur<1){toast('البصمة قصيرة كلش');return}
  const type=(R.mime||'audio/mp4').split(';')[0];const blob=new Blob(R.ch,{type});if(blob.size>740000)return toast('البصمة طويلة كلش، خليها أقصر','bad');
  const wave=downsample(R.peaks,46);const cid=S.open,reply=S.reply;const fr=new FileReader();fr.onload=()=>{const msg={type:'voice',media:fr.result,dur:Math.round(dur),wave,mime:type};if(reply)msg.replyTo=reply;API.send(cid,msg);cancelReply()};fr.readAsDataURL(blob)}
 function downsample(a,n){if(!a.length)return [];const out=[];for(let i=0;i<n;i++){const s=Math.floor(i*a.length/n),e=Math.max(s+1,Math.floor((i+1)*a.length/n));let m=0;for(let k=s;k<e&&k<a.length;k++)m=Math.max(m,a[k]);out.push(m)}const mx=Math.max(...out,.05);return out.map(v=>Math.round(10+90*Math.pow(v/mx,.75)))}
@@ -1282,11 +1372,11 @@ function setupSendBtn(){const b=$('#sendBtn');let g=null;
  const down=(x,y)=>{if(S.recording&&S.recording.locked){g={mode:'stop'};return}if($('#txt').value.trim()){g={mode:'send'};return}g={mode:'rec',x,y,t:now()};recStart()};
  const move=(x,y)=>{if(!g||g.mode!=='rec'||!S.recording||S.recording.locked)return;const dx=x-g.x,dy=y-g.y;const sl=$('#recSlide');sl.style.transform=`translateX(${Math.max(0,dx)}px)`;sl.style.opacity=String(1-Math.min(1,Math.max(0,dx)/120));$('#lockP').style.transform=`translateY(${Math.max(-60,Math.min(0,dy))}px)`;
   if(dx>120){g=null;REC.held=false;recStop(false);vib(20);toast('انلغت البصمة')}else if(dy<-75){S.recording.locked=true;$('#comp').dataset.lock='1';resetRecUI();vib(15);g=null;REC.held=false}};
- const up=()=>{REC.held=false;if(!g)return;const gg=g;g=null;if(gg.mode==='send')sendText();else if(gg.mode==='stop')recStop(true);else if(gg.mode==='rec'){if(!S.recording)return;if(now()-gg.t<400){S.recording.locked=true;$('#comp').dataset.lock='1'}else recStop(true)}resetRecUI()};
+ const up=()=>{REC.held=false;if(!g)return;const gg=g;g=null;if(gg.mode==='send')sendText();else if(gg.mode==='stop')recStop(true);else if(gg.mode==='rec'){if(!S.recording)return;if(now()-gg.t<400||now()-S.recording.t0<1200){S.recording.locked=true;$('#comp').dataset.lock='1';toast('ديسجّل… دوس ➤ للإرسال أو 🗑 للإلغاء')}else recStop(true)}resetRecUI()};
  b.addEventListener('touchstart',e=>{e.preventDefault();const t=e.touches[0];down(t.clientX,t.clientY)},{passive:false});
  b.addEventListener('touchmove',e=>{e.preventDefault();const t=e.touches[0];move(t.clientX,t.clientY)},{passive:false});
  b.addEventListener('touchend',e=>{e.preventDefault();up()},{passive:false});
- b.addEventListener('touchcancel',()=>{REC.held=false;if(g&&g.mode==='rec'&&S.recording&&!S.recording.locked)recStop(false);g=null;resetRecUI()});
+ b.addEventListener('touchcancel',()=>{REC.held=false;if(g&&g.mode==='rec'&&S.recording&&!S.recording.locked){S.recording.locked=true;$('#comp').dataset.lock='1'}g=null;resetRecUI()});
  b.addEventListener('mousedown',e=>{if(e.button)return;e.preventDefault();down(e.clientX,e.clientY);const mm=ev=>move(ev.clientX,ev.clientY);const mu=()=>{removeEventListener('mousemove',mm);removeEventListener('mouseup',mu);up()};addEventListener('mousemove',mm);addEventListener('mouseup',mu)});
  b.addEventListener('click',e=>e.preventDefault())}
 
@@ -1403,7 +1493,7 @@ function userHero(u){return `<div class="ihero">${avHTML({id:u.id,name:u.name,ph
 function userRows(u){return `<div class="card" style="padding:4px;margin-bottom:14px"><div class="irow">${ico('at')}<div><div class="v num" style="text-align:right">@${esc(u.username||'')}</div><div class="k">اسم المستخدم</div></div></div>${u.bio?`<div class="irow">${ico('info')}<div><div class="v">${esc(u.bio)}</div><div class="k">النبذة</div></div></div>`:''}</div>`}
 
 /* ================= الإعدادات ================= */
-function renderSettings(){const m=S.meDoc||{};const mode=ls.get('amc-mode','dark');const fs=+ls.get('amc-fs','15');
+function renderSettings(){const m=S.meDoc||{};const mode=ls.get('amc-mode','dark');const fs=+ls.get('amc-fs','16');
  $('#settings').innerHTML=`<div class="card br"><div class="prof"><label class="av" style="--s:70px;--h:${hue(S.me)}">${m.photo?`<img src="${m.photo}">`:esc(initials(m.name))}<span class="cam">${ico('camera')}</span><input type="file" accept="image/*" class="hide" id="avIn"></label>
   <div class="x"><div class="nm">${esc(m.name||'')}</div><div class="un num">@${esc(m.username||'')}</div><div style="color:var(--dim);font-size:13px;margin-top:3px;overflow-wrap:anywhere">${esc(m.bio||'ماكو نبذة')}</div></div></div>
   <div style="display:flex;gap:8px;margin-top:12px"><button class="btn tint" style="flex:1" data-act="editprof">${ico('pen')} تعديل</button>${m.photo?`<button class="btn ghost" data-act="rmphoto">${ico('trash')}</button>`:''}</div></div>
@@ -1415,7 +1505,7 @@ function renderSettings(){const m=S.meDoc||{};const mode=ls.get('amc-mode','dark
   <div class="sw-row"><span>خلفية المحادثات<small>نقشة الشعار ورا الرسائل</small></span><button class="sw ${ls.get('amc-wall','1')==='1'?'on':''}" data-act="wall"></button></div></div>
  <div class="card"><h4>${ico('bell')} الإشعارات والصوت</h4>
   <div class="sw-row"><span>أصوات الرسائل<small>صوت خفيف عند الإرسال والاستلام</small></span><button class="sw ${SND.on?'on':''}" data-act="sound"></button></div>
-  ${(()=>{const st=pushState();const T={demo:'تشتغل بس ويا Firebase',nosetup:'تحتاج إعداد الإشعارات (مفتاح VAPID + Worker)','ios-home':'لازم تضيف التطبيق للشاشة الرئيسية أول',unsupported:'جهازك أو متصفحك ما يدعمها',denied:'مرفوضة — فعّلها من إعدادات الجهاز',ask:'توصلك الرسائل حتى لو التطبيق مسدود',granted:'مسموحة — دوس تفعيل حتى تكمل',on:'مفعّلة ✓ توصلك حتى لو التطبيق مسدود'};const btn=['ask','granted','ios-home'].includes(st)?`<button class="btn tint" data-act="notif" style="height:34px">${st==='ios-home'?'شلون؟':'تفعيل'}</button>`:st==='on'?'<span class="pill ok">مفعّلة</span>':'';return `<div class="sw-row"><span>الإشعارات<small>${T[st]}</small></span>${btn}</div>`})()}</div>
+  ${(()=>{const st=pushState();const T={demo:'تشتغل بس ويا Firebase',nosetup:'تحتاج إعداد الإشعارات (مفتاح VAPID + Worker)','ios-home':'لازم تضيف التطبيق للشاشة الرئيسية أول',unsupported:'جهازك أو متصفحك ما يدعمها',denied:'مرفوضة — فعّلها من إعدادات الجهاز',ask:'توصلك الرسائل حتى لو التطبيق مسدود',granted:'مسموحة — دوس تفعيل حتى تكمل',on:'مفعّلة ✓ توصلك حتى لو التطبيق مسدود'};const btn=['ask','granted','ios-home'].includes(st)?`<button class="btn tint" data-act="notif" style="height:34px">${st==='ios-home'?'شلون؟':'تفعيل'}</button>`:st==='on'?'<button class="btn tint" data-act="pushtest" style="height:34px">تجربة</button>':'';return `<div class="sw-row"><span>الإشعارات<small>${T[st]}</small></span>${btn}</div>`})()}</div>
  <div class="card"><h4>${ico('lock')} الخصوصية</h4><div class="sw-row"><span>إخفاء آخر ظهور<small>ما يشوفون الناس وكت آخر دخول إلك</small></span><button class="sw ${m.hideSeen?'on':''}" data-act="hideseen"></button></div></div>
  <div class="card"><h4>${ico('info')} عن التطبيق</h4><div class="sw-row"><span>الإصدار</span><span class="num" style="color:var(--dim);font-size:13px">${APP.build}</span></div>
   <div class="sw-row"><span>الاتصال</span>${DEMO?'<span class="pill" style="background:rgba(242,176,61,.12);color:var(--warn)">وضع تجريبي · محلي</span>':'<span class="pill ok">Firebase · متزامن</span>'}</div>
@@ -1511,6 +1601,8 @@ async function registerPush(){if(DEMO||!VAPID_KEY)return false;try{if(!firebase.
  const reg=await navigator.serviceWorker.register('sw.js');await navigator.serviceWorker.ready;const tok=await firebase.messaging().getToken({vapidKey:VAPID_KEY,serviceWorkerRegistration:reg});if(!tok)return false;
  const old=ls.get('amc-push');const tokens={[tok]:now()};if(old&&old!==tok)tokens[old]=OP.del();await store.set('pushTokens/'+S.me,{tokens},{merge:true});ls.set('amc-push',tok);return true}catch(e){console.warn('push',e);return false}}
 async function unregisterPush(){const t=ls.get('amc-push');if(!t||DEMO)return;try{await store.set('pushTokens/'+S.me,{tokens:{[t]:OP.del()}},{merge:true})}catch(e){}localStorage.removeItem('amc-push')}
+async function pushTest(){if(DEMO||!PUSH_URL)return toast('الإشعارات تحتاج إعداد','bad');try{toast('ديدز إشعار تجريبي… سدّ التطبيق هسه');const t=await firebase.auth().currentUser.getIdToken();const r=await fetch(PUSH_URL,{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+t},body:JSON.stringify({test:true,delay:5})});const j=await r.json().catch(()=>({}));
+ if(j.ok&&j.sent)toast(`انرسل ✓ (${j.sent}) — لازم يوصلك خلال ثواني`);else if(j.ok)toast('ماكو جهاز مسجّل — دوس تفعيل الإشعارات أول','bad');else toast('خطأ بالسيرفر: '+(j.error||r.status),'bad')}catch(e){toast('ما گدرت أوصل للسيرفر: '+e.message,'bad')}}
 function pushNotify(cid,mid){if(DEMO||!PUSH_URL)return;try{const u=firebase.auth().currentUser;if(!u)return;u.getIdToken().then(t=>fetch(PUSH_URL,{method:'POST',keepalive:true,headers:{'Content-Type':'application/json','Authorization':'Bearer '+t},body:JSON.stringify({cid,mid})})).catch(()=>{})}catch(e){}}
 function renderPushBan(){const b=$('#pushBan');if(!b)return;const st=pushState();const x=+ls.get('amc-pban-x','0');if(now()-x<3*864e5||!['ask','ios-home','granted'].includes(st)){b.innerHTML='';return}
  const ios=st==='ios-home';b.innerHTML=`<div class="pban"><div class="ic">${ico('bell')}</div><div class="x"><b>${ios?'خلّي الإشعارات توصلك':'فعّل الإشعارات'}</b><small>${ios?'ضيف التطبيق للشاشة الرئيسية حتى توصلك الرسائل حتى لو مسدود':'حتى توصلك الرسائل حتى لو التطبيق مسدود'}</small></div><button class="btn pri" data-act="notif">${ios?'شلون؟':'تفعيل'}</button><button class="ib" data-act="pbanx" style="width:30px;height:30px">${ico('close')}</button></div>`}
@@ -1553,7 +1645,7 @@ const ACT={newchat:()=>newChatSheet(),newgroup:()=>{S.newGroup=null;groupSheet(1
  reccancel:()=>{recStop(false);vib(15)},play:el=>playVoice(el.closest('[data-voice]').dataset.voice),speed:()=>cycleSpeed(),
  sound:()=>{SND.on=!SND.on;ls.set('amc-snd',SND.on?'1':'0');SND.play('send');toast(SND.on?'الأصوات شغّالة 🔊':'الأصوات مطفية 🔇');renderSettings()},
  wall:()=>{const v=ls.get('amc-wall','1')==='1'?'0':'1';ls.set('amc-wall',v);document.documentElement.dataset.wall=v;renderSettings()},
- notif:()=>enablePush(),pbanx:()=>{ls.set('amc-pban-x',String(now()));renderPushBan()},
+ notif:()=>enablePush(),pushtest:()=>pushTest(),pbanx:()=>{ls.set('amc-pban-x',String(now()));renderPushBan()},
  hideseen:()=>store.update('users/'+S.me,{hideSeen:!S.meDoc.hideSeen}),editprof:editProfileSheet,rmphoto:()=>store.update('users/'+S.me,{photo:''}),
  logout:()=>confirmSheet('تسجيل خروج','متأكد تريد تطلع من حسابك على هذا الجهاز؟','اطلع',async()=>{presence(false);await unregisterPush();S.unsub.forEach(u=>{try{u()}catch(e){}});await auth.signOut();location.hash='';location.reload()}),
  rename:()=>renameGroupSheet(S.info.id),addmem:()=>addMembersSheet(S.info.id),closelb:()=>closeLBnav(),lbshare:()=>shareImage(LB.src),
@@ -1630,7 +1722,7 @@ function pwa(){const st=matchMedia('(display-mode: standalone)').matches||naviga
  const chk=async()=>{try{const r=await fetch(location.pathname+'?v='+now(),{cache:'no-store'});const t=await r.text();const m=t.match(/name="app-build" content="([^"]+)"/);if(m&&m[1]!==APP.build){saveDraft();location.reload()}}catch(e){}};setInterval(chk,60000);document.addEventListener('visibilitychange',()=>{if(!document.hidden)chk()})}
 
 /* ================= البداية ================= */
-(async function boot(){document.documentElement.dataset.wall=ls.get('amc-wall','1');document.documentElement.style.setProperty('--msg-fs',ls.get('amc-fs','15')+'px');applyTheme(S.accent);setMode(ls.get('amc-mode','dark'));
+(async function boot(){document.documentElement.dataset.wall=ls.get('amc-wall','1');document.documentElement.style.setProperty('--msg-fs',ls.get('amc-fs','16')+'px');applyTheme(S.accent);setMode(ls.get('amc-mode','dark'));
  bindEvents();pwa();setupLogin();
  try{if(DEMO){store=LocalStore();auth=LocalAuth()}
   else{const v='10.12.5',b=`https://www.gstatic.com/firebasejs/${v}/`;await loadScript(b+'firebase-app-compat.js');await Promise.all([loadScript(b+'firebase-auth-compat.js'),loadScript(b+'firebase-firestore-compat.js')]);
