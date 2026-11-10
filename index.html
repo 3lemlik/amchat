@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover,interactive-widget=resizes-content">
-<meta name="app-build" content="2026.11.10-14">
+<meta name="app-build" content="2026.11.10-15">
 <meta name="theme-color" content="#0b0c10">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
@@ -1393,6 +1393,39 @@ html[data-theme="light"] .av.sysav{background:linear-gradient(145deg,#fff,#f1f2f
 /* ===== v11: القائمة السفلية أنزل (نفس التصميم) ===== */
 @media (max-width:900px){#bnav{padding-bottom:max(8px,calc(var(--sab) * .4))!important}}
 
+/* ===== تثبيت التطبيق ===== */
+#instCard{position:absolute;left:12px;right:12px;bottom:calc(84px + max(8px,var(--sab) * .4));z-index:7;display:flex;align-items:center;gap:10px;padding:10px 10px 10px 8px;border-radius:18px;background:color-mix(in srgb,var(--panel) 94%,transparent);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border:1px solid rgba(var(--acc-rgb),.3);box-shadow:0 14px 40px rgba(0,0,0,.35),0 0 0 1px rgba(255,255,255,.03);transform:translateY(20px);opacity:0;transition:transform .45s cubic-bezier(.2,.9,.3,1.2),opacity .3s;max-width:460px;margin:0 auto}
+#instCard.on{transform:none;opacity:1}
+#instCard .ic-l img{width:44px;height:44px;border-radius:11px;display:block;box-shadow:0 4px 12px rgba(0,0,0,.3)}
+#instCard .x{flex:1;min-width:0;display:flex;flex-direction:column}
+#instCard .x b{font-family:var(--f-d);font-size:14.5px}
+#instCard .x small{color:var(--dim);font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#instCard .ib{width:30px;height:30px;flex:none}
+#instCard .ib svg{width:16px;height:16px}
+#app:not([data-pane="posts"]):not([data-pane="chats"]) #instCard{display:none}
+@media (min-width:901px){#instCard{left:auto;right:24px;bottom:24px;width:380px}}
+.ins-h{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+.ins-ic img{width:62px;height:62px;border-radius:15px;display:block;box-shadow:0 8px 22px rgba(0,0,0,.35),0 0 0 1px var(--line2)}
+.ins-h b{font-family:var(--f-o);font-size:18px;letter-spacing:1.5px;display:block;direction:ltr;text-align:right}
+.ins-h small{color:var(--dim);font-size:12.5px}
+.ins-why{color:var(--dim);line-height:1.8;margin:0 2px 12px;font-size:14px}
+.ins-ben{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px}
+.ins-ben>div{background:var(--panel2);border:1px solid var(--line);border-radius:14px;padding:11px 8px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:3px;min-width:0}
+.ins-ben span{width:34px;height:34px;border-radius:10px;background:var(--accent-soft);color:var(--accent);display:grid;place-items:center;margin-bottom:3px}
+.ins-ben span svg{width:17px;height:17px}
+.ins-ben b{font-family:var(--f-d);font-size:13.5px}
+.ins-ben small{color:var(--faint);font-size:11px;line-height:1.5}
+.ins-steps{display:flex;flex-direction:column;gap:2px;background:var(--panel2);border:1px solid var(--line);border-radius:16px;padding:6px 12px}
+.ins-steps .st{display:flex;gap:12px;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--line);line-height:1.9;font-size:14.5px}
+.ins-steps .st:last-child{border-bottom:0}
+.ins-steps .st>i{width:26px;height:26px;border-radius:50%;background:var(--accent);color:var(--accent-ink,#fff);display:grid;place-items:center;font-style:normal;font-size:13px;font-weight:800;flex:none;margin-top:2px}
+.ins-steps small{display:block;color:var(--faint);font-size:12px;line-height:1.6}
+.ins-k{display:inline-flex;align-items:center;gap:6px;vertical-align:middle;background:var(--panel3);border:1px solid var(--line2);border-radius:8px;padding:2px 7px;color:#2f8cff;font-weight:700;font-size:13px}
+.ins-k svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.ins-k.wide{color:var(--ink)}
+.ins-mini img{width:22px;height:22px;border-radius:6px;vertical-align:middle;margin-inline-start:2px}
+.ins-ok{display:flex;align-items:center;gap:8px;color:var(--ok);font-weight:700}
+
 </style>
 </head>
 <body>
@@ -1909,7 +1942,7 @@ async function startApp(uid){S.me=uid;$('#login').classList.add('hide');$('#app'
  document.addEventListener('visibilitychange',()=>{presence(!document.hidden);if(document.hidden)pauseAllReels();if(!document.hidden&&S.open)API.markRead(S.open)});
  addEventListener('pagehide',()=>presence(false));
  setInterval(()=>{tickClock();schedule()},15000);setInterval(()=>{const sig=S.chats.map(c=>typers(c).join()).join('|');if(sig!==S._tsig){S._tsig=sig;schedule()}},1500);
- tickClock();renderSettings();renderFolders();watchFeed();watchNotes();watchFollows();watchActivity();watchMod();setNav('posts');
+ tickClock();renderSettings();renderFolders();watchFeed();watchNotes();watchFollows();watchActivity();watchMod();setNav('posts');setTimeout(renderInstallCard,3500);
  const hh=decodeURIComponent(location.hash||'');if(hh)setTimeout(()=>handleHash(hh),600);if(/^#(join|u|r)=/.test(hh))history.replaceState(null,'',location.pathname)}
 function presence(on){if(!S.me||S.banned)return;store.update('users/'+S.me,{online:on,lastSeen:OP.now()})}
 function tickClock(){const d=new Date();$$('[data-clock]').forEach(e=>e.textContent=hm()+' '+ampm());$$('[data-date]').forEach(e=>e.textContent=d.toLocaleDateString('ar-IQ-u-nu-latn',{weekday:'long',day:'numeric',month:'long'}))}
@@ -2224,7 +2257,7 @@ function renderSettings(){const m=S.meDoc||{};const mode=ls.get('amc-mode','dark
  <div class="card"><h4>${ico('lock')} الخصوصية</h4><div class="sw-row"><span>حساب خاص<small>بس اللي توافق عليهم يشوفون منشوراتك وريلزاتك وقصصك</small></span><button class="sw ${m.private?'on':''}" data-act="privacc"></button></div>
  <div class="sw-row"><span>إخفاء آخر ظهور<small>ما يشوفون الناس وكت آخر دخول إلك</small></span><button class="sw ${m.hideSeen?'on':''}" data-act="hideseen"></button></div>
  <div class="sw-row" style="flex-wrap:wrap"><span>منو يگدر يراسلني<small>محادثات جديدة</small></span><div class="seg sm" style="width:auto;flex:none"><button data-dmp="all" class="${m.dmPolicy!=='following'?'on':''}">الكل</button><button data-dmp="following" class="${m.dmPolicy==='following'?'on':''}">اللي أتابعهم</button></div></div>
- <button class="opt" data-act="freqs"><span class="ic">${ico('uplus')}</span>طلبات المتابعة ${reqCount()?`<b class="badge num" style="margin-right:auto">${reqCount()}</b>`:''}</button><button class="opt" data-act="blocked"><span class="ic">${ico('ban')}</span>المحظورين <span class="num" style="margin-right:auto;color:var(--faint)">${(S.prefs.blocked||[]).length||''}</span></button><button class="opt" data-act="rules"><span class="ic">${ico('shield')}</span>قواعد المجتمع</button></div>
+ <button class="opt" data-act="freqs"><span class="ic">${ico('uplus')}</span>طلبات المتابعة ${reqCount()?`<b class="badge num" style="margin-right:auto">${reqCount()}</b>`:''}</button><button class="opt" data-act="blocked"><span class="ic">${ico('ban')}</span>المحظورين <span class="num" style="margin-right:auto;color:var(--faint)">${(S.prefs.blocked||[]).length||''}</span></button><button class="opt" data-act="rules"><span class="ic">${ico('shield')}</span>قواعد المجتمع</button>${isStandalone()?'':`<button class="opt" data-act="install"><span class="ic">${ico('dl')}</span>ثبّت التطبيق على جهازك</button>`}</div>
  <div class="card"><h4>${ico('info')} الحساب</h4>${DEBUG?`<div class="sw-row"><span>الإصدار</span><span class="num" style="color:var(--dim);font-size:13px">${APP.build}${DEMO?' · demo':''}</span></div>`:''}
   <div class="sw-row"><span>الاتصال</span><span class="pill ok" data-synct>متصل ✓</span></div>
   <button class="btn danger block" style="margin-top:10px" data-act="logout">${ico('logout')} تسجيل خروج</button></div>
@@ -2340,7 +2373,7 @@ async function pushTest(){if(DEMO||!PUSH_URL)return toast('الإشعارات ت
 function pushNotify(cid,mid){if(DEMO||!PUSH_URL)return;try{const u=firebase.auth().currentUser;if(!u)return;u.getIdToken().then(t=>fetch(PUSH_URL,{method:'POST',keepalive:true,headers:{'Content-Type':'application/json','Authorization':'Bearer '+t},body:JSON.stringify({cid,mid})})).catch(()=>{})}catch(e){}}
 function renderPushBan(){const b=$('#pushBan');if(!b)return;const st=pushState();const x=+ls.get('amc-pban-x','0');if(now()-x<3*864e5||!['ask','ios-home','granted'].includes(st)){b.innerHTML='';return}
  const ios=st==='ios-home';b.innerHTML=`<div class="pban"><div class="ic">${ico('bell')}</div><div class="x"><b>${ios?'خلّي الإشعارات توصلك':'فعّل الإشعارات'}</b><small>${ios?'ضيف التطبيق للشاشة الرئيسية حتى توصلك الرسائل حتى لو مسدود':'حتى توصلك الرسائل حتى لو التطبيق مسدود'}</small></div><button class="btn pri" data-act="notif">${ios?'شلون؟':'تفعيل'}</button><button class="ib" data-act="pbanx" style="width:30px;height:30px">${ico('close')}</button></div>`}
-function iosHomeSheet(){openSheet('ضيف التطبيق للشاشة الرئيسية',`<div style="line-height:2;color:var(--dim)">بالآيفون، الإشعارات تشتغل بس إذا التطبيق مضاف للشاشة الرئيسية:<br><b style="color:var(--ink)">1.</b> افتح الموقع بـ <b style="color:var(--ink)">Safari</b><br><b style="color:var(--ink)">2.</b> دوس زر المشاركة ${ico('share','i')} جوه<br><b style="color:var(--ink)">3.</b> اختار <b style="color:var(--ink)">إضافة إلى الشاشة الرئيسية</b><br><b style="color:var(--ink)">4.</b> افتح التطبيق من الأيقونة ودوس <b style="color:var(--accent)">تفعيل الإشعارات</b></div>`,`<button class="btn pri block" data-act="closesheet">فهمت</button>`)}
+function iosHomeSheet(){installSheet('بالآيفون، الإشعارات تشتغل بس إذا التطبيق مثبّت على الشاشة الرئيسية. ثبّته وافتحه من أيقونته، وبعدها فعّل الإشعارات.')}
 
 /* ================= عارض الصور (تكبير وسحب) ================= */
 const LB={s:1,x:0,y:0};
@@ -2659,6 +2692,31 @@ function renderActivity(){const box=$('#actList');if(!box)return;if(!S.acts.leng
  box.innerHTML=h}
 async function openActRef(ref,from){if(!ref)return openInfo({type:'user',id:from});const [k,id,cm]=ref.split(':');if(cm){commentsSheet(k==='p'?'posts':'reels',id);return}if(k==='p'){let p=findPost(id);if(!p){const d=await store.get('posts/'+id).catch(()=>null);if(d)p={id,...d}}if(!p)return toast('هذا المنشور انحذف');openSheet('المنشور',`<div class="feed in-sheet">${postHTML(p)}</div>`)}else if(k==='r')handleHash('#r='+id)}
 
+/* ================= تثبيت التطبيق (PWA) ================= */
+S.bip=null;
+addEventListener('beforeinstallprompt',e=>{e.preventDefault();S.bip=e;renderInstallCard()});
+addEventListener('appinstalled',()=>{S.bip=null;ls.set('amc-inst','1');$('#instCard')&&$('#instCard').remove();toast('انثبّت التطبيق ✓ افتحه من الشاشة الرئيسية')});
+const iosBrowser=()=>/CriOS|FxiOS|EdgiOS|OPiOS|GSA\//.test(navigator.userAgent)?'other':'safari';
+const canInstall=()=>!isStandalone()&&(isIOS||!!S.bip);
+const ICO_SHARE=`<svg viewBox="0 0 24 24" class="i"><path d="M12 15V3M8 7l4-4 4 4"/><path d="M6 11H5a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-8a1 1 0 0 0-1-1h-1"/></svg>`;
+const ICO_ADDSQ=`<svg viewBox="0 0 24 24" class="i"><rect x="3.5" y="3.5" width="17" height="17" rx="4"/><path d="M12 8v8M8 12h8"/></svg>`;
+function installSheet(why){
+ const head=`<div class="ins-h"><div class="ins-ic"><img src="apple-touch-icon.png" alt=""></div><div><b>${APP.w1} ${APP.w2}</b><small>تصميم وبرمجة علي مالك</small></div></div>
+ ${why?`<p class="ins-why">${why}</p>`:''}
+ <div class="ins-ben">${[['expand','شاشة كاملة','بدون شريط المتصفح، مثل أي تطبيق'],['bell','إشعارات','توصلك الرسائل حتى لو التطبيق مسدود'],['clock','أسرع','يفتح فوراً من أيقونته بالشاشة الرئيسية']].map(([i,t,d])=>`<div><span>${ico(i)}</span><b>${t}</b><small>${d}</small></div>`).join('')}</div>`;
+ if(isStandalone())return openSheet('التطبيق مثبّت',head+`<p class="ins-ok">${ico('check2','i')} إنت هسه فاتح التطبيق المثبّت ✓</p>`,`<button class="btn pri block" data-act="closesheet">زين</button>`);
+ if(S.bip)return openSheet('ثبّت التطبيق',head,`<button class="btn ghost" style="flex:1" data-act="closesheet">بعدين</button><button class="btn pri" style="flex:1.6" data-act="doinstall">${ico('dl')} ثبّت هسه</button>`);
+ if(isIOS&&iosBrowser()==='other')return openSheet('ثبّت التطبيق',head+`<div class="ins-steps"><div class="st"><i class="num">1</i><div>انسخ الرابط وافتحه بمتصفح <b>Safari</b></div></div><div class="st"><i class="num">2</i><div>من سفاري اتبع خطوات الإضافة للشاشة الرئيسية</div></div></div>`,`<button class="btn pri block" data-act="copylink">${ico('copy')} انسخ الرابط</button>`);
+ if(isIOS)return openSheet('ثبّت التطبيق على آيفونك',head+`<div class="ins-steps">
+  <div class="st"><i class="num">1</i><div>دوس زر المشاركة <span class="ins-k">${ICO_SHARE}</span> بشريط سفاري<small>إذا ما شايفه، دوس ⋯ جنب الرابط أول</small></div></div>
+  <div class="st"><i class="num">2</i><div>نزّل واختار <span class="ins-k wide">${ICO_ADDSQ} إضافة إلى الشاشة الرئيسية</span></div></div>
+  <div class="st"><i class="num">3</i><div>دوس <b>إضافة</b> فوگ، وافتح التطبيق من أيقونته <span class="ins-mini"><img src="apple-touch-icon.png" alt=""></span></div></div></div>`,`<button class="btn pri block" data-act="closesheet">فهمت</button>`);
+ openSheet('ثبّت التطبيق',head+`<div class="ins-steps"><div class="st"><i class="num">1</i><div>افتح قائمة المتصفح <b>⋮</b></div></div><div class="st"><i class="num">2</i><div>اختار <b>تثبيت التطبيق</b> أو <b>إضافة إلى الشاشة الرئيسية</b></div></div></div>`,`<button class="btn pri block" data-act="closesheet">فهمت</button>`)}
+async function doInstall(){const e=S.bip;if(!e)return installSheet();closeSheet();try{e.prompt();const r=await e.userChoice;if(r&&r.outcome==='accepted'){S.bip=null;$('#instCard')&&$('#instCard').remove()}}catch(x){}}
+function renderInstallCard(){if(!S.me||!canInstall()||DEMO&&!S.bip&&!isIOS)return;if(ls.get('amc-inst','')==='1'&&!S.bip)return;if(now()-(+ls.get('amc-instx','0'))<3*864e5)return;if($('#instCard'))return;
+ const el=document.createElement('div');el.id='instCard';el.innerHTML=`<div class="ic-l"><img src="apple-touch-icon.png" alt=""></div><div class="x"><b>ثبّت ${APP.w1} ${APP.w2}</b><small>شاشة كاملة وإشعارات مثل أي تطبيق</small></div><button class="btn pri sm" data-act="install">ثبّت</button><button class="ib" data-act="instx" aria-label="سدّ">${ico('close')}</button>`;
+ $('#app').appendChild(el);requestAnimationFrame(()=>el.classList.add('on'))}
+
 /* ================= الإدارة والإشراف ================= */
 const SYS='amchat';
 const SYSU={id:SYS,name:'إدارة AM CHAT',username:'amchat',verified:true,sys:true};
@@ -2868,7 +2926,7 @@ const ACT={newchat:()=>newChatSheet(),newgroup:()=>{S.newGroup=null;groupSheet(1
  rename:()=>renameGroupSheet(S.info.id),addmem:()=>addMembersSheet(S.info.id),closelb:()=>closeLBnav(),lbshare:()=>shareImage(LB.src),
  addstory:(el,e)=>{e&&e.stopPropagation();if(guard())addStorySheet()},newpost:()=>guard()&&newPostSheet(),newreel:()=>guard()&&newReelSheet(),rvclose:()=>popNav('rv'),shareprof:el=>shareProfile(el.dataset.u),gsettings:()=>groupSettingsSheet(S.info.id),
  ginvite:()=>{const l=location.origin+location.pathname+'#join='+S.info.id;if(navigator.share)navigator.share({title:S.chatMap[S.info.id].title,url:l}).catch(()=>{});else copyText(l)},
- note:()=>guard()&&noteSheet(),ackwarn:()=>ackWarn(),rules:()=>rulesSheet(),logoutnow:async()=>{presence(false);await unregisterPush();S.unsub.forEach(u=>{try{u()}catch(e){}});await auth.signOut();location.hash='';location.reload()},privacc:()=>setPrivate(!S.meDoc.private),freqs:()=>requestsSheet(),blocked:()=>blockedSheet(),
+ note:()=>guard()&&noteSheet(),install:()=>installSheet(),doinstall:()=>doInstall(),instx:()=>{ls.set('amc-instx',String(now()));const c=$('#instCard');if(c){c.classList.remove('on');setTimeout(()=>c.remove(),300)}},copylink:()=>{copyText(location.href.split('#')[0]);closeSheet()},ackwarn:()=>ackWarn(),rules:()=>rulesSheet(),logoutnow:async()=>{presence(false);await unregisterPush();S.unsub.forEach(u=>{try{u()}catch(e){}});await auth.signOut();location.hash='';location.reload()},privacc:()=>setPrivate(!S.meDoc.private),freqs:()=>requestsSheet(),blocked:()=>blockedSheet(),
  rmute:()=>{S.reelMuted=!S.reelMuted;$$('.reel video').forEach(v=>v.muted=S.reelMuted);$$('.rl-mute use').forEach(u=>u.setAttribute('href',S.reelMuted?'#i-vol0':'#i-vol'));toast(S.reelMuted?'الصوت مطفي 🔇':'الصوت شغّال 🔊')},stclose:()=>closeStory(),stviews:()=>{SV.paused=true;storyViewers()},stmore:()=>storyMore()};
 function bindEvents(){
  document.addEventListener('click',e=>{const t=e.target;
