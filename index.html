@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover,interactive-widget=resizes-content">
-<meta name="app-build" content="2026.11.10-11">
+<meta name="app-build" content="2026.11.10-14">
 <meta name="theme-color" content="#0b0c10">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
@@ -1385,6 +1385,14 @@ html[data-theme="light"] .av.sysav{background:linear-gradient(145deg,#fff,#f1f2f
 .adm-st .stx small{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .adm-st.bad .stx b{color:var(--bad)}
 
+.adm-foot{display:flex;flex-direction:column;align-items:center;text-align:center;gap:4px;margin:26px 8px 6px;padding:22px 16px 6px;border-top:1px dashed var(--line2)}
+.af-ic{width:52px;height:52px;border-radius:50%;display:grid;place-items:center;background:rgba(60,207,130,.12);color:var(--ok);margin-bottom:6px;box-shadow:0 0 0 6px rgba(60,207,130,.05)}
+.af-ic svg{width:24px;height:24px}
+.adm-foot b{font-family:var(--f-d);font-size:15px}
+.adm-foot small{color:var(--faint);font-size:12.5px;line-height:1.7;max-width:280px}
+/* ===== v11: القائمة السفلية أنزل (نفس التصميم) ===== */
+@media (max-width:900px){#bnav{padding-bottom:max(8px,calc(var(--sab) * .4))!important}}
+
 </style>
 </head>
 <body>
@@ -2715,7 +2723,11 @@ S.admTab='home';S.admF='all';S.repF='open';
 async function admLoad(force){if(S.admUsers&&!force&&now()-S.admAt<60000)return;
  const [us,mods]=await Promise.all([store.query('users',{limit:1500}).catch(()=>[]),store.query('mod',{limit:500}).catch(()=>[])]);
  S.admUsers=us.filter(u=>u.id&&!u.bot||store.local);us.forEach(u=>{S.users[u.id]={...(S.users[u.id]||{}),...u}});S.admMods={};mods.forEach(m=>S.admMods[m.id]=m);S.admAt=now()}
-async function admCount(c){if(store.local)return (await store.query(c,{})).length;try{const s=await firebase.firestore().collection(c).count().get();return s.data().count}catch(e){return null}}
+async function admCount(c){if(store.local)return (await store.query(c,{})).length;
+ try{const q=firebase.firestore().collection(c);if(typeof q.count==='function'){const s=await q.count().get();return s.data().count}}catch(e){}
+ try{const t=await firebase.auth().currentUser.getIdToken();const pid=firebase.app().options.projectId;
+  const r=await fetch(`https://firestore.googleapis.com/v1/projects/${pid}/databases/(default)/documents:runAggregationQuery`,{method:'POST',headers:{'Content-Type':'application/json',Authorization:'Bearer '+t},body:JSON.stringify({structuredAggregationQuery:{structuredQuery:{from:[{collectionId:c}]},aggregations:[{alias:'n',count:{}}]}})});
+  const j=await r.json();const v=j&&j[0]&&j[0].result&&j[0].result.aggregateFields&&j[0].result.aggregateFields.n;return v?+v.integerValue:null}catch(e){return null}}
 
 function renderAdmin(){const box=$('#admBody');if(!box||!isAdm())return;
  const n=repGroups(S.reports||[]).length;
@@ -2734,9 +2746,10 @@ async function admHome(){await admLoad();const us=S.admUsers||[],t0=new Date();t
  admIn(`<div class="adm-eb">01 · CONTROL ROOM ── AM-CHAT</div>
  <div class="adm-grid">${st('users',us.length,'المستخدمين')}${st('eye',online,'متصلين هسه','ok')}${st('uplus',today,'جدد اليوم')}${st('flag',reps.length,'بلاغات مفتوحة',reps.length?'bad':'')}${st('image',pc,'منشورات')}${st('reel',rc,'ريلز')}${st('lock',mods.filter(m=>m.state==='restrict').length,'مقيّدين','warn')}${st('ban',mods.filter(m=>m.state==='ban').length,'موقوفين','bad')}</div>
  <div class="card br adm-chart"><h4>${ico('uplus')} التسجيلات آخر 7 أيام</h4><div class="bars7">${days.map(x=>`<div class="b7"><span class="num">${x.n}</span><i style="--h:${Math.round(x.n/mx*100)}%"></i><small>${W[x.d.getDay()]}</small></div>`).join('')}</div></div>
- ${reps.length?`<div class="sec-t">آخر البلاغات</div>${reps.slice(0,3).map(repCard).join('')}<button class="btn tint block" data-admtab="reports">كل البلاغات (${reps.length})</button>`:`<div class="card adm-ok">${ico('check2')}<div><b>ماكو بلاغات مفتوحة</b><small>المجتمع هادئ هسه 👌</small></div></div>`}
+ ${reps.length?`<div class="sec-t">آخر البلاغات</div>${reps.slice(0,3).map(repCard).join('')}<button class="btn tint block" data-admtab="reports">كل البلاغات (${reps.length})</button>`:''}
  <div class="sec-t">أحدث المسجّلين</div><div class="card adm-list">${us.slice().sort((a,b)=>(b.createdAt||0)-(a.createdAt||0)).slice(0,6).map(admRow).join('')||'<div class="empty">ماكو</div>'}</div>
- <div class="adm-acts"><button class="btn pri" data-adm="broadcast">${ico('bell')} رسالة لكل المستخدمين</button><button class="btn ghost" data-adm="rules">${ico('shield')} قواعد المجتمع</button></div>`,'home')}
+ <div class="adm-acts"><button class="btn pri" data-adm="broadcast">${ico('bell')} رسالة لكل المستخدمين</button><button class="btn ghost" data-adm="rules">${ico('shield')} قواعد المجتمع</button></div>
+ ${reps.length?'':`<div class="adm-foot"><div class="af-ic">${ico('check2')}</div><b>ماكو بلاغات مفتوحة</b><small>المجتمع هادئ هسه 👌 أي بلاغ جديد يطلعلك هنا وبالعدّاد فوگ</small></div>`}`,'home')}
 
 function admRow(u){const m=(S.admMods||{})[u.id];const on=modActive(m);
  return `<div class="mem" data-admu="${u.id}">${avHTML({id:u.id,name:u.name,photo:u.photo},44,isOn(u))}<div class="x"><div class="nm">${esc(u.name||'بدون اسم')}${u.verified?' '+ico('vf','vf'):''}</div><div class="st"><span class="num">@${esc(u.username||'')}</span>${u.createdAt?` · <span class="num">${fmtD(u.createdAt)}</span>`:''}</div></div>${on?`<span class="adm-chip ${m.state}">${m.state==='ban'?'موقوف':'مقيّد'}</span>`:''}${ico('chev','i adm-chev')}</div>`}
