@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover,interactive-widget=resizes-content">
-<meta name="app-build" content="2026.11.10-9">
+<meta name="app-build" content="2026.11.10-10">
 <meta name="theme-color" content="#0b0c10">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
@@ -494,7 +494,7 @@ html.kb .comp{padding-bottom:8px}
 @media (max-width:900px){html.kb #bnav{display:none}html.kb #listCol{padding-bottom:0}}
 
 /* stories strip */
-.stories{display:flex;gap:12px;overflow-x:auto;scrollbar-width:none;padding:2px 2px 4px;margin:0 -2px}
+.stories{direction:ltr;display:flex;gap:12px;overflow-x:auto;scrollbar-width:none;padding:2px 2px 4px;margin:0 -2px}
 .stories::-webkit-scrollbar{display:none}
 .st-i{display:flex;flex-direction:column;align-items:center;gap:5px;width:64px;flex:none;cursor:pointer}
 .st-i .nm{font-size:11.5px;color:var(--dim);max-width:64px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:600}
@@ -592,9 +592,9 @@ html[data-theme="light"] #hold .bg{background:rgba(240,242,246,.45)}
 #story .media .blur{position:absolute;inset:-30px;background-size:cover;background-position:center;filter:blur(30px) brightness(.55)}
 #story .media img{position:relative;max-width:100%;max-height:100%;object-fit:contain}
 #story .media .tx{position:relative;padding:30px;text-align:center;font-size:28px;font-weight:800;line-height:1.5;white-space:pre-wrap;overflow-wrap:anywhere;text-shadow:0 2px 12px rgba(0,0,0,.2)}
-#story .bars{position:absolute;top:calc(8px + var(--sat));left:10px;right:10px;display:flex;gap:4px;z-index:3;direction:rtl}
+#story .bars{position:absolute;top:calc(8px + var(--sat));left:10px;right:10px;display:flex;gap:4px;z-index:3;direction:ltr}
 #story .bars i{flex:1;height:3px;border-radius:3px;background:rgba(255,255,255,.3);overflow:hidden;position:relative}
-#story .bars i b{position:absolute;top:0;bottom:0;right:0;width:0;background:#fff;border-radius:3px}
+#story .bars i b{position:absolute;top:0;bottom:0;left:0;width:0;background:#fff;border-radius:3px}
 #story .hd{position:absolute;top:calc(18px + var(--sat));left:6px;right:10px;display:flex;align-items:center;gap:10px;z-index:3;padding-top:4px}
 #story .hd .x{flex:1;min-width:0}#story .hd b{font-size:15px;display:block;text-shadow:0 1px 6px rgba(0,0,0,.4)}#story .hd small{font-size:12px;opacity:.8}
 #story .hd .av{--s:38px;box-shadow:none}
@@ -1211,6 +1211,8 @@ html.kb #sheet{max-height:calc(100% - 8px)}
 .cx-row button{display:flex;flex-direction:column;align-items:center;gap:5px;padding:10px 4px;border-radius:14px;background:var(--panel2);border:1px solid var(--line);font-size:12.5px;font-weight:600;color:var(--dim)}
 .cx-row button svg{width:20px;height:20px;color:var(--accent)}
 .cx-row button:active{transform:scale(.96)}
+
+.stories .st-i{direction:rtl}
 
 </style>
 </head>
@@ -2129,7 +2131,7 @@ function bindStory(){const st=$('#story'),fr=$('#story .frame');let p=null,hold;
    else if(toNext&&!hasNext()&&dx<-w*.28){reset(false);closeStory()}
    else{reset();SV.paused=false;st.classList.remove('paused')}return}
   if(pp.held){SV.paused=false;st.classList.remove('paused');return}
-  const r=fr.getBoundingClientRect();const rel=(e.clientX-r.left)/r.width;showStory(SV.i+(rel>.7?-1:1))};
+  const r=fr.getBoundingClientRect();const rel=(e.clientX-r.left)/r.width;showStory(SV.i+(rel<.3?-1:1))};
  st.addEventListener('pointerup',end);st.addEventListener('pointercancel',e=>{clearTimeout(hold);p=null;SV.paused=false;st.classList.remove('paused');reset()});
  st.addEventListener('contextmenu',e=>e.preventDefault())}
 
