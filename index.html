@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover,interactive-widget=resizes-content">
-<meta name="app-build" content="2026.11.10-5">
+<meta name="app-build" content="2026.11.10-6">
 <meta name="theme-color" content="#0b0c10">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
@@ -944,6 +944,83 @@ html[data-theme="light"] .rbar{background:rgba(255,255,255,.75)!important}
 .feed>*{flex:none}
 .ihead .ib{order:2}
 
+/* ===== v5: home, search, notes, icon tabbar, livelier design ===== */
+@media (max-width:900px){
+ #bnav .tabbar{grid-template-columns:repeat(5,1fr);height:62px;width:min(400px,calc(100% - 24px))}
+ #bnav .lens{width:calc((100% - 8px)/5)}
+ #bnav button{gap:0}
+ #bnav button svg{width:27px;height:27px}
+ #bnav button.on svg{transform:scale(1.12)}
+ #bnav .badge{top:8px;left:calc(50% - 24px)}
+ #bnav .tb-me .av{--s:28px!important;font-size:11px;box-shadow:0 0 0 2px var(--panel)!important;transition:box-shadow .3s}
+ #bnav button.on .tb-me .av{box-shadow:0 0 0 2px var(--panel),0 0 0 4px var(--accent)!important}
+ #app[data-pane="posts"] #listCol{padding-top:calc(58px + var(--sat))}
+ #pane-search .phead{padding-top:4px}
+}
+#topbar .tb-title .wm{font-size:18px;letter-spacing:2.5px}
+#app[data-pane="posts"] #topbar .tb-title .logo{animation:float 4s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-2px) rotate(-6deg)}}
+/* home greeting */
+.hi{display:flex;align-items:baseline;gap:8px;padding:2px 4px 0}
+.hi span{font-size:14px;color:var(--dim)}
+.hi b{font-size:24px;font-weight:800;background:linear-gradient(90deg,var(--ink),var(--accent2) 60%,var(--accent));-webkit-background-clip:text;background-clip:text;color:transparent}
+.feed .stories{margin:0 -12px;padding:4px 12px 6px}
+/* animated story rings */
+.ring.new{background:none;overflow:hidden}
+.ring.new::before{content:"";position:absolute;inset:-40%;background:conic-gradient(var(--accent),#ffb347,#ff3b8d,var(--accent2),var(--accent));animation:spin 3.5s linear infinite;z-index:0}
+.ring .av{position:relative;z-index:1}
+.ring .add{z-index:2}
+/* feed cards: entrance + subtle glow edge */
+.feed .post{animation:ent .45s both;box-shadow:0 10px 30px rgba(0,0,0,.18)}
+.feed .post::before{content:"";position:absolute}
+.post{position:relative}
+.post header .av{transition:transform .2s}.post header:active .av{transform:scale(.94)}
+.newpost{background:linear-gradient(120deg,var(--accent-soft),transparent 60%),var(--panel2);border-color:rgba(var(--acc-rgb),.25)}
+/* notes row */
+.notes{display:flex;gap:14px;overflow-x:auto;scrollbar-width:none;padding:34px 2px 4px;margin:0 -2px}
+.notes::-webkit-scrollbar{display:none}
+.nt-i{position:relative;display:flex;flex-direction:column;align-items:center;gap:5px;width:74px;flex:none;cursor:pointer}
+.nt-i .av{--s:58px!important;box-shadow:0 0 0 2px var(--panel),0 0 0 3.5px var(--line2)!important}
+.nt-i .nm{font-size:12px;color:var(--dim);max-width:74px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:500}
+.nt-b{position:absolute;bottom:calc(100% - 20px);left:50%;transform:translateX(-50%);max-width:96px;min-width:52px;padding:6px 10px;border-radius:16px;background:var(--panel3);border:1px solid var(--line2);font-size:11.5px;line-height:1.35;text-align:center;color:var(--ink);box-shadow:0 6px 16px rgba(0,0,0,.25);z-index:2;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;animation:bob 3.2s ease-in-out infinite;animation-delay:var(--d,0s)}
+.nt-b::after{content:"";position:absolute;bottom:-5px;left:50%;width:9px;height:9px;margin-left:-4px;border-radius:50%;background:inherit;border:1px solid var(--line2)}
+.nt-b.add{color:var(--faint);border-style:dashed}
+.nt-i.me .nt-b:not(.add){background:var(--accent);color:var(--accent-ink);border-color:transparent}
+@keyframes bob{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(-3px)}}
+.nt-hint{display:flex;align-items:center;gap:8px;color:var(--faint);font-size:12.5px;padding:0 6px;align-self:center;white-space:nowrap}
+.nt-hint svg{width:18px;height:18px}
+.nt-edit{display:flex;flex-direction:column;align-items:center;gap:6px;padding-top:62px;position:relative}
+.nt-b.big{position:absolute;top:0;bottom:auto;max-width:260px;min-width:160px;padding:10px 14px;font-size:16px;-webkit-line-clamp:4;animation:none;transform:translateX(-50%)}
+.nt-b.big textarea{width:100%;background:none;border:0;outline:0;color:inherit;text-align:center;resize:none;font-size:16px;line-height:1.4}
+.nt-edit small{color:var(--faint)}
+/* search & explore */
+.search.big .inp{height:44px;border-radius:14px;font-size:16px}
+.sugg{display:flex;gap:10px;overflow-x:auto;scrollbar-width:none;padding:2px 14px 6px}
+.sugg::-webkit-scrollbar{display:none}
+.sg{flex:none;width:104px;padding:14px 8px 12px;border-radius:18px;background:var(--panel2);border:1px solid var(--line);display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;transition:transform .15s}
+.sg:active{transform:scale(.96)}
+.sg b{font-size:14px;font-weight:600;margin-top:4px;max-width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.sg small{font-size:11.5px;color:var(--faint);max-width:100%;overflow:hidden;text-overflow:ellipsis}
+.explore{display:grid;grid-template-columns:repeat(3,1fr);grid-auto-flow:dense;gap:2px;padding-bottom:calc(100px + var(--sab))}
+.explore button{aspect-ratio:1;position:relative;overflow:hidden;background:var(--panel3)}
+.explore button.big{grid-column:span 2;grid-row:span 2}
+.explore img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s}
+.explore button:active img{transform:scale(1.05)}
+.explore .pt{display:grid;place-items:center;padding:10px;color:#fff;font-weight:700;font-size:12.5px;line-height:1.4}
+.explore .rv{position:absolute;top:6px;left:6px;color:#fff;filter:drop-shadow(0 1px 3px rgba(0,0,0,.6))}.explore .rv svg{width:18px;height:18px}
+.feed.in-search{padding:0 12px 100px}
+#pane-search .mem{margin:0 8px}
+/* lively touches */
+.cta,.btn.pri{background-image:linear-gradient(120deg,rgba(255,255,255,.12),transparent 40%)}
+.badge{animation:pop .4s}
+#bnav .lens{animation:lensGlow 3s ease-in-out infinite}
+@keyframes lensGlow{0%,100%{box-shadow:inset 0 0 0 1px rgba(var(--acc-rgb),.35),inset 0 1px 0 rgba(255,255,255,.18),0 0 14px rgba(var(--acc-rgb),.2)}50%{box-shadow:inset 0 0 0 1px rgba(var(--acc-rgb),.55),inset 0 1px 0 rgba(255,255,255,.22),0 0 24px rgba(var(--acc-rgb),.38)}}
+.notes{padding-top:40px}
+.nt-b{bottom:auto;top:-34px}
+.nt-b::after{bottom:-4px;width:8px;height:8px}
+@media (max-width:900px){#app[data-pane="posts"] .tb-st .pill{display:none}}
+.notes{padding-top:50px}
+.nt-b{top:-44px;max-width:112px;max-height:42px;padding:5px 10px;line-height:1.4}
+
 </style>
 </head>
 <body>
@@ -1005,6 +1082,8 @@ html[data-theme="light"] .rbar{background:rgba(255,255,255,.75)!important}
 <symbol id="i-vol0" viewBox="0 0 24 24"><path d="M11 5 6 9H2v6h4l5 4ZM22 9l-6 6M16 9l6 6"/></symbol>
 <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7"/></symbol>
 <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/></symbol>
+<symbol id="i-home" viewBox="0 0 24 24"><path d="M3 10.5 12 3l9 7.5V20a1.5 1.5 0 0 1-1.5 1.5H15v-6.5H9v6.5H4.5A1.5 1.5 0 0 1 3 20Z"/></symbol>
+<symbol id="i-note" viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-7l-5 4v-4H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Z"/><path d="M8 9h8M8 12.5h5"/></symbol>
 <symbol id="i-vf" viewBox="0 0 24 24"><path fill="currentColor" stroke="none" d="M12 1.8l2.5 1.9 3.1-.2.9 3 2.6 1.7-1 2.9 1 2.9-2.6 1.7-.9 3-3.1-.2L12 22.2l-2.5-1.9-3.1.2-.9-3-2.6-1.7 1-2.9-1-2.9 2.6-1.7.9-3 3.1.2Z"/><path d="M8.3 12.2l2.5 2.5 4.9-5" stroke="#fff" stroke-width="2.2" fill="none"/></symbol>
 </defs>
 </svg>
@@ -1038,9 +1117,10 @@ html[data-theme="light"] .rbar{background:rgba(255,255,255,.75)!important}
   <div class="brand"><svg class="logo"><use href="#i-logo"/></svg><span class="wm" id="sdWm"></span></div>
   <button class="cta" data-act="newchat"><svg class="i"><use href="#i-pen"/></svg><span>محادثة جديدة</span></button>
   <nav class="nav">
-   <button data-nav="chats" class="on"><svg class="i"><use href="#i-chat"/></svg><span class="t">المحادثات</span><span class="badge hide" data-unread></span></button>
-   <button data-nav="posts"><svg class="i"><use href="#i-grid"/></svg><span class="t">المنشورات</span></button>
+   <button data-nav="posts" class="on"><svg class="i"><use href="#i-home"/></svg><span class="t">الرئيسية</span></button>
+   <button data-nav="search"><svg class="i"><use href="#i-search"/></svg><span class="t">البحث</span></button>
    <button data-nav="reels"><svg class="i"><use href="#i-reel"/></svg><span class="t">الريلز</span></button>
+   <button data-nav="chats"><svg class="i"><use href="#i-chat"/></svg><span class="t">المحادثات</span><span class="badge hide" data-unread></span></button>
    <button data-nav="contacts"><svg class="i"><use href="#i-users"/></svg><span class="t">الأشخاص</span></button>
    <button data-nav="saved"><svg class="i"><use href="#i-bookmark"/></svg><span class="t">الرسائل المحفوظة</span></button>
    <button data-nav="profile"><svg class="i"><use href="#i-user"/></svg><span class="t">حسابي</span></button>
@@ -1058,21 +1138,21 @@ html[data-theme="light"] .rbar{background:rgba(255,255,255,.75)!important}
 
  <div id="topbar">
   <div class="tb-acts">
-   <button class="gl circ acc hud" data-act="newchat" data-for="chats contacts" title="محادثة جديدة"><svg class="i"><use href="#i-pen"/></svg></button><button class="gl circ" data-act="addstory" data-for="chats" title="قصة جديدة"><svg class="i"><use href="#i-camera"/></svg></button>
-   <button class="gl circ acc hud" data-act="newpost" data-for="posts" title="منشور جديد"><svg class="i"><use href="#i-plus"/></svg></button>
+   <button class="gl circ acc hud" data-act="newchat" data-for="chats contacts" title="محادثة جديدة"><svg class="i"><use href="#i-pen"/></svg></button><button class="gl circ" data-act="note" data-for="chats" title="ملاحظة"><svg class="i"><use href="#i-note"/></svg></button>
+   <button class="gl circ acc hud" data-act="newpost" data-for="posts" title="منشور جديد"><svg class="i"><use href="#i-plus"/></svg></button><button class="gl circ" data-act="addstory" data-for="posts" title="قصة جديدة"><svg class="i"><use href="#i-camera"/></svg></button>
    <button class="gl circ acc hud" data-act="editprof" data-for="profile" title="تعديل"><svg class="i"><use href="#i-pen"/></svg></button><button class="gl circ" data-nav="settings" data-for="profile" title="الإعدادات"><svg class="i"><use href="#i-gear"/></svg></button>
   </div>
-  <div class="tb-title"><svg class="logo"><use href="#i-logo"/></svg><b id="tbTitle">المحادثات</b></div>
+  <div class="tb-title"><svg class="logo"><use href="#i-logo"/></svg><b id="tbTitle"></b></div>
   <div class="tb-st"><div class="gl pill"><i class="dot" data-sync></i><span class="tclock num" data-clock>--:--</span></div><button class="gl circ" data-modetog><svg class="i"><use href="#i-moon"/></svg></button></div>
  </div>
 
  <section id="listCol">
-  <div class="pane on" id="pane-chats">
+  <div class="pane" id="pane-chats">
    <div class="phead">
     <div class="row"><div style="min-width:0"><h1>المحادثات</h1></div>
      <button class="ib acc" data-act="newchat" title="محادثة جديدة"><svg class="i"><use href="#i-pen"/></svg></button></div>
     <div class="search"><svg class="i"><use href="#i-search"/></svg><input class="inp" id="chatSearch" placeholder="دوّر بالمحادثات…" autocomplete="off"></div>
-    <div class="stories" id="stories"></div>
+    <div class="notes" id="notes"></div>
     <div class="folders" id="folders"></div>
    </div>
    <div id="pushBan"></div>
@@ -1086,9 +1166,13 @@ html[data-theme="light"] .rbar{background:rgba(255,255,255,.75)!important}
    </div>
    <div class="list scroll" id="contactList"></div>
   </div>
-  <div class="pane" id="pane-posts">
+  <div class="pane on" id="pane-posts">
    <div class="phead"><div class="row"><div style="min-width:0"><h1>المنشورات</h1></div><button class="ib acc" data-act="newpost" title="منشور جديد"><svg class="i"><use href="#i-plus"/></svg></button></div></div>
    <div class="scroll feed" id="feed"></div>
+  </div>
+  <div class="pane" id="pane-search">
+   <div class="phead"><div class="search big"><svg class="i"><use href="#i-search"/></svg><input class="inp" id="globalSearch" placeholder="دوّر على أشخاص، مجموعات، منشورات…" autocomplete="off" autocapitalize="off" enterkeyhint="search"></div><div class="folders" id="sTabs"></div></div>
+   <div class="scroll" id="searchRes" style="flex:1;min-height:0"></div>
   </div>
   <div class="pane" id="pane-reels"><div class="reels" id="reelList"></div>
    <div class="reels-top"><b>الريلز</b><button class="gl circ" data-act="newreel" title="ريل جديد"><svg class="i"><use href="#i-camera"/></svg></button></div></div>
@@ -1141,10 +1225,11 @@ html[data-theme="light"] .rbar{background:rgba(255,255,255,.75)!important}
  </div></aside>
 
  <nav id="bnav"><div class="tabbar gl hud"><i class="lens"></i>
-  <button data-nav="chats" class="on"><svg class="i"><use href="#i-chat"/></svg><span class="bl">المحادثات</span><span class="badge hide" data-unread></span></button>
-  <button data-nav="posts"><svg class="i"><use href="#i-grid"/></svg><span class="bl">المنشورات</span></button>
-  <button data-nav="reels"><svg class="i"><use href="#i-reel"/></svg><span class="bl">الريلز</span></button>
-  <button data-nav="profile"><svg class="i"><use href="#i-user"/></svg><span class="bl">حسابي</span></button>
+  <button data-nav="posts" class="on" aria-label="الرئيسية"><svg class="i"><use href="#i-home"/></svg></button>
+  <button data-nav="search" aria-label="البحث"><svg class="i"><use href="#i-search"/></svg></button>
+  <button data-nav="reels" aria-label="الريلز"><svg class="i"><use href="#i-reel"/></svg></button>
+  <button data-nav="chats" aria-label="المحادثات"><svg class="i"><use href="#i-chat"/></svg><span class="badge hide" data-unread></span></button>
+  <button data-nav="profile" aria-label="حسابي"><span class="tb-me" data-meav2></span></button>
  </div></nav>
 </div>
 
@@ -1344,7 +1429,7 @@ const savedId=()=>'saved_'+S.me;
 /* ================= عمليات ================= */
 const API={
  async send(cid,msg,from=S.me){const c=S.chatMap[cid]||await store.get('chats/'+cid);if(!c)return;const coll=`chats/${cid}/messages`;const id=store.newId(coll);
-  const doc={from,at:OP.now(),type:msg.type||'text',text:(msg.text||'').slice(0,4000)};['media','dur','replyTo','fwd','sys','uids','wave','mime','story'].forEach(k=>{if(msg[k]!=null)doc[k]=msg[k]});
+  const doc={from,at:OP.now(),type:msg.type||'text',text:(msg.text||'').slice(0,4000)};['media','dur','replyTo','fwd','sys','uids','wave','mime','story','note'].forEach(k=>{if(msg[k]!=null)doc[k]=msg[k]});
   const w=store.set(coll+'/'+id,doc);if(from===S.me&&doc.type!=='system')Promise.resolve(w).then(()=>pushNotify(cid,id));
   const patch={lastMsg:{id,from,type:doc.type,text:doc.text.slice(0,140),at:OP.now(),...(msg.sys?{sys:msg.sys,uids:msg.uids||[]}:{})},updatedAt:OP.now(),['typing.'+from]:OP.del(),['reads.'+from]:OP.now()};
   (c.members||[]).filter(u=>u!==from).forEach(u=>patch['unread.'+u]=OP.inc(1));
@@ -1435,11 +1520,11 @@ async function startApp(uid){S.me=uid;$('#login').classList.add('hide');$('#app'
  document.addEventListener('visibilitychange',()=>{presence(!document.hidden);if(!document.hidden&&S.open)API.markRead(S.open)});
  addEventListener('pagehide',()=>presence(false));
  setInterval(()=>{tickClock();schedule()},15000);setInterval(()=>{const sig=S.chats.map(c=>typers(c).join()).join('|');if(sig!==S._tsig){S._tsig=sig;schedule()}},1500);
- tickClock();renderSettings();renderFolders();stagger($('#chatList'));
- const hh=decodeURIComponent(location.hash||'');if(hh)setTimeout(()=>handleHash(hh),600);if(/^#(join|u|r)=/.test(hh))history.replaceState(null,'',location.pathname);$('#app').dataset.pane='chats'}
+ tickClock();renderSettings();renderFolders();watchFeed();watchNotes();setNav('posts');
+ const hh=decodeURIComponent(location.hash||'');if(hh)setTimeout(()=>handleHash(hh),600);if(/^#(join|u|r)=/.test(hh))history.replaceState(null,'',location.pathname)}
 function presence(on){if(!S.me)return;store.update('users/'+S.me,{online:on,lastSeen:OP.now()})}
 function tickClock(){const d=new Date();$$('[data-clock]').forEach(e=>e.textContent=hm()+' '+ampm());$$('[data-date]').forEach(e=>e.textContent=d.toLocaleDateString('ar-IQ-u-nu-latn',{weekday:'long',day:'numeric',month:'long'}))}
-function renderMe(){const m=S.meDoc;$$('[data-meav]').forEach(e=>e.innerHTML=avHTML({id:S.me,name:m.name,photo:m.photo},38));$$('[data-mename]').forEach(e=>e.textContent=m.name||'');$$('[data-meun]').forEach(e=>e.textContent='@'+(m.username||''));const sig=[m.name,m.photo&&m.photo.length,m.bio,m.username,m.hideSeen,m.accent].join('|');if(sig!==S._msig){S._msig=sig;if($('#pane-settings').classList.contains('on')&&!$('#settings').contains(document.activeElement))renderSettings()}}
+function renderMe(){const m=S.meDoc;$$('[data-meav]').forEach(e=>e.innerHTML=avHTML({id:S.me,name:m.name,photo:m.photo},38));$$('[data-meav2]').forEach(e=>e.innerHTML=avHTML({id:S.me,name:m.name,photo:m.photo},28));$$('[data-mename]').forEach(e=>e.textContent=m.name||'');$$('[data-meun]').forEach(e=>e.textContent='@'+(m.username||''));const sig=[m.name,m.photo&&m.photo.length,m.bio,m.username,m.hideSeen,m.accent].join('|');if(sig!==S._msig){S._msig=sig;if($('#pane-settings').classList.contains('on')&&!$('#settings').contains(document.activeElement))renderSettings()}}
 
 let rq;function schedule(){if(rq)return;rq=requestAnimationFrame(()=>{rq=0;renderStories();renderChatList();renderFolders();renderUnread();if(S.open)renderHeader();if(S.info)renderInfo();if(S.open&&S.msgs.length)renderMsgs()})}
 
@@ -1517,7 +1602,7 @@ function msgHTML(m,f){if(m.type==='system')return `<div class="sys">${esc(sysTex
  else{if(m.fwd)inner+=`<div class="fwd">${ico('forward','i')} محوّلة من <b>${esc(m.fwd.name)}</b></div>`;
   if(m.replyTo){const rn=m.replyTo.from===S.me?'إنت':U(m.replyTo.from).name;inner+=`<span class="quote" data-jump="${m.replyTo.id}"><b>${esc(rn)}</b><span>${esc(m.replyTo.text||'📎 مرفق')}</span></span>`}
   if(m.type==='image')inner+=`<img class="ph" src="${m.media}" data-lb alt="" loading="lazy" draggable="false">`;
-  if(m.story)inner+=storyQuote(m);
+  if(m.story)inner+=storyQuote(m);if(m.note)inner+=noteQuote(m);
   if(m.type==='voice')inner+=voiceHTML(m,f);
   if(m.text)inner+=`<div class="txt">${linkify(esc(m.text))}${hasR?'':sp}</div>`;else if(m.type==='voice'&&!hasR)inner+=`<div style="height:12px"></div>`}
  if(hasR)inner+=`<div class="reacts">${Object.entries(m.reactions).filter(([k,a])=>a&&a.length&&REACT[k]).map(([k,a])=>`<button data-react="${k}" class="${a.includes(S.me)?'me':''}">${REACT[k]}${a.length>1?`<span class="num">${a.length}</span>`:''}</button>`).join('')}${sp}</div>`;
@@ -1754,14 +1839,14 @@ function renderSettings(){const m=S.meDoc||{};const mode=ls.get('amc-mode','dark
  $('#fsIn').oninput=e=>{ls.set('amc-fs',e.target.value);document.documentElement.style.setProperty('--msg-fs',e.target.value+'px');$$('.preview-bubbles .bub').forEach(b=>b.style.fontSize=e.target.value+'px')};$('#fsIn').onchange=()=>renderSettings()}
 
 /* ================= التنقل ================= */
-const NAVT={chats:'المحادثات',contacts:'الأشخاص',settings:'الإعدادات',posts:'المنشورات',reels:'الريلز',profile:'حسابي'};const LENSK={contacts:'chats',settings:'profile'};
+const NAVT={chats:'المحادثات',contacts:'الأشخاص',settings:'الإعدادات',posts:'',reels:'الريلز',profile:'حسابي',search:'البحث'};const LENSK={contacts:'chats',settings:'profile',saved:'chats'};
 function moveLens(k){const tb=$('#bnav .tabbar');if(!tb)return;const bs=[...tb.querySelectorAll('button')];const i=bs.findIndex(b=>b.dataset.nav===k);if(i<0)return;const w=bs[0].offsetWidth;tb.querySelector('.lens').style.transform=`translateX(${-i*w}px)`}
 addEventListener('resize',()=>{const a=$('#bnav button.on');if(a)moveLens(a.dataset.nav)});
 function setNav(k){if(k==='saved'){API.ensureSaved().then(id=>openChat(id));return}const cur=$('.pane.on');const next=$('#pane-'+k);
- $$('#side [data-nav]').forEach(b=>b.classList.toggle('on',b.dataset.nav===k));$$('#bnav [data-nav]').forEach(b=>b.classList.toggle('on',b.dataset.nav===(LENSK[k]||k)));moveLens(LENSK[k]||k);$('#app').dataset.pane=k;const tt=$('#tbTitle');if(tt)tt.textContent=NAVT[k]||'';if(cur===next)return;
+ $$('#side [data-nav]').forEach(b=>b.classList.toggle('on',b.dataset.nav===k));$$('#bnav [data-nav]').forEach(b=>b.classList.toggle('on',b.dataset.nav===(LENSK[k]||k)));moveLens(LENSK[k]||k);$('#app').dataset.pane=k;const tt=$('#tbTitle');if(tt){if(k==='posts')tt.innerHTML=`<span class="wm">${APP.w1}<em>${APP.w2}</em></span>`;else tt.textContent=NAVT[k]||''}if(cur===next)return;
  if(cur){$$('input',cur).forEach(i=>{if(i.type!=='file'&&i.type!=='range'&&i.type!=='color')i.value=''});$$('.scroll,.list',cur).forEach(s=>s.scrollTop=0);if(cur.id==='pane-chats'){S.folder='all';renderChatList();renderFolders()}if(cur.id==='pane-reels')pauseAllReels('#pane-reels')}
  $$('.pane').forEach(p=>p.classList.toggle('on',p===next));warp();const h=$('h1',next);if(h){h.classList.remove('flick');void h.offsetWidth;h.classList.add('flick')}
- if(k==='contacts')renderContacts();if(k==='settings')renderSettings();if(k==='posts'){watchFeed();renderFeed()}if(k==='reels'){watchReels();renderReelFeed();setTimeout(()=>{const el=[...$$('#reelList .reel')].find(e=>{const r=e.getBoundingClientRect();return r.top>=-10&&r.top<innerHeight/2});if(el)playReel(el)},150)}if(k==='profile')renderMyProfile();const lst=$('.list',next)||$('.set',next);if(lst)stagger(lst)}
+ if(k==='contacts')renderContacts();if(k==='settings')renderSettings();if(k==='posts'){watchFeed();renderFeed()}if(k==='reels'){watchReels();renderReelFeed();setTimeout(()=>{const el=[...$$('#reelList .reel')].find(e=>{const r=e.getBoundingClientRect();return r.top>=-10&&r.top<innerHeight/2});if(el)playReel(el)},150)}if(k==='profile')renderMyProfile();if(k==='search'){renderSearch();if(!isTouch)setTimeout(()=>$('#globalSearch').focus(),100)}if(k==='chats'){renderNotes();stagger($('#chatList'))}const lst=$('.list',next)||$('.set',next);if(lst)stagger(lst)}
 async function renderContacts(){const q=$('#userSearch').value;const box=$('#contactList');let rows=await API.searchUsers(q);
  if(q){box.innerHTML=rows.length?rows.map(u=>userRow(u)).join(''):`<div class="empty">${ico('search')}<div>ماكو أحد بهذا الاسم</div></div>`;return}
  const p=dmPartners();const ids=new Set(p.map(u=>u.id));const others=rows.filter(u=>!ids.has(u.id));
@@ -1890,8 +1975,8 @@ function postHTML(p){const u=U(p.uid),mine=p.uid===S.me,lk=p.likes||[],liked=lk.
  ${p.type==='image'&&p.text?`<div class="pc"><b data-user="${p.uid}">${esc(firstName(u.name))}</b> ${linkify(esc(p.text))}</div>`:''}${p.cc?`<button class="pcl" data-pcmt="${p.id}">شوف التعليقات كلها (${p.cc})</button>`:''}</article>`}
 function keyed(box,items){const old={};[...box.children].forEach(el=>{if(el.dataset.key)old[el.dataset.key]=el});items.forEach((it,i)=>{let el=old[it.key];if(!el||el.dataset.sig!==it.sig){const t=document.createElement('div');t.innerHTML=it.html;const n=t.firstElementChild;n.dataset.key=it.key;n.dataset.sig=it.sig;if(el)el.replaceWith(n);el=n}delete old[it.key];if(box.children[i]!==el)box.insertBefore(el,box.children[i]||null)});Object.values(old).forEach(e=>e.remove())}
 const postSig=p=>{const u=U(p.uid);return [(p.likes||[]).join(),p.cc,p.text,u.name,(u.photo||'').length,p.at?1:0].join('|')};
-function renderFeed(){const box=$('#feed');if(!box||!S.me)return;const m=S.meDoc||{};const items=[{key:'new',sig:(m.name||'')+(m.photo||'').length,html:`<div class="newpost" data-act="newpost">${avHTML({id:S.me,name:m.name,photo:m.photo},40)}<span>شنو ببالك يا ${esc(firstName(m.name))}؟</span>${ico('image')}</div>`}];
- S.posts.forEach(p=>items.push({key:p.id,sig:postSig(p),html:postHTML(p)}));if(!S.posts.length)items.push({key:'empty',sig:'e',html:`<div class="empty">${ico('grid')}<div>ماكو منشورات لحد الآن — كون أول واحد ينشر</div><button class="btn tint" data-act="newpost">انشر شي</button></div>`});keyed(box,items)}
+function renderFeed(){const box=$('#feed');if(!box||!S.me)return;const m=S.meDoc||{};const items=[{key:'hi',sig:greet()+(m.name||''),html:`<div class="hi"><span>${greet()}</span><b>${esc(firstName(m.name))}</b></div>`},{key:'stories',sig:'s',html:'<div class="stories" id="stories"></div>'},{key:'new',sig:(m.name||'')+(m.photo||'').length,html:`<div class="newpost" data-act="newpost">${avHTML({id:S.me,name:m.name,photo:m.photo},40)}<span>شنو ببالك يا ${esc(firstName(m.name))}؟</span>${ico('image')}</div>`}];
+ S.posts.forEach(p=>items.push({key:p.id,sig:postSig(p),html:postHTML(p)}));const hadStories=!!$('#stories');if(!S.posts.length)items.push({key:'empty',sig:'e',html:`<div class="empty">${ico('grid')}<div>ماكو منشورات لحد الآن — كون أول واحد ينشر</div><button class="btn tint" data-act="newpost">انشر شي</button></div>`});keyed(box,items);if(!hadStories||!$('#stories').innerHTML)renderStories()}
 function findPost(id){return S.posts.find(p=>p.id===id)||Object.values(S.ucache).flatMap(c=>c.posts||[]).find(p=>p.id===id)}
 function likePost(id,force){const p=findPost(id);if(!p)return;const on=(p.likes||[]).includes(S.me);if(force&&on)return;store.update('posts/'+id,{likes:on?OP.remove(S.me):OP.union(S.me)});if(!on)vib(10)}
 function burst(el){const b=el.querySelector('.burst');if(!b)return;b.classList.remove('go');void b.offsetWidth;b.classList.add('go')}
@@ -2012,6 +2097,46 @@ async function joinFlow(cid){let c=null;try{c=await store.get('chats/'+cid)}catc
  openSheet('انضمام لمجموعة',`<div class="ihero">${avHTML({id:cid,name:c.title,photo:c.photo},88)}<h3>${esc(c.title)}</h3><div class="st"><span class="num">${(c.members||[]).length}</span> عضو</div>${c.desc?`<p style="color:var(--dim);margin:6px 0 0">${esc(c.desc)}</p>`:''}</div>`,`<button class="btn pri block" id="jnGo">انضم للمجموعة</button>`);
  $('#jnGo').onclick=async()=>{$('#jnGo').disabled=true;await store.update('chats/'+cid,{members:OP.union(S.me),['unread.'+S.me]:0});S.chatMap[cid]={id:cid,...c,members:[...(c.members||[]),S.me]};await API.send(cid,{type:'system',sys:'joined'});closeSheet();openChat(cid);toast('انضميت ✓')}}
 
+/* ================= الملاحظات (Notes) ================= */
+S.notes=[];
+function watchNotes(){S.unsub.push(store.watchQuery('notes',{where:[['exp','>',now()]],limit:300},list=>{S.notes=list;renderNotes()}))}
+function renderNotes(){const box=$('#notes');if(!box||!S.me)return;const t=now(),ok=storyCircle();const mine=S.notes.find(n=>n.id===S.me&&n.exp>t);const m=S.meDoc||{};
+ const others=S.notes.filter(n=>n.id!==S.me&&n.exp>t&&ok.has(n.id)).sort((a,b)=>(b.at||0)-(a.at||0));
+ let h=`<div class="nt-i me" data-act="note"><div class="nt-b ${mine?'':'add'}">${mine?esc(mine.text):'شاركنا شي…'}</div>${avHTML({id:S.me,name:m.name,photo:m.photo},58)}<span class="nm">${mine?'ملاحظتك':'ملاحظة جديدة'}</span></div>`;
+ h+=others.map((n,i)=>{const u=U(n.id);return `<div class="nt-i" data-noteu="${n.id}" style="--d:${(i%5)*.4}s"><div class="nt-b">${esc(n.text)}</div>${avHTML({id:u.id,name:u.name,photo:u.photo},58,isOn(u))}<span class="nm">${esc(firstName(u.name))}</span></div>`}).join('');
+ if(!others.length)h+=`<div class="nt-hint">${ico('note')}<span>ملاحظات أصحابك تطلع هنا لمدة 24 ساعة</span></div>`;box.innerHTML=h}
+function noteSheet(){const mine=S.notes.find(n=>n.id===S.me&&n.exp>now());openSheet('ملاحظتك',`<div class="nt-edit"><div class="nt-b big"><textarea id="ntT" maxlength="60" rows="2" placeholder="شنو ببالك؟">${esc(mine?mine.text:'')}</textarea></div>${avHTML({id:S.me,name:S.meDoc.name,photo:S.meDoc.photo},72)}<small class="num" id="ntC">${mine?mine.text.length:0}/60</small></div><p style="text-align:center;color:var(--faint);font-size:13px;margin:4px 0 0">تبين لأصحابك فوگ المحادثات لمدة 24 ساعة</p>`,
+ `${mine?'<button class="btn danger" id="ntDel">حذف</button>':'<button class="btn ghost" data-act="closesheet">إلغاء</button>'}<button class="btn pri" style="flex:1" id="ntGo">${ico('send')} شارك</button>`);
+ const ta=$('#ntT');ta.oninput=()=>$('#ntC').textContent=ta.value.length+'/60';setTimeout(()=>ta.focus(),250);
+ $('#ntGo').onclick=()=>{const t=ta.value.trim();if(!t)return toast('اكتب شي أول');store.set('notes/'+S.me,{uid:S.me,text:t,at:OP.now(),exp:now()+864e5});closeSheet();toast('انتشرت ملاحظتك 💬');SND.play('send')};
+ const d=$('#ntDel');if(d)d.onclick=()=>{store.del('notes/'+S.me);closeSheet();toast('انحذفت الملاحظة')}}
+function noteView(uid){const n=S.notes.find(x=>x.id===uid);if(!n)return;const u=U(uid);openSheet(firstName(u.name),`<div class="nt-edit"><div class="nt-b big"><div>${esc(n.text)}</div></div><span data-user="${uid}">${avHTML({id:u.id,name:u.name,photo:u.photo},72,isOn(u))}</span><small>${agoLong(n.at)}</small></div>`,
+ `<input class="inp" id="ntR" placeholder="رد على ${esc(firstName(u.name))}…" maxlength="300" enterkeyhint="send" style="flex:1"><button class="btn pri" id="ntRG" style="width:48px;padding:0">${ico('send')}</button>`);
+ const go=async()=>{const t=$('#ntR').value.trim();if(!t)return;const cid=await ensureDM(uid);API.send(cid,{text:t,note:{text:n.text.slice(0,60)}});closeSheet();toast('انرسل الرد ✓')};$('#ntRG').onclick=go;$('#ntR').onkeydown=e=>{if(e.key==='Enter'){e.preventDefault();go()}}}
+function noteQuote(m){return `<span class="quote"><b>${m.from===S.me?'رديت على ملاحظة':'رد على ملاحظتك'}</b><span>💬 ${esc(m.note.text)}</span></span>`}
+
+/* ================= البحث والاستكشاف ================= */
+S.sTab='all';
+const STABS=[['all','الكل'],['people','الأشخاص'],['groups','المجموعات'],['posts','المنشورات']];
+let srT;function runSearch(){clearTimeout(srT);srT=setTimeout(renderSearch,220)}
+async function renderSearch(){const box=$('#searchRes');if(!box)return;const q=($('#globalSearch').value||'').trim();
+ $('#sTabs').innerHTML=q?STABS.map(([k,t])=>`<button data-stab="${k}" class="${S.sTab===k?'on':''}">${t}</button>`).join(''):'';
+ if(!q){watchFeed();watchReels();const tiles=[...S.posts.map(p=>({k:'p',p,at:p.at||0})),...S.reels.map((r,i)=>({k:'r',r,i,at:r.at||0}))].sort((a,b)=>b.at-a.at).slice(0,45);
+  let people=[];try{people=(await API.searchUsers('')).slice(0,12)}catch(e){}
+  box.innerHTML=(people.length?`<div class="sec-t">ناس ممكن تعرفهم</div><div class="sugg">${people.map(u=>`<div class="sg" data-user="${u.id}">${avHTML({id:u.id,name:u.name,photo:u.photo},64,isOn(u))}<b>${esc(firstName(u.name))}</b><small class="num">@${esc(u.username||'')}</small></div>`).join('')}</div>`:'')+
+   `<div class="sec-t">استكشف</div>`+(tiles.length?`<div class="explore">${tiles.map((t,i)=>t.k==='p'?(t.p.type==='image'?`<button data-popen="${t.p.id}" class="${i%7===0?'big':''}"><img src="${t.p.media}" alt="" loading="lazy"></button>`:`<button data-popen="${t.p.id}" class="pt ${i%7===0?'big':''}" style="background:${ST_BG[t.p.bg||0]}"><span>${esc(t.p.text.slice(0,90))}</span></button>`)
+   :`<button data-rexp="${t.i}" class="rl ${i%7===0?'big':''}">${t.r.thumb?`<img src="${t.r.thumb}" alt="">`:''}<span class="rv">${ico('reel')}</span></button>`).join('')}</div>`:`<div class="empty">${ico('grid')}<div>لحد الآن ماكو شي تستكشفه</div></div>`);return}
+ const ql=q.toLowerCase().replace(/^@/,'');let people=[];if(S.sTab==='all'||S.sTab==='people'){try{people=await API.searchUsers(q)}catch(e){}}
+ const groups=(S.sTab==='all'||S.sTab==='groups')?S.chats.filter(c=>c.type==='group'&&(c.title||'').toLowerCase().includes(ql)):[];
+ const posts=(S.sTab==='all'||S.sTab==='posts')?S.posts.filter(p=>(p.text||'').toLowerCase().includes(ql)||(U(p.uid).name||'').toLowerCase().includes(ql)):[];
+ let h='';if(people.length)h+=`<div class="sec-t">الأشخاص</div>`+people.slice(0,S.sTab==='all'?5:50).map(u=>`<div class="mem" data-user="${u.id}">${avHTML({id:u.id,name:u.name,photo:u.photo},46,isOn(u))}<div class="x"><div class="nm">${esc(u.name)}${u.verified?' '+ico('vf','vf'):''}</div><div class="st num">@${esc(u.username||'')}</div></div><button class="btn tint" data-dm="${u.id}" style="height:34px;padding:0 12px">رسالة</button></div>`).join('');
+ if(groups.length)h+=`<div class="sec-t">المجموعات</div>`+groups.map(c=>`<div class="mem" data-gopen="${c.id}">${chatAv(c,46)}<div class="x"><div class="nm">${esc(c.title)}</div><div class="st"><span class="num">${(c.members||[]).length}</span> عضو</div></div></div>`).join('');
+ if(posts.length)h+=`<div class="sec-t">المنشورات</div><div class="feed in-search">${posts.slice(0,20).map(postHTML).join('')}</div>`;
+ box.innerHTML=h||`<div class="empty">${ico('search')}<div>ماكو نتائج لـ «${esc(q)}»</div></div>`}
+
+/* ================= تحية الرئيسية ================= */
+function greet(){const h=new Date().getHours();return h<5?'سهرانين؟ 🌙':h<12?'صباح الخير ☀️':h<17?'نهارك سعيد 🌤️':h<21?'مساء الخير 🌇':'مساء النور 🌙'}
+
 /* ================= الأحداث ================= */
 const ACT={newchat:()=>newChatSheet(),newgroup:()=>{S.newGroup=null;groupSheet(1)},closesheet:closeSheet,closechat:closeChat,
  info:()=>{if(!S.open)return;S.info?closeInfo():openInfo({type:'chat',id:S.open})},closeinfo:closeInfo,
@@ -2028,6 +2153,7 @@ const ACT={newchat:()=>newChatSheet(),newgroup:()=>{S.newGroup=null;groupSheet(1
  rename:()=>renameGroupSheet(S.info.id),addmem:()=>addMembersSheet(S.info.id),closelb:()=>closeLBnav(),lbshare:()=>shareImage(LB.src),
  addstory:(el,e)=>{e&&e.stopPropagation();addStorySheet()},newpost:()=>newPostSheet(),newreel:()=>newReelSheet(),rvclose:()=>popNav('rv'),shareprof:el=>shareProfile(el.dataset.u),gsettings:()=>groupSettingsSheet(S.info.id),
  ginvite:()=>{const l=location.origin+location.pathname+'#join='+S.info.id;if(navigator.share)navigator.share({title:S.chatMap[S.info.id].title,url:l}).catch(()=>{});else copyText(l)},
+ note:()=>noteSheet(),
  rmute:()=>{S.reelMuted=!S.reelMuted;$$('.reel video').forEach(v=>v.muted=S.reelMuted);$$('.rl-mute use').forEach(u=>u.setAttribute('href',S.reelMuted?'#i-vol0':'#i-vol'));toast(S.reelMuted?'الصوت مطفي 🔇':'الصوت شغّال 🔊')},stclose:()=>closeStory(),stviews:()=>{SV.paused=true;storyViewers()},stmore:()=>storyMore()};
 function bindEvents(){
  document.addEventListener('click',e=>{const t=e.target;
@@ -2041,7 +2167,7 @@ function bindEvents(){
   if(v=q('data-ptab')){const pu=t.closest('[data-puid]').dataset.puid;S.ptab[pu]=v;if(t.closest('#myProfile'))renderMyProfile();else renderInfo();return}
   if(v=q('data-rlike')){likeReel(v);return}if(v=q('data-rcmt')){commentsSheet('reels',v);return}if(v=q('data-rmore')){reelMore(v);return}
   if(v=q('data-rshare')){const r=allReels().find(x=>x.id===v);if(r)shareToChat({text:`🎬 ريل من ${U(r.uid).name}${r.caption?'\n'+r.caption:''}\n${location.origin+location.pathname}#r=${r.id}`},'انرسل الريل ✓');return}
-  if(v=q('data-mem')){memberMenu(S.info.id,v);return}
+  if(v=q('data-mem')){memberMenu(S.info.id,v);return}if(v=q('data-noteu')){noteView(v);return}if(v=q('data-stab')){S.sTab=v;renderSearch();return}if(v=q('data-gopen')){openChat(v);return}if(v=q('data-rexp')){openReelViewer(S.reels,+v);return}
   const pd=t.closest('[data-pdbl]');if(pd){const id=pd.dataset.pdbl,tn=now();if(S._pdt&&S._pdt.id===id&&tn-S._pdt.t<320){likePost(id,true);burst(pd);S._pdt=null}else S._pdt={id,t:tn};return}
   const rl=t.closest('.reel');if(rl&&!t.closest('button,[data-user]')){const id=rl.dataset.reel,tn=now();if(S._rdt&&S._rdt.id===id&&tn-S._rdt.t<300){clearTimeout(S._rdt.to);likeReel(id,true);burst(rl);S._rdt=null}else{const to=setTimeout(()=>{const vd=rl.querySelector('video');if(!vd)return;if(vd.paused){vd.play().catch(()=>{});rl.classList.remove('paused')}else{vd.pause();rl.classList.add('paused')}},300);S._rdt={id,t:tn,to}}return}
   const mt=t.closest('[data-modetog]');if(mt){setMode(document.documentElement.dataset.theme==='light'?'dark':'light');return}
@@ -2089,7 +2215,7 @@ function bindEvents(){
  txt.addEventListener('paste',e=>{const f=[...(e.clipboardData&&e.clipboardData.files||[])].find(f=>f.type.startsWith('image/'));if(f){e.preventDefault();pickImage(f)}});
  setupSendBtn();bindStory();bindLB();bindEdgeBack();
  $('#fileImg').onchange=e=>{pickImage(e.target.files[0]);e.target.value=''};
- $('#chatSearch').oninput=()=>renderChatList();let us;$('#userSearch').oninput=()=>{clearTimeout(us);us=setTimeout(renderContacts,250)};
+ $('#chatSearch').oninput=()=>renderChatList();$('#globalSearch').oninput=()=>{S.sTab='all';runSearch()};let us;$('#userSearch').oninput=()=>{clearTimeout(us);us=setTimeout(renderContacts,250)};
  const box=$('#msgs');box.addEventListener('scroll',()=>{updFab();if(box.scrollTop<120&&S.hasMore&&!S.loadingMore){S.loadingMore=true;S.msgLimit+=60;watchMsgs(S.open)}if(box.scrollHeight-box.scrollTop-box.clientHeight<90)API.markRead(S.open)},{passive:true});
  $('#fab').onclick=()=>{S.fabN=0;box.scrollTo({top:box.scrollHeight,behavior:'smooth'})};
  $('#pinbar').onclick=e=>{if(!e.target.closest('[data-act]'))jumpTo($('#pinbar').dataset.jump)};
