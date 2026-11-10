@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover,interactive-widget=resizes-content">
-<meta name="app-build" content="2026.11.10-7">
+<meta name="app-build" content="2026.11.10-8">
 <meta name="theme-color" content="#0b0c10">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
@@ -1089,6 +1089,98 @@ html[data-theme="light"] .rbar{background:rgba(255,255,255,.75)!important}
 .rcard .av,.pcard .av{visibility:visible!important;--s:26px!important;font-size:10px}
 .m .rcard,.m .pcard{animation:none}
 
+/* ===== v7 ===== */
+:root{--vvb:0px}
+#app,#login,#sheetWrap,#hold,#story,#rv{height:auto!important;bottom:var(--vvb)!important}
+#uplHold{left:0!important;top:auto!important;bottom:0;width:2px!important;height:2px!important;opacity:.01!important}
+/* avatar image: never distorted */
+.av img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:50%}
+/* notes: readable bigger bubble */
+.notes{padding-top:66px;gap:10px}
+.nt-i{width:88px}
+.nt-i .nm{max-width:88px}
+.nt-b{top:-60px;max-width:124px;min-width:64px;max-height:58px;padding:7px 11px;font-size:12.5px;line-height:1.35;-webkit-line-clamp:3;font-weight:500;border-radius:18px}
+.nt-b.big{top:0;max-height:none;max-width:280px;font-size:17px;-webkit-line-clamp:5}
+.nt-edit{padding-top:84px}
+/* small buttons */
+.btn.sm{height:34px;padding:0 12px;font-size:13.5px;border-radius:10px;flex:none}
+.btn.ic{width:44px;padding:0}
+.mem .btn.sm{margin-right:4px}
+/* follow UI */
+.pstats button{flex:1;display:flex;flex-direction:column;padding:10px 4px;border-radius:14px;background:var(--panel2);border:1px solid var(--line);transition:transform .15s,background .2s}
+.pstats button:active{transform:scale(.96)}
+.pstats b{font-size:19px;font-weight:700}.pstats span{font-size:12.5px;color:var(--dim)}
+.pbtns .btn{flex:1}.pbtns .btn.ic,.pbtns .btn.ghost:last-child:not(:first-child){flex:none}
+.pbtns .btn.ghost[data-dm]{flex:1}
+.plk{display:inline-grid;color:var(--dim)}.plk svg{width:16px;height:16px}
+.preq{display:flex;align-items:center;gap:10px;width:min(360px,calc(100% - 32px));margin:10px 0 0;padding:12px 14px;border-radius:14px;background:var(--accent-soft);color:var(--accent);font-weight:600}
+.preq span{flex:1;text-align:right}
+.plock{display:flex;flex-direction:column;align-items:center;gap:6px;padding:40px 24px;color:var(--dim);text-align:center}
+.plock svg{width:46px;height:46px;padding:10px;border-radius:50%;border:2px solid var(--line2);color:var(--ink)}
+.plock b{color:var(--ink);font-size:16px}
+.skc{display:block;aspect-ratio:1;background:linear-gradient(90deg,var(--panel2) 25%,var(--panel3) 50%,var(--panel2) 75%);background-size:200% 100%;animation:skel 1.3s infinite}
+.fmode{display:flex;gap:6px;padding:0 2px}
+.fmode button{display:flex;align-items:center;gap:6px;height:34px;padding:0 14px;border-radius:999px;background:var(--panel2);border:1px solid var(--line);color:var(--dim);font-weight:600;font-size:13.5px;transition:all .2s}
+.fmode button svg{width:16px;height:16px}
+.fmode button.on{background:var(--ink);color:var(--void);border-color:var(--ink)}
+/* cropper */
+.crop{display:flex;flex-direction:column;align-items:center;gap:12px}
+.cr-stage{position:relative;overflow:hidden;background:#000;border-radius:14px;touch-action:none;cursor:grab;margin:0 auto}
+.cr-stage.drag{cursor:grabbing}
+.cr-stage img{position:absolute;left:50%;top:50%;max-width:none;user-select:none;-webkit-user-drag:none;pointer-events:none}
+.cr-grid{position:absolute;inset:0;pointer-events:none;box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.7);border-radius:inherit;opacity:.0;transition:opacity .2s}
+.cr-stage.drag .cr-grid{opacity:1}
+.cr-grid i{position:absolute;background:rgba(255,255,255,.35)}
+.cr-grid i:nth-child(1){left:33.33%;top:0;bottom:0;width:1px}.cr-grid i:nth-child(2){left:66.66%;top:0;bottom:0;width:1px}.cr-grid i:nth-child(3){top:33.33%;left:0;right:0;height:1px}.cr-grid i:nth-child(4){top:66.66%;left:0;right:0;height:1px}
+.cr-stage.round::after{content:"";position:absolute;inset:0;border-radius:50%;box-shadow:0 0 0 999px rgba(0,0,0,.55),inset 0 0 0 2px rgba(255,255,255,.85);pointer-events:none}
+.cr-stage.round .cr-grid{border-radius:50%}
+.cr-r{display:flex;gap:6px;flex-wrap:wrap;justify-content:center}
+.cr-r button{height:32px;padding:0 12px;border-radius:999px;background:var(--panel2);border:1px solid var(--line);font-size:13px;font-weight:600;color:var(--dim)}
+.cr-r button.on{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.cr-z{display:flex;align-items:center;gap:10px;width:min(320px,100%);color:var(--dim)}
+.cr-z svg.sm{width:15px;height:15px}.cr-z input{flex:1}
+.cr-h{margin:0;color:var(--faint);font-size:12.5px}
+/* keyboard inside sheets: shrink previews */
+html.kb #sheet .nr-prev,html.kb #sheet .nr-v{max-height:20vh}
+html.kb #sheet .stc{max-height:24vh}
+html.kb #sheet .np-img img{max-height:18vh}
+html.kb #sheet{max-height:calc(100% - 8px)}
+#sheet .sb{scroll-padding:80px}
+
+/* ===== desktop layout ===== */
+@media (min-width:901px){
+ #app[data-pane="posts"],#app[data-pane="reels"],#app[data-pane="search"],#app[data-pane="profile"]{grid-template-columns:248px minmax(0,1fr) 0 auto}
+ #app[data-pane="posts"] #chatCol,#app[data-pane="reels"] #chatCol,#app[data-pane="search"] #chatCol,#app[data-pane="profile"] #chatCol{display:none}
+ #app[data-pane="posts"] #listCol,#app[data-pane="reels"] #listCol,#app[data-pane="search"] #listCol,#app[data-pane="profile"] #listCol{grid-column:2;border-left:0;background:transparent}
+ #pane-posts .phead,#pane-posts .feed,#pane-search .phead,#searchRes>*,#myProfile{width:100%;max-width:640px;margin-inline:auto}
+ #pane-posts .phead{padding-inline:12px}
+ #pane-posts .feed{padding-top:8px}
+ #pane-search .explore{max-width:900px;margin-inline:auto;gap:4px}
+ #searchRes .sec-t,#searchRes .sugg,#searchRes .mem,#searchRes .feed{max-width:900px;margin-inline:auto}
+ #myProfile{max-width:900px}
+ #myProfile .pcover{border-radius:0 0 28px 28px}
+ #myProfile .pgrid{gap:4px}
+ #pane-reels{background:#000}
+ #pane-reels .reels{scroll-padding:0}
+ #pane-reels .reel{width:min(100%,calc((100vh - 0px)*.5625));margin-inline:auto;border-radius:0}
+ #pane-reels .reels-top{left:auto;right:24px;flex-direction:row-reverse;gap:14px}
+ .reels-top b{color:#fff}
+ .phead h1{font-size:28px}
+ #pane-posts .stories{padding-inline:12px}
+ .hi{padding-top:14px}
+ #side .nav button{height:44px}
+ #infoCol .prof2{padding-bottom:30px}
+ #sheet{max-height:min(760px,calc(100vh - 40px))}
+}
+@media (min-width:901px) and (max-width:1240px){
+ #app[data-pane="posts"],#app[data-pane="reels"],#app[data-pane="search"],#app[data-pane="profile"]{grid-template-columns:78px minmax(0,1fr) 0 auto}
+}
+@media (min-width:901px){#pane-reels .reel{border-radius:14px;height:calc(100% - 24px);margin-top:12px;margin-bottom:12px;scroll-snap-align:center}#pane-reels .rl-mute{top:14px}}
+.nt-b{max-height:none;max-width:136px;font-size:13px;top:-62px}
+.notes{padding-top:70px}
+.cr-z input{direction:ltr}
+@media (min-width:901px){#pane-search .explore{grid-template-columns:repeat(4,1fr);max-width:900px}}
+
 </style>
 </head>
 <body>
@@ -1236,7 +1328,7 @@ html[data-theme="light"] .rbar{background:rgba(255,255,255,.75)!important}
    <div class="list scroll" id="contactList"></div>
   </div>
   <div class="pane on" id="pane-posts">
-   <div class="phead"><div class="row"><div style="min-width:0"><h1>المنشورات</h1></div><button class="ib acc" data-act="newpost" title="منشور جديد"><svg class="i"><use href="#i-plus"/></svg></button></div></div>
+   <div class="phead"><div class="row"><div style="min-width:0"><h1>الرئيسية</h1></div><button class="ib acc" data-act="newpost" title="منشور جديد"><svg class="i"><use href="#i-plus"/></svg></button></div></div>
    <div class="scroll feed" id="feed"></div>
   </div>
   <div class="pane" id="pane-search">
@@ -1512,7 +1604,7 @@ const API={
  react(cid,m,k){const R=m.reactions||{};const has=(R[k]||[]).includes(S.me);const p={};Object.keys(R).forEach(x=>{if(x!==k&&(R[x]||[]).includes(S.me))p['reactions.'+x]=OP.remove(S.me)});p['reactions.'+k]=has?OP.remove(S.me):OP.union(S.me);store.update(`chats/${cid}/messages/${m.id}`,p);if(!has)SND.play('rec')},
  _rt:{},markRead(cid){const c=S.chatMap[cid];if(!c||!S.me)return;const need=unreadOf(c)>0||(c.lastMsg&&c.lastMsg.from!==S.me&&(c.reads&&c.reads[S.me]||0)<c.lastMsg.at);if(!need||now()-(this._rt[cid]||0)<1200)return;this._rt[cid]=now();store.update('chats/'+cid,{['unread.'+S.me]:0,['reads.'+S.me]:OP.now()})},
  _tt:0,typing(cid){if(now()-this._tt<3000)return;this._tt=now();store.update('chats/'+cid,{['typing.'+S.me]:OP.now()})},
- async openDM(uid){if(uid===S.me)return openChat(await API.ensureSaved());const cid=await ensureDM(uid);
+ async openDM(uid){if(uid===S.me)return openChat(await API.ensureSaved());if(isBlocked(uid))return toast('حاظر هذا الشخص — ألغِ الحظر أول');{const u=U(uid);if(u.dmPolicy==='following'&&!S.chatMap[dmId(S.me,uid)]&&S.fol.followers.get(uid)!=='ok'&&fState(uid)!=='ok'){const ex=await store.get('chats/'+dmId(S.me,uid)).catch(()=>null);if(!ex)return toast('هذا الشخص يستقبل رسائل بس من الناس اللي يتابعهم')}}const cid=await ensureDM(uid);
   const h=S.prefs.hidden||{};if(h[cid])store.set('prefs/'+S.me,{hidden:{[cid]:OP.del()}},{merge:true});openChat(cid)},
  async ensureSaved(){const id=savedId();if(!S.chatMap[id]&&!await store.get('chats/'+id))await store.set('chats/'+id,{type:'saved',members:[S.me],createdAt:OP.now(),updatedAt:OP.now(),unread:{},reads:{}});return id},
  async createGroup(title,members,photo,opts){const id=store.newId('chats');await store.set('chats/'+id,{type:'group',title,photo:photo||'',members:[S.me,...members],admins:[S.me],owner:S.me,createdAt:OP.now(),updatedAt:OP.now(),unread:{},reads:{},...optsToDoc(opts||{})});
@@ -1525,7 +1617,7 @@ const API={
   if(store.local){rows=(await store.query('users',{})).filter(u=>!q||(u.username||'').includes(q.toLowerCase())||(u.name||'').includes(q))}
   else if(!q){rows=await store.query('users',{orderBy:['createdAt','desc'],limit:40})}
   else{const lq=q.toLowerCase();const [a,b]=await Promise.all([store.query('users',{where:[['username','>=',lq],['username','<=',lq+'']],limit:20}),store.query('users',{where:[['name','>=',q],['name','<=',q+'']],limit:20})]);const m={};[...a,...b].forEach(u=>m[u.id]=u);rows=Object.values(m)}
-  rows.forEach(u=>{S.users[u.id]={...(S.users[u.id]||{}),...u}});return rows.filter(u=>u.id!==S.me)}
+  rows.forEach(u=>{S.users[u.id]={...(S.users[u.id]||{}),...u}});return rows.filter(u=>u.id!==S.me&&!isBlocked(u.id))}
 };
 
 /* ================= بوتات الوضع التجريبي ================= */
@@ -1593,7 +1685,7 @@ async function startApp(uid){S.me=uid;$('#login').classList.add('hide');$('#app'
  document.addEventListener('visibilitychange',()=>{presence(!document.hidden);if(!document.hidden&&S.open)API.markRead(S.open)});
  addEventListener('pagehide',()=>presence(false));
  setInterval(()=>{tickClock();schedule()},15000);setInterval(()=>{const sig=S.chats.map(c=>typers(c).join()).join('|');if(sig!==S._tsig){S._tsig=sig;schedule()}},1500);
- tickClock();renderSettings();renderFolders();watchFeed();watchNotes();setNav('posts');
+ tickClock();renderSettings();renderFolders();watchFeed();watchNotes();watchFollows();setNav('posts');
  const hh=decodeURIComponent(location.hash||'');if(hh)setTimeout(()=>handleHash(hh),600);if(/^#(join|u|r)=/.test(hh))history.replaceState(null,'',location.pathname)}
 function presence(on){if(!S.me)return;store.update('users/'+S.me,{online:on,lastSeen:OP.now()})}
 function tickClock(){const d=new Date();$$('[data-clock]').forEach(e=>e.textContent=hm()+' '+ampm());$$('[data-date]').forEach(e=>e.textContent=d.toLocaleDateString('ar-IQ-u-nu-latn',{weekday:'long',day:'numeric',month:'long'}))}
@@ -1613,7 +1705,7 @@ function onChats(){S.chats.forEach(c=>{const lm=c.lastMsg;if(!lm)return;const pr
 function renderUnread(){let n=0;S.chats.forEach(c=>{if(!isMuted(c.id)&&visible(c))n+=unreadOf(c)>0?1:0});$$('[data-unread]').forEach(e=>{e.textContent=n>99?'99+':n;e.classList.toggle('hide',!n)});document.title=(n?`(${n}) `:'')+'AM CHAT';try{navigator.setAppBadge&&(n?navigator.setAppBadge(n):navigator.clearAppBadge())}catch(e){}}
 
 /* ================= قائمة المحادثات ================= */
-function visible(c){if(c.type==='dm'&&!c.lastMsg&&c.by!==S.me)return false;const h=S.prefs.hidden&&S.prefs.hidden[c.id];if(h&&(c.updatedAt||0)<=h)return false;return true}
+function visible(c){if(c.type==='dm'&&(c.members||[]).some(u=>u!==S.me&&isBlocked(u)))return false;if(c.type==='dm'&&!c.lastMsg&&c.by!==S.me)return false;const h=S.prefs.hidden&&S.prefs.hidden[c.id];if(h&&(c.updatedAt||0)<=h)return false;return true}
 function sortedChats(){const pins=S.prefs.pins||[];return S.chats.filter(visible).sort((a,b)=>{const pa=pins.indexOf(a.id),pb=pins.indexOf(b.id);if(pa>=0||pb>=0)return (pa<0?99:pa)-(pb<0?99:pb);return (b.updatedAt||0)-(a.updatedAt||0)})}
 const FOLDERS=[['all','الكل'],['unread','غير مقروءة'],['dm','شخصية'],['group','مجموعات']];
 function inFolder(c,f){return f==='all'||(f==='unread'?unreadOf(c)>0:f==='dm'?c.type!=='group':c.type==='group')}
@@ -1634,7 +1726,7 @@ function pushNav(k){try{history.pushState({k},'')}catch(e){}S.nav.push(k)}
 const NAVF={rv:()=>doCloseRV(),chat:()=>doCloseChat(),info:()=>doCloseInfo(),story:()=>doCloseStory(),lb:()=>doCloseLB()};
 function popNav(k){if(S.nav[S.nav.length-1]===k)history.back();else{const i=S.nav.lastIndexOf(k);if(i>=0)S.nav.splice(i,1);NAVF[k]&&NAVF[k]()}}
 addEventListener('popstate',()=>{const k=S.nav.pop();NAVF[k]&&NAVF[k]()});
-async function openChat(cid){if(!S.chatMap[cid]){const c=await store.get('chats/'+cid);if(!c)return toast('المحادثة مو موجودة','bad');S.chatMap[cid]={id:cid,...c}}
+async function openChat(cid){if(!isPhone()&&!['chats','contacts','settings'].includes($('#app').dataset.pane))setNav('chats');if(!S.chatMap[cid]){const c=await store.get('chats/'+cid);if(!c)return toast('المحادثة مو موجودة','bad');S.chatMap[cid]={id:cid,...c}}
  const was=S.open;if(was===cid){closeSheet();return}S.open=cid;if(!was&&isPhone())pushNav('chat');
  if(S.info&&S.info.type!=='chat'||S.info&&S.info.id!==cid){if(S.nav.includes('info'))S.nav.splice(S.nav.lastIndexOf('info'),1);doCloseInfo()}
  $('#app').dataset.open=cid;closeSheet();hideCtx();
@@ -1857,7 +1949,7 @@ function groupSheet(step=1){const G=S.newGroup=S.newGroup||{sel:new Set(),title:
  else{openSheet('مجموعة جديدة',`<div style="display:flex;flex-direction:column;align-items:center;gap:10px;margin:6px 0 14px"><label class="av" id="gAv" style="--s:92px;--h:${hue('g'+G.sel.size)};cursor:pointer">${G.photo?`<img src="${G.photo}">`:ico('camera')}<input type="file" accept="image/*" class="hide" id="gAvIn"></label><small style="color:var(--faint)">صورة المجموعة (اختياري)</small></div>
   <div class="field"><label>اسم المجموعة</label><input class="inp" id="gT" maxlength="60" placeholder="مثلاً: شلة الكلية" value="${esc(G.title)}"></div>${groupOptsHTML(G.opts=G.opts||{})}<div class="sec-t">الأعضاء (${G.sel.size})</div>${[...G.sel].map(id=>userRow(U(id))).join('')}`,
   `<button class="btn ghost" id="gBack">رجوع</button><button class="btn pri" style="flex:1" id="gMk">${ico('check')} سوّي المجموعة</button>`);
-  $('#gAvIn').onchange=async e=>{const f=e.target.files[0];if(!f)return;G.photo=await compressImg(f,256,.8);$('#gAv').innerHTML=`<img src="${G.photo}"><input type="file" accept="image/*" class="hide" id="gAvIn">`;groupSheet(2)};
+  $('#gAvIn').onchange=async e=>{const f=e.target.files[0];if(!f)return;G.title=$('#gT').value;const d=await cropImage(f,{...AV_CROP,title:'صورة المجموعة',back:()=>groupSheet(2)});if(d)G.photo=d;groupSheet(2)};
   $('#gT').oninput=e=>G.title=e.target.value;bindGroupOpts(G.opts);$('#gBack').onclick=()=>groupSheet(1);
   $('#gMk').onclick=async()=>{const t=$('#gT').value.trim();if(t.length<2){$('#gT').classList.add('err');return toast('اكتب اسم المجموعة','bad')}$('#gMk').disabled=true;const id=await API.createGroup(t,[...G.sel],G.photo,G.opts);S.newGroup=null;closeSheet();setNav('chats');openChat(id);toast('انسوّت المجموعة 🎉')};if(!isTouch)$('#gT').focus()}}
 function forwardSheet(m){const list=sortedChats().filter(c=>(c.members||[]).includes(S.me));openSheet('إعادة توجيه إلى…',list.map(c=>`<div class="mem" data-fwdto="${c.id}">${chatAv(c,42)}<div class="x"><div class="nm">${esc(chatInfo(c).title)}</div></div></div>`).join(''));
@@ -1884,7 +1976,7 @@ function renderInfo(){const o=S.info;if(!o)return;const b=$('#infoBody');const k
    ${admin||canAdd?`<button class="opt" data-act="addmem"><span class="ic">${ico('uplus')}</span>إضافة أعضاء</button>`:''}${c.public&&member?`<button class="opt" data-act="ginvite"><span class="ic">${ico('link')}</span>رابط الدعوة</button>`:''}<div class="sec-t">الأعضاء</div>${[...(c.members||[])].sort((a,b)=>((c.admins||[]).includes(b)-(c.admins||[]).includes(a))||(isOn(U(b))-isOn(U(a)))).map(id=>{const u=U(id);const ad=(c.admins||[]).includes(id);
     return userRow(u,{sub:id===S.me?'إنت':seenTxt(u),mem:1,right:(ad?'<span class="pill acc">مشرف</span>':'')})}).join('')}`}
   const med=sharedMedia();if(med.length&&c.type!=='group')h+=`<div class="sec-t">الصور المشتركة</div><div class="mgrid">${med.map(m=>`<img src="${m.media}" data-lb>`).join('')}</div>`;else if(med.length)h+=`<div class="sec-t">الصور المشتركة</div><div class="mgrid">${med.map(m=>`<img src="${m.media}" data-lb>`).join('')}</div>`}
- b.innerHTML=h;b.scrollTop=keep;const gp=$('#gPhotoIn');if(gp)gp.onchange=async e=>{const f=e.target.files[0];if(!f)return;const d=await compressImg(f,256,.8);store.update('chats/'+o.id,{photo:d});API.send(o.id,{type:'system',sys:'photo'})}}
+ b.innerHTML=h;b.scrollTop=keep;const gp=$('#gPhotoIn');if(gp)gp.onchange=async e=>{const f=e.target.files[0];if(!f)return;const d=await cropImage(f,{...AV_CROP,title:'صورة المجموعة'});if(!d)return;closeSheet();store.update('chats/'+o.id,{photo:d});API.send(o.id,{type:'system',sys:'photo'})}}
 function userHero(u){return `<div class="ihero">${avHTML({id:u.id,name:u.name,photo:u.photo},104,isOn(u))}<h3>${esc(u.name)}${u.verified?ico('vf','vf'):''}</h3><div class="st ${isOn(u)?'on':''}">${esc(seenTxt(u))}</div></div>`}
 function userRows(u){return `<div class="card" style="padding:4px;margin-bottom:14px"><div class="irow">${ico('at')}<div><div class="v num" style="text-align:right">@${esc(u.username||'')}</div><div class="k">اسم المستخدم</div></div></div>${u.bio?`<div class="irow">${ico('info')}<div><div class="v">${esc(u.bio)}</div><div class="k">النبذة</div></div></div>`:''}</div>`}
 
@@ -1902,12 +1994,15 @@ function renderSettings(){const m=S.meDoc||{};const mode=ls.get('amc-mode','dark
  <div class="card"><h4>${ico('bell')} الإشعارات والصوت</h4>
   <div class="sw-row"><span>أصوات الرسائل<small>صوت خفيف عند الإرسال والاستلام</small></span><button class="sw ${SND.on?'on':''}" data-act="sound"></button></div>
   ${(()=>{const st=pushState();const T={demo:'غير متوفرة بهاي النسخة',nosetup:'غير متوفرة حالياً','ios-home':'لازم تضيف التطبيق للشاشة الرئيسية أول',unsupported:'جهازك أو متصفحك ما يدعمها',denied:'مرفوضة — فعّلها من إعدادات الجهاز',ask:'توصلك الرسائل حتى لو التطبيق مسدود',granted:'مسموحة — دوس تفعيل حتى تكمل',on:'مفعّلة ✓ توصلك حتى لو التطبيق مسدود'};const btn=['ask','granted','ios-home'].includes(st)?`<button class="btn tint" data-act="notif" style="height:34px">${st==='ios-home'?'شلون؟':'تفعيل'}</button>`:st==='on'?'<button class="btn tint" data-act="pushtest" style="height:34px">تجربة</button>':'';return `<div class="sw-row"><span>الإشعارات<small>${T[st]}</small></span>${btn}</div>`})()}</div>
- <div class="card"><h4>${ico('lock')} الخصوصية</h4><div class="sw-row"><span>إخفاء آخر ظهور<small>ما يشوفون الناس وكت آخر دخول إلك</small></span><button class="sw ${m.hideSeen?'on':''}" data-act="hideseen"></button></div></div>
+ <div class="card"><h4>${ico('lock')} الخصوصية</h4><div class="sw-row"><span>حساب خاص<small>بس اللي توافق عليهم يشوفون منشوراتك وريلزاتك وقصصك</small></span><button class="sw ${m.private?'on':''}" data-act="privacc"></button></div>
+ <div class="sw-row"><span>إخفاء آخر ظهور<small>ما يشوفون الناس وكت آخر دخول إلك</small></span><button class="sw ${m.hideSeen?'on':''}" data-act="hideseen"></button></div>
+ <div class="sw-row" style="flex-wrap:wrap"><span>منو يگدر يراسلني<small>محادثات جديدة</small></span><div class="seg sm" style="width:auto;flex:none"><button data-dmp="all" class="${m.dmPolicy!=='following'?'on':''}">الكل</button><button data-dmp="following" class="${m.dmPolicy==='following'?'on':''}">اللي أتابعهم</button></div></div>
+ <button class="opt" data-act="freqs"><span class="ic">${ico('uplus')}</span>طلبات المتابعة ${reqCount()?`<b class="badge num" style="margin-right:auto">${reqCount()}</b>`:''}</button><button class="opt" data-act="blocked"><span class="ic">${ico('ban')}</span>المحظورين <span class="num" style="margin-right:auto;color:var(--faint)">${(S.prefs.blocked||[]).length||''}</span></button></div>
  <div class="card"><h4>${ico('info')} الحساب</h4>${DEBUG?`<div class="sw-row"><span>الإصدار</span><span class="num" style="color:var(--dim);font-size:13px">${APP.build}${DEMO?' · demo':''}</span></div>`:''}
   <div class="sw-row"><span>الاتصال</span><span class="pill ok" data-synct>متصل ✓</span></div>
   <button class="btn danger block" style="margin-top:10px" data-act="logout">${ico('logout')} تسجيل خروج</button></div>
  <div class="credit" data-dbg>تصميم وبرمجة <b>علي مالك</b></div>`;
- $('#avIn').onchange=async e=>{const f=e.target.files[0];if(!f)return;const d=await compressImg(f,256,.8);store.update('users/'+S.me,{photo:d});toast('تغيّرت الصورة ✓')};
+ $('#avIn').onchange=async e=>{const f=e.target.files[0];e.target.value='';if(!f)return;const d=await cropImage(f,AV_CROP);if(!d)return;closeSheet();store.update('users/'+S.me,{photo:d});toast('تغيّرت الصورة ✓')};
  $('#accIn').oninput=e=>{applyTheme(e.target.value)};$('#accIn').onchange=e=>{store.update('users/'+S.me,{accent:e.target.value});renderSettings()};
  $('#fsIn').oninput=e=>{ls.set('amc-fs',e.target.value);document.documentElement.style.setProperty('--msg-fs',e.target.value+'px');$$('.preview-bubbles .bub').forEach(b=>b.style.fontSize=e.target.value+'px')};$('#fsIn').onchange=()=>renderSettings()}
 
@@ -1929,7 +2024,7 @@ async function renderContacts(){const q=$('#userSearch').value;const box=$('#con
 const ST_BG=['linear-gradient(150deg,#ec1c32,#5e0a16)','linear-gradient(150deg,#2f8cff,#14307a)','linear-gradient(150deg,#8b5cf6,#db2777)','linear-gradient(150deg,#18b6a4,#0b4a5e)','linear-gradient(150deg,#f59e0b,#c2410c)','linear-gradient(150deg,#1f2937,#0b0c10)'];
 const ST_DUR=6000;S.stories=[];S.seenSt={};try{S.seenSt=JSON.parse(ls.get('amc-seenst','{}'))}catch(e){}
 function watchStories(){S.unsub.push(store.watchQuery('stories',{where:[['exp','>',now()]],limit:300},list=>{S.stories=list;renderStories();schedule()}));setInterval(()=>{renderStories();schedule()},60000)}
-function storyCircle(){const s=new Set([S.me]);S.chats.forEach(c=>(c.members||[]).forEach(u=>s.add(u)));return s}
+function storyCircle(){const s=new Set([S.me]);S.chats.forEach(c=>(c.members||[]).forEach(u=>s.add(u)));S.fol.following.forEach((st,u)=>{if(st==='ok')s.add(u)});[...s].forEach(u=>{if(u!==S.me&&!canSee(u))s.delete(u)});return s}
 const stSeen=s=>s.uid===S.me||!!(s.views&&s.views[S.me])||!!S.seenSt[s.id];
 function storyGroups(){const t=now(),ok=storyCircle(),g={};S.stories.filter(s=>s.exp>t&&ok.has(s.uid)).sort((a,b)=>(a.at||0)-(b.at||0)).forEach(s=>(g[s.uid]=g[s.uid]||[]).push(s));
  return Object.entries(g).map(([uid,items])=>({uid,items,unseen:items.some(s=>!stSeen(s)),last:(items[items.length-1].at||0)}))}
@@ -1939,12 +2034,12 @@ function renderStories(){const box=$('#stories');if(!box||!S.me)return;const min
  let h=`<div class="st-i" data-st="${mine?S.me:''}" ${mine?'':'data-act="addstory"'}><div class="ring ${mine?'':'none'}" style="${mine?'':'background:transparent'}">${avHTML({id:S.me,name:m.name,photo:m.photo},54)}<span class="add" data-act="addstory">${ico('plus')}</span></div><span class="nm">قصتك</span></div>`;
  h+=orderedGroups().map(g=>{const u=U(g.uid);return `<div class="st-i" data-st="${g.uid}"><div class="ring ${g.unseen?'new':''}">${avHTML({id:u.id,name:u.name,photo:u.photo},54)}</div><span class="nm">${esc(firstName(u.name))}</span></div>`}).join('');box.innerHTML=h}
 const SV={};
-function openStories(uid){const gs=storyGroups();const map={};gs.forEach(g=>map[g.uid]=g.items);if(!map[uid])return;SV.order=uid===S.me?[S.me]:orderedGroups().map(g=>g.uid);if(!SV.order.includes(uid))SV.order=[uid];SV.u=SV.order.indexOf(uid);SV.map=map;
+function openStories(uid){SV.lastU=null;const gs=storyGroups();const map={};gs.forEach(g=>map[g.uid]=g.items);if(!map[uid])return;SV.order=uid===S.me?[S.me]:orderedGroups().map(g=>g.uid);if(!SV.order.includes(uid))SV.order=[uid];SV.u=SV.order.indexOf(uid);SV.map=map;
  const items=map[uid];let i=uid===S.me?0:items.findIndex(s=>!stSeen(s));if(i<0)i=0;$('#story').classList.add('on');pushNav('story');showStory(i)}
 function showStory(i){const uid=SV.order[SV.u],items=SV.map[uid]||[];
  if(i<0){if(SV.u>0){SV.u--;const it=SV.map[SV.order[SV.u]];return showStory(it.length-1)}i=0}
  if(i>=items.length){if(SV.u<SV.order.length-1){SV.u++;return showStory(0)}return closeStory()}
- SV.i=i;const s=items[i],u=U(uid),mine=uid===S.me;SV.cur=s;
+ const pu=SV.lastU,pi=SV.i;SV.i=i;const s=items[i],u=U(uid),mine=uid===S.me;SV.cur=s;SV.lastU=uid;
  $('#stBars').innerHTML=items.map((x,k)=>`<i><b style="width:${k<i?100:0}%"></b></i>`).join('');
  $('#stAv').innerHTML=avHTML({id:u.id,name:u.name,photo:u.photo},38);$('#stName').textContent=mine?'قصتك':u.name;$('#stTime').textContent=agoTxt(s.at);$('#stMore').classList.toggle('hide',!mine);
  const md=$('#stMedia');const fr=$('#story .frame');SV.ready=false;
@@ -1955,6 +2050,8 @@ function showStory(i){const uid=SV.order[SV.u],items=SV.map[uid]||[];
  else ft.innerHTML=`<input id="stReply" placeholder="رد على ${esc(firstName(u.name))}…" enterkeyhint="send" autocomplete="off">${['❤️','🔥','😂','😮'].map(e=>`<button class="qr" data-stq="${e}">${e}</button>`).join('')}`;
  const ri=$('#stReply');if(ri){ri.onfocus=()=>{SV.paused=true};ri.onblur=()=>{SV.paused=false};ri.onkeydown=e=>{if(e.key==='Enter'&&ri.value.trim()){e.preventDefault();storyReply(ri.value.trim());ri.value='';ri.blur()}}}
  if(!mine&&!stSeen(s)){S.seenSt[s.id]=now();ls.set('amc-seenst',JSON.stringify(S.seenSt));store.update('stories/'+s.id,{['views.'+S.me]:OP.now()});renderStories()}
+ if(pu&&pu!==uid)storyTrans(SV.order.indexOf(uid)>SV.order.indexOf(pu)?1:-1);else if(pu)mediaFade();
+ {const nx=items[i+1]||(SV.map[SV.order[SV.u+1]]||[])[0];if(nx&&nx.type==='image'){const pi2=new Image();pi2.src=nx.media}}
  SV.elapsed=0;SV.last=null;SV.paused=false;$('#story').classList.remove('paused');stLoop()}
 function stLoop(){cancelAnimationFrame(SV.raf);const tick=t=>{if(!$('#story').classList.contains('on'))return;const run=!SV.paused&&SV.ready&&!document.hidden&&!$('#sheetWrap').classList.contains('on');if(SV.last!=null&&run)SV.elapsed+=t-SV.last;SV.last=t;
   const p=Math.min(1,SV.elapsed/ST_DUR);const b=$$('#stBars b')[SV.i];if(b)b.style.width=(p*100)+'%';if(p>=1)return showStory(SV.i+1);SV.raf=requestAnimationFrame(tick)};SV.raf=requestAnimationFrame(tick)}
@@ -2049,16 +2146,19 @@ function postHTML(p){const u=U(p.uid),mine=p.uid===S.me,lk=p.likes||[],liked=lk.
 function keyed(box,items){const old={};[...box.children].forEach(el=>{if(el.dataset.key)old[el.dataset.key]=el});items.forEach((it,i)=>{let el=old[it.key];if(!el||el.dataset.sig!==it.sig){const t=document.createElement('div');t.innerHTML=it.html;const n=t.firstElementChild;n.dataset.key=it.key;n.dataset.sig=it.sig;if(el)el.replaceWith(n);el=n}delete old[it.key];if(box.children[i]!==el)box.insertBefore(el,box.children[i]||null)});Object.values(old).forEach(e=>e.remove())}
 const postSig=p=>{const u=U(p.uid);return [(p.likes||[]).join(),p.cc,p.text,u.name,(u.photo||'').length,p.at?1:0].join('|')};
 function renderFeed(){const box=$('#feed');if(!box||!S.me)return;const m=S.meDoc||{};const items=[{key:'hi',sig:greet()+(m.name||''),html:`<div class="hi"><span>${greet()}</span><b>${esc(firstName(m.name))}</b></div>`},{key:'stories',sig:'s',html:'<div class="stories" id="stories"></div>'},{key:'new',sig:(m.name||'')+(m.photo||'').length,html:`<div class="newpost" data-act="newpost">${avHTML({id:S.me,name:m.name,photo:m.photo},40)}<span>شنو ببالك يا ${esc(firstName(m.name))}؟</span>${ico('image')}</div>`}];
- S.posts.forEach(p=>items.push({key:p.id,sig:postSig(p),html:postHTML(p)}));const hadStories=!!$('#stories');if(!S.feedLoaded){for(let k=0;k<2;k++)items.push({key:'sk'+k,sig:'sk',html:'<div class="sk"><div class="h"><i></i><i></i></div><i class="b"></i></div>'})}else if(!S.posts.length)items.push({key:'empty',sig:'e',html:`<div class="empty">${ico('grid')}<div>ماكو منشورات لحد الآن — كون أول واحد ينشر</div><button class="btn tint" data-act="newpost">انشر شي</button></div>`});keyed(box,items);if(!hadStories||!$('#stories').innerHTML)renderStories()}
+ items.push({key:'fm',sig:S.feedMode||'all',html:`<div class="fmode"><button data-fmode="all" class="${S.feedMode!=='following'?'on':''}">${ico('grid')} الكل</button><button data-fmode="following" class="${S.feedMode==='following'?'on':''}">${ico('users')} اللي أتابعهم</button></div>`});
+ const vis=S.posts.filter(p=>canSee(p.uid)&&(S.feedMode!=='following'||p.uid===S.me||fState(p.uid)==='ok'));vis.forEach(p=>items.push({key:p.id,sig:postSig(p),html:postHTML(p)}));const hadStories=!!$('#stories');if(!S.feedLoaded){for(let k=0;k<2;k++)items.push({key:'sk'+k,sig:'sk',html:'<div class="sk"><div class="h"><i></i><i></i></div><i class="b"></i></div>'})}else if(!vis.length)items.push({key:'empty'+(S.feedMode||''),sig:'e',html:`<div class="empty">${ico('grid')}<div>${S.feedMode==='following'?'اللي تتابعهم ما نشروا شي لحد الآن — دوّر على ناس وتابعهم':'ماكو منشورات لحد الآن — كون أول واحد ينشر'}</div><button class="btn tint" data-act="newpost">انشر شي</button></div>`});keyed(box,items);if(!hadStories||!$('#stories').innerHTML)renderStories()}
 function findPost(id){return S.posts.find(p=>p.id===id)||Object.values(S.ucache).flatMap(c=>c.posts||[]).find(p=>p.id===id)}
 function likePost(id,force){const p=findPost(id);if(!p)return;const on=(p.likes||[]).includes(S.me);if(force&&on)return;store.update('posts/'+id,{likes:on?OP.remove(S.me):OP.union(S.me)});if(!on)vib(10)}
 function burst(el){const b=el.querySelector('.burst');if(!b)return;b.classList.remove('go');void b.offsetWidth;b.classList.add('go')}
-function newPostSheet(){let img='',bg=0;openSheet('منشور جديد',`<div class="np-w"><textarea class="inp" id="npT" rows="4" maxlength="2000" placeholder="شنو ببالك؟"></textarea><div id="npPrev"></div><div class="bgs" id="npBg">${ST_BG.map((b,i)=>`<button style="background:${b}" data-bg="${i}" class="${i?'':'on'}"></button>`).join('')}</div>
- <button class="opt" id="npImg"><span class="ic">${ico('image')}</span>أضف صورة</button><input type="file" accept="image/*" class="hide" id="npFile"></div>`,`<button class="btn ghost" data-act="closesheet">إلغاء</button><button class="btn pri" style="flex:1" id="npGo">${ico('send')} نشر</button>`);
- $$('#npBg button').forEach(b=>b.onclick=()=>{bg=+b.dataset.bg;$$('#npBg button').forEach(x=>x.classList.toggle('on',x===b))});
- $('#npImg').onclick=()=>$('#npFile').click();$('#npFile').onchange=async e=>{const f=e.target.files[0];if(!f)return;try{img=await compressImg(f,store.local?900:1280,store.local?.7:.78)}catch(x){return toast('ما گدرت أقرا الصورة','bad')}
-  $('#npPrev').innerHTML=`<div class="np-img"><img src="${img}"><button class="ib" id="npRm">${ico('close')}</button></div>`;$('#npBg').classList.add('hide');$('#npRm').onclick=()=>{img='';$('#npPrev').innerHTML='';$('#npBg').classList.remove('hide')}};
- $('#npGo').onclick=()=>{const t=$('#npT').value.trim();if(!img&&!t)return toast('اكتب شي أو أضف صورة');const id=store.newId('posts');store.set('posts/'+id,{uid:S.me,type:img?'image':'text',media:img,text:t,bg,at:OP.now(),likes:[],cc:0});closeSheet();toast('انتشر منشورك ✨');SND.play('send');if(!$('#pane-posts').classList.contains('on'))setNav('posts')};setTimeout(()=>!isTouch&&$('#npT').focus(),200)}
+function newPostSheet(st){st=st||{img:'',bg:0,text:''};openSheet('منشور جديد',`<div class="np-w"><textarea class="inp" id="npT" rows="4" maxlength="2000" placeholder="شنو ببالك؟">${esc(st.text)}</textarea>
+ ${st.img?`<div class="np-img"><img src="${st.img}"><button class="ib" id="npRm">${ico('close')}</button></div>`:`<div class="bgs" id="npBg">${ST_BG.map((b,i)=>`<button style="background:${b}" data-bg="${i}" class="${i===st.bg?'on':''}"></button>`).join('')}</div>`}
+ <button class="opt" id="npImg"><span class="ic">${ico('image')}</span>${st.img?'غيّر الصورة':'أضف صورة'}</button><input type="file" accept="image/*" class="hide" id="npFile"></div>`,`<button class="btn ghost" data-act="closesheet">إلغاء</button><button class="btn pri" style="flex:1" id="npGo">${ico('send')} نشر</button>`);
+ $$('#npBg button').forEach(b=>b.onclick=()=>{st.bg=+b.dataset.bg;$$('#npBg button').forEach(x=>x.classList.toggle('on',x===b))});
+ $('#npImg').onclick=()=>$('#npFile').click();
+ $('#npFile').onchange=async e=>{const f=e.target.files[0];if(!f)return;st.text=$('#npT').value;const d=await cropImage(f,{ratios:POST_RATIOS,out:store.local?900:1350,title:'قص الصورة',back:()=>newPostSheet(st)});if(d)st.img=d;newPostSheet(st)};
+ const rm=$('#npRm');if(rm)rm.onclick=()=>{st.text=$('#npT').value;st.img='';newPostSheet(st)};
+ $('#npGo').onclick=()=>{const t=$('#npT').value.trim(),img=st.img;if(!img&&!t)return toast('اكتب شي أو أضف صورة');const id=store.newId('posts');store.set('posts/'+id,{uid:S.me,type:img?'image':'text',media:img,text:t,bg:st.bg,at:OP.now(),likes:[],cc:0});closeSheet();toast('انتشر منشورك ✨');SND.play('send');if(!$('#pane-posts').classList.contains('on'))setNav('posts')};if(!isTouch)setTimeout(()=>$('#npT').focus(),200)}
 function postMore(id){confirmSheet('حذف المنشور','تريد تحذف هذا المنشور؟','حذف',()=>{store.del('posts/'+id);toast('انحذف المنشور')})}
 function commentsSheet(kind,id){const coll=`${kind}/${id}/comments`;openSheet('التعليقات',`<div id="cmList" class="cm-list"><div class="empty" style="padding:20px">ديحمّل…</div></div>`,`<input class="inp" id="cmIn" placeholder="اكتب تعليق…" maxlength="500" enterkeyhint="send" style="flex:1"><button class="btn pri" id="cmGo" style="width:48px;padding:0">${ico('send')}</button>`);
  const owner=(kind==='posts'?findPost(id):S.reels.concat(Object.values(S.ucache).flatMap(c=>c.reels||[])).find(r=>r.id===id)||{}).uid;
@@ -2082,7 +2182,7 @@ function renderReelList(box,list){const items=list.map(r=>({key:r.id,sig:'r',r,h
  Object.values(old).forEach(e=>{const v=e.querySelector('video');v&&v.pause();e.remove()});
  if(!list.length&&!box.querySelector('.empty'))box.innerHTML=`<div class="empty rl-empty">${ico('reel')}<div>ماكو ريلز لحد الآن</div><button class="btn pri" data-act="newreel">${ico('camera')} انشر أول ريل</button></div>`;else if(list.length)box.querySelectorAll('.empty').forEach(e=>e.remove())}
 function updReel(el,r){const lk=r.likes||[];const b=el.querySelector('[data-rlike]');b.classList.toggle('on',lk.includes(S.me));b.querySelector('.num').textContent=fmtN(lk.length);el.querySelector('[data-rcmt] .num').textContent=fmtN(r.cc||0);el.querySelector('.rl-meta .num').textContent=fmtN(r.views||0)}
-function renderReelFeed(){const box=$('#reelList');if(box)renderReelList(box,S.reels)}
+function renderReelFeed(){const box=$('#reelList');if(box)renderReelList(box,S.reels.filter(r=>canSee(r.uid)))}
 const reelObs=new Map();
 function obsReel(box,el){let io=reelObs.get(box);if(!io){io=new IntersectionObserver(es=>es.forEach(en=>{const v=en.target.querySelector('video');if(en.isIntersecting&&en.intersectionRatio>.6&&reelActive(box))playReel(en.target);else if(v){v.pause()}}),{root:box,threshold:[0,.6,1]});reelObs.set(box,io)}io.observe(el)}
 function reelActive(box){return box.id==='rvList'?$('#rv').classList.contains('on'):$('#pane-reels').classList.contains('on')}
@@ -2105,14 +2205,19 @@ function newReelSheet(){openSheet('ريل جديد',`<button class="opt" id="nrP
    v.className='nr-v';v.controls=false;v.muted=true;$('.nr-prev').appendChild(v);v.currentTime=Math.min(.1,v.duration/2);
    $('#nrGo').onclick=()=>postReel(f,v,$('#nrCap').value.trim())};v.onerror=()=>toast('ما گدرت أقرا الفيديو','bad')}}
 function videoThumb(v){try{const s=360/Math.max(v.videoWidth,v.videoHeight);const c=document.createElement('canvas');c.width=Math.round(v.videoWidth*s);c.height=Math.round(v.videoHeight*s);c.getContext('2d').drawImage(v,0,0,c.width,c.height);return c.toDataURL('image/jpeg',.6)}catch(e){return ''}}
-function transcode(v,dur,onp){const s=Math.min(1,720/Math.max(v.videoWidth,v.videoHeight));const W=Math.round(v.videoWidth*s/2)*2,H=Math.round(v.videoHeight*s/2)*2;const c=document.createElement('canvas');c.width=W;c.height=H;const x=c.getContext('2d');const cs=c.captureStream(30);
- let ac;try{ac=new (window.AudioContext||window.webkitAudioContext)();const src=ac.createMediaElementSource(v);const dest=ac.createMediaStreamDestination();src.connect(dest);dest.stream.getAudioTracks().forEach(t=>cs.addTrack(t))}catch(e){}
+function transcode(v,dur,onp){const s=Math.min(1,720/Math.max(v.videoWidth,v.videoHeight));const W=Math.round(v.videoWidth*s/2)*2,H=Math.round(v.videoHeight*s/2)*2;const c=document.createElement('canvas');c.width=W;c.height=H;const x=c.getContext('2d');
+ if(!c.captureStream||!window.MediaRecorder)return Promise.reject(new Error('nocodec'));const cs=c.captureStream(30);
+ let ac;try{ac=new (window.AudioContext||window.webkitAudioContext)();const src=ac.createMediaElementSource(v);const dest=ac.createMediaStreamDestination();src.connect(dest);dest.stream.getAudioTracks().forEach(t=>cs.addTrack(t))}catch(e){ac=null;v.muted=true}
  const mime=['video/mp4;codecs=avc1,mp4a.40.2','video/mp4','video/webm;codecs=vp9,opus','video/webm;codecs=vp8,opus','video/webm'].find(t=>{try{return MediaRecorder.isTypeSupported(t)}catch(e){return false}})||'';
- const vbr=Math.max(350e3,Math.min(1.4e6,(4.4e6*8/Math.max(dur,1))-70e3));const rec=new MediaRecorder(cs,mime?{mimeType:mime,videoBitsPerSecond:vbr,audioBitsPerSecond:64000}:{});const ch=[];rec.ondataavailable=e=>{if(e.data&&e.data.size)ch.push(e.data)};
- return new Promise((res,rej)=>{let stop=false;const draw=()=>{if(stop)return;try{x.drawImage(v,0,0,W,H)}catch(e){}onp(Math.min(1,v.currentTime/dur));if(v.requestVideoFrameCallback)v.requestVideoFrameCallback(draw);else requestAnimationFrame(draw)};
-  rec.onstop=()=>{try{ac&&ac.close()}catch(e){}res({blob:new Blob(ch,{type:(rec.mimeType||mime||'video/webm').split(';')[0]}),mime:(rec.mimeType||mime||'video/webm').split(';')[0]})};
-  v.onended=()=>{stop=true;setTimeout(()=>{try{rec.stop()}catch(e){}},200)};v.onerror=()=>rej(new Error('video'));
-  v.loop=false;v.muted=false;try{ac&&ac.resume()}catch(e){}v.currentTime=0;rec.start(1000);const pp=v.play();if(pp&&pp.catch)pp.catch(err=>{stop=true;try{rec.stop()}catch(e){}rej(err)});draw()})}
+ const vbr=Math.max(350e3,Math.min(1.4e6,(4.4e6*8/Math.max(dur,1))-70e3));let rec;try{rec=new MediaRecorder(cs,mime?{mimeType:mime,videoBitsPerSecond:vbr,audioBitsPerSecond:64000}:{})}catch(e){return Promise.reject(e)}const ch=[];rec.ondataavailable=e=>{if(e.data&&e.data.size)ch.push(e.data)};
+ return new Promise((res,rej)=>{let done=false,lastT=-1,stallAt=now(),iv,wd;const t0=now();
+  const finish=ok=>{if(done)return;done=true;clearInterval(iv);clearInterval(wd);document.removeEventListener('visibilitychange',vis);try{v.pause()}catch(e){}
+   if(!ok){try{rec.stop()}catch(e){}try{ac&&ac.close()}catch(e){}return rej(new Error('stall'))}rec.onstop=()=>{try{ac&&ac.close()}catch(e){}const ty=(rec.mimeType||mime||'video/webm').split(';')[0];res({blob:new Blob(ch,{type:ty}),mime:ty})};setTimeout(()=>{try{rec.state!=='inactive'?rec.stop():rec.onstop()}catch(e){rec.onstop()}},250)};
+  const vis=()=>{if(!document.hidden&&!done&&v.paused)v.play().catch(()=>{})};document.addEventListener('visibilitychange',vis);
+  iv=setInterval(()=>{if(done)return;try{x.drawImage(v,0,0,W,H)}catch(e){}onp(Math.min(1,v.currentTime/dur));if(v.ended||v.currentTime>=dur-.08)finish(true)},33);
+  wd=setInterval(()=>{if(done)return;if(v.paused&&!v.ended&&!document.hidden)v.play().catch(()=>{});if(v.currentTime!==lastT){lastT=v.currentTime;stallAt=now()}else if(!document.hidden&&now()-stallAt>9000)finish(false);if(now()-t0>(dur*3+30)*1000)finish(false)},1000);
+  v.onended=()=>finish(true);v.onerror=()=>finish(false);
+  v.loop=false;try{ac&&ac.resume()}catch(e){}v.currentTime=0;try{rec.start(1000)}catch(e){return finish(false)}const pp=v.play();if(pp&&pp.catch)pp.catch(()=>{v.muted=true;v.play().catch(()=>finish(false))})})}
 function blobB64(b){return new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(String(r.result).split(',')[1]);r.onerror=rej;r.readAsDataURL(b)})}
 function uplPill(thumb){let p=$('#upl');if(!p){p=document.createElement('div');p.id='upl';p.className='gl hud';$('#app').appendChild(p)}
  p.innerHTML=`<div class="up-th">${thumb?`<img src="${thumb}" alt="">`:ico('reel')}</div><div class="x"><b id="upT">ديجهّز الريل…</b><div class="up-bar"><i id="upB"></i></div></div><span class="num" id="upP">0%</span>`;p.className='gl hud on';return p}
@@ -2120,37 +2225,44 @@ async function postReel(file,v,caption){const W=v.videoWidth,H=v.videoHeight;con
  const hold=$('#uplHold')||Object.assign(document.createElement('div'),{id:'uplHold'});document.body.appendChild(hold);hold.appendChild(v);
  const pill=uplPill(thumb);const setP=(p,t)=>{$('#upB').style.width=Math.round(p*100)+'%';$('#upP').textContent=Math.round(p*100)+'%';if(t)$('#upT').textContent=t};
  let blob=file,mime=file.type||'video/mp4';const LIM=store.local?2.6e6:4.6e6;S.uploading=true;
- try{if(file.size>LIM||!/mp4|webm|quicktime/.test(mime)){setP(0,'ديضغط الفيديو…');const r=await transcode(v,dur,p=>setP(p*.8));blob=r.blob;mime=r.mime}
+ try{if(file.size>LIM||!/mp4|webm|quicktime/.test(mime)){setP(0,'ديضغط الفيديو…');try{const r=await transcode(v,dur,p=>setP(p*.8));blob=r.blob;mime=r.mime;if(blob.size<20000)throw new Error('empty')}catch(te){console.warn('transcode',te);if(file.size>LIM*1.25)throw new Error('big');blob=file}}
   if(blob.size>LIM*1.25)throw new Error('big');if(mime==='video/quicktime')mime='video/mp4';
   setP(.82,'ديرفع الريل…');const b64=await blobB64(blob);const CH=900000,n=Math.ceil(b64.length/CH);const id=store.newId('reels');
   await store.set('reels/'+id,{uid:S.me,caption,dur:Math.round(dur),mime,thumb,w:W,h:H,chunks:n,at:OP.now(),likes:[],cc:0,views:0,ready:false});
   for(let i=0;i<n;i++){await store.set(`reels/${id}/chunks/${i}`,{d:b64.slice(i*CH,(i+1)*CH)});setP(.82+.18*(i+1)/n)}
   await store.update('reels/'+id,{ready:true});$('#upT').textContent='انتشر الريل ✓';pill.classList.add('done');SND.play('send');vib(15);
   pill.onclick=()=>{pill.classList.remove('on');setNav('reels')};setTimeout(()=>pill.classList.remove('on'),3500)}
- catch(e){console.warn(e);$('#upT').textContent=e&&e.message==='big'?'الفيديو كبير، اختار فيديو أقصر':'ما انتشر الريل، جرّب مرة ثانية';pill.classList.add('err');setTimeout(()=>pill.classList.remove('on'),4500)}
+ catch(e){console.warn(e);$('#upT').textContent=e&&e.message==='big'?'ما گدرنا نضغط الفيديو — جرّب فيديو أقصر':'ما انتشر الريل، جرّب مرة ثانية';pill.classList.add('err');setTimeout(()=>pill.classList.remove('on'),4500)}
  finally{S.uploading=false;try{v.pause();v.remove()}catch(e){}}}
 
 /* ================= الملف الشخصي ================= */
 async function loadUserMedia(uid,force){const c=S.ucache[uid];if(c&&!force&&now()-c.t<60000)return c;const [p,r]=await Promise.all([store.query('posts',{where:[['uid','==',uid]],limit:60}).catch(()=>[]),store.query('reels',{where:[['uid','==',uid]],limit:60}).catch(()=>[])]);
- const o={t:now(),posts:p.sort((a,b)=>(b.at||0)-(a.at||0)),reels:r.filter(x=>x.ready).sort((a,b)=>(b.at||0)-(a.at||0))};S.ucache[uid]=o;return o}
-let profT;function refreshProfiles(){clearTimeout(profT);profT=setTimeout(()=>{Object.keys(S.ucache).forEach(k=>S.ucache[k].t=0);if($('#pane-profile').classList.contains('on'))renderMyProfile();if(S.info&&S.info.type==='user')renderInfo()},400)}
-function profileHTML(uid,own,media,tab){const u=own?{id:S.me,...S.meDoc}:U(uid);const P=media?media.posts:[],R=media?media.reels:[];tab=tab||'posts';
- const grid=!media?'<div class="empty" style="padding:30px">ديحمّل…</div>':tab==='posts'?(P.length?`<div class="pgrid">${P.map(p=>p.type==='image'?`<button data-popen="${p.id}"><img src="${p.media}" alt="" loading="lazy"></button>`:`<button data-popen="${p.id}" class="pt" style="background:${ST_BG[p.bg||0]}"><span>${esc(p.text.slice(0,80))}</span></button>`).join('')}</div>`:`<div class="empty">${ico('grid')}<div>${own?'ما نشرت شي لحد الآن':'ماكو منشورات'}</div>${own?'<button class="btn tint" data-act="newpost">انشر أول منشور</button>':''}</div>`)
+ const o={t:now(),fol:c&&c.fol,posts:p.sort((a,b)=>(b.at||0)-(a.at||0)),reels:r.filter(x=>x.ready).sort((a,b)=>(b.at||0)-(a.at||0))};S.ucache[uid]=o;return o}
+let profT;function refreshProfiles(){clearTimeout(profT);profT=setTimeout(()=>{Object.keys(S.ucache).forEach(k=>{S.ucache[k].t=0;S.ucache[k].posts=S.ucache[k].posts||[]});if($('#pane-profile').classList.contains('on'))renderMyProfile();if(S.info&&S.info.type==='user')renderInfo()},400)}
+function profileHTML(uid,own,media,tab){const u=own?{id:S.me,...S.meDoc}:U(uid);const P=media?media.posts||[]:[],R=media?media.reels||[]:[];tab=tab||'posts';const fol=media&&media.fol;const locked=!own&&!canSee(uid);
+ if(!fol&&media)loadFol(uid).then(()=>{if(own&&$('#pane-profile').classList.contains('on'))renderMyProfile();else if(S.info&&S.info.id===uid)renderInfo()});
+ const grid=locked?`<div class="plock">${ico('lock')}<b>${isBlocked(uid)?'حاظر هذا الحساب':'هذا الحساب خاص'}</b><span>${isBlocked(uid)?'ألغِ الحظر حتى تشوف منشوراته':'تابعه حتى تشوف منشوراته وريلزاته'}</span></div>`
+  :!media?'<div class="pgrid">'+'<i class="skc"></i>'.repeat(6)+'</div>':tab==='posts'?(P.length?`<div class="pgrid">${P.map(p=>p.type==='image'?`<button data-popen="${p.id}"><img src="${p.media}" alt="" loading="lazy"></button>`:`<button data-popen="${p.id}" class="pt" style="background:${ST_BG[p.bg||0]}"><span>${esc(p.text.slice(0,80))}</span></button>`).join('')}</div>`:`<div class="empty">${ico('grid')}<div>${own?'ما نشرت شي لحد الآن':'ماكو منشورات'}</div>${own?'<button class="btn tint" data-act="newpost">انشر أول منشور</button>':''}</div>`)
   :(R.length?`<div class="pgrid rg">${R.map((r,i)=>`<button data-ropen="${uid}" data-ri="${i}">${r.thumb?`<img src="${r.thumb}" alt="">`:''}<span class="rv">${ico('play')}<span class="num">${fmtN(r.views||0)}</span></span></button>`).join('')}</div>`:`<div class="empty">${ico('reel')}<div>${own?'ما نشرت ريلز لحد الآن':'ماكو ريلز'}</div>${own?'<button class="btn tint" data-act="newreel">انشر أول ريل</button>':''}</div>`);
+ const n=v=>media?fmtN(v):'–';const rq=own?reqCount():0;
  return `<div class="prof2" data-puid="${uid}"><div class="pcover"></div><div class="phead2">${avHTML({id:u.id,name:u.name,photo:u.photo},96,!own&&isOn(u))}</div>
- <h2>${esc(u.name||'')}${u.verified?ico('vf','vf'):''}</h2><div class="pun num">@${esc(u.username||'')}</div>${!own?`<div class="pst ${isOn(u)?'on':''}">${esc(seenTxt(u))}</div>`:''}
- ${u.bio?`<p class="pbio">${linkify(esc(u.bio))}</p>`:''}${u.link?`<a class="plink" href="${esc(/^https?:/.test(u.link)?u.link:'https://'+u.link)}" target="_blank" rel="noopener">${ico('link')}<span>${esc(u.link.replace(/^https?:\/\//,''))}</span></a>`:''}
- <div class="pstats"><div><b class="num">${media?fmtN(P.length):'–'}</b><span>منشور</span></div><div><b class="num">${media?fmtN(R.length):'–'}</b><span>ريل</span></div><div><b class="num">${media?fmtN(P.reduce((a,p)=>a+(p.likes||[]).length,0)+R.reduce((a,r)=>a+(r.likes||[]).length,0)):'–'}</b><span>إعجاب</span></div></div>
- <div class="pbtns">${own?`<button class="btn pri" data-act="editprof">${ico('pen')} تعديل الملف الشخصي</button><button class="btn ghost" data-act="shareprof">${ico('share')}</button>`:uid!==S.me?`<button class="btn pri" data-dm="${uid}">${ico('chat')} رسالة</button><button class="btn ghost" data-act="shareprof" data-u="${esc(u.username||'')}">${ico('share')}</button>`:''}</div>
+ <h2>${esc(u.name||'')}${u.verified?ico('vf','vf'):''}${u.private?`<span class="plk">${ico('lock')}</span>`:''}</h2><div class="pun num">@${esc(u.username||'')}</div>${!own?`<div class="pst ${isOn(u)?'on':''}">${esc(seenTxt(u))}${S.fol.followers.get(uid)==='ok'?' · يتابعك':''}</div>`:''}
+ ${u.bio?`<p class="pbio">${linkify(esc(u.bio))}</p>`:''}${u.link?`<a class="plink" href="${esc(/^https?:/.test(u.link)?u.link:'https://'+u.link)}" target="_blank" rel="noopener">${ico('link')}<span>${esc(u.link.replace(/^https?:\/\/(www\.)?/,'').split(/[?#]/)[0].slice(0,40))}</span></a>`:''}
+ <div class="pstats"><button ${locked?'':'data-ptab="posts"'}><b class="num">${locked?'–':n(P.length+R.length)}</b><span>منشور</span></button><button ${locked?'':`data-folk="followers:${uid}"`}><b class="num">${fol?fmtN(fol.followers.length):'–'}</b><span>متابِع</span></button><button ${locked?'':`data-folk="following:${uid}"`}><b class="num">${fol?fmtN(fol.following.length):'–'}</b><span>يتابع</span></button></div>
+ ${rq?`<button class="preq" data-act="freqs">${ico('uplus')}<span>طلبات المتابعة</span><b class="badge num">${rq}</b></button>`:''}
+ <div class="pbtns">${own?`<button class="btn pri" data-act="editprof">${ico('pen')} تعديل الملف</button><button class="btn ghost" data-act="shareprof">${ico('share')}</button>`:`${isBlocked(uid)?`<button class="btn ghost" data-unblock="${uid}">إلغاء الحظر</button>`:followBtn(uid)}<button class="btn ghost" data-dm="${uid}">${ico('chat')} رسالة</button><button class="btn ghost ic" data-umenu="${uid}">${ico('more')}</button>`}</div>
  <div class="ptabs"><button data-ptab="posts" class="${tab==='posts'?'on':''}">${ico('grid')}</button><button data-ptab="reels" class="${tab==='reels'?'on':''}">${ico('reel')}</button></div>${grid}</div>`}
 S.ptab={};
 async function renderMyProfile(){const box=$('#myProfile');if(!box||!S.me)return;const c=S.ucache[S.me];box.innerHTML=profileHTML(S.me,true,c,S.ptab[S.me]);if(!c||now()-c.t>60000){await loadUserMedia(S.me,true);box.innerHTML=profileHTML(S.me,true,S.ucache[S.me],S.ptab[S.me])}}
-function editProfileSheet(){const m=S.meDoc;let photo=m.photo||'';openSheet('تعديل الملف الشخصي',`<div style="display:flex;flex-direction:column;align-items:center;gap:8px;margin:4px 0 14px"><label id="epAv" style="cursor:pointer;position:relative">${avHTML({id:S.me,name:m.name,photo},96)}<span class="ep-cam">${ico('camera')}</span><input type="file" accept="image/*" class="hide" id="epFile"></label><button class="btn ghost ${photo?'':'hide'}" id="epRmPh" style="height:32px;font-size:13px">شيل الصورة</button></div>
- <div class="field"><label>الاسم</label><input class="inp" id="epN" maxlength="40" value="${esc(m.name)}"></div><div class="field"><label>نبذة عنك</label><textarea class="inp" id="epB" rows="3" maxlength="160" placeholder="شي يعرّف الناس بيك…">${esc(m.bio||'')}</textarea></div>
- <div class="field"><label>رابط (انستا، موقع…)</label><input class="inp ltr" id="epL" maxlength="120" placeholder="instagram.com/..." value="${esc(m.link||'')}"></div><div class="field"><label>اسم المستخدم</label><input class="inp ltr" value="@${esc(m.username)}" disabled></div>`,`<button class="btn ghost" data-act="closesheet">إلغاء</button><button class="btn pri" style="flex:1" id="epOk">حفظ</button>`);
- const paint=()=>{$('#epAv').querySelector('.av').outerHTML=avHTML({id:S.me,name:$('#epN').value||m.name,photo},96);$('#epRmPh').classList.toggle('hide',!photo)};
- $('#epFile').onchange=async e=>{const f=e.target.files[0];if(!f)return;photo=await compressImg(f,320,.82);paint()};$('#epRmPh').onclick=()=>{photo='';paint()};
- $('#epOk').onclick=()=>{const n=$('#epN').value.trim();if(n.length<2)return toast('الاسم قصير','bad');store.update('users/'+S.me,{name:n,bio:$('#epB').value.trim(),link:$('#epL').value.trim(),photo});closeSheet();toast('انحفظ ✓');S.ucache[S.me]&&(S.ucache[S.me].t=0);setTimeout(renderMyProfile,300)}}
+function editProfileSheet(st){const m=S.meDoc;st=st||{photo:m.photo||'',name:m.name||'',bio:m.bio||'',link:m.link||''};
+ openSheet('تعديل الملف الشخصي',`<div style="display:flex;flex-direction:column;align-items:center;gap:8px;margin:4px 0 14px"><label id="epAv" style="cursor:pointer;position:relative">${avHTML({id:S.me,name:st.name,photo:st.photo},96)}<span class="ep-cam">${ico('camera')}</span><input type="file" accept="image/*" class="hide" id="epFile"></label><div style="display:flex;gap:8px"><button class="btn tint sm" id="epPick">تغيير الصورة</button><button class="btn ghost sm ${st.photo?'':'hide'}" id="epRmPh">شيل الصورة</button></div></div>
+ <div class="field"><label>الاسم</label><input class="inp" id="epN" maxlength="40" value="${esc(st.name)}"></div><div class="field"><label>نبذة عنك</label><textarea class="inp" id="epB" rows="3" maxlength="160" placeholder="شي يعرّف الناس بيك…">${esc(st.bio)}</textarea></div>
+ <div class="field"><label>رابط (انستا، موقع…)</label><input class="inp ltr" id="epL" maxlength="200" placeholder="instagram.com/..." value="${esc(st.link)}" inputmode="url" autocapitalize="off"></div><div class="field"><label>اسم المستخدم</label><input class="inp ltr" value="@${esc(m.username)}" disabled></div>`,`<button class="btn ghost" data-act="closesheet">إلغاء</button><button class="btn pri" style="flex:1" id="epOk">حفظ</button>`);
+ const grab=()=>{st.name=$('#epN').value;st.bio=$('#epB').value;st.link=$('#epL').value};
+ $('#epPick').onclick=()=>$('#epFile').click();
+ $('#epFile').onchange=async e=>{const f=e.target.files[0];if(!f)return;grab();const d=await cropImage(f,{...AV_CROP,back:()=>editProfileSheet(st)});if(d)st.photo=d;editProfileSheet(st)};
+ $('#epRmPh').onclick=()=>{grab();st.photo='';editProfileSheet(st)};
+ $('#epOk').onclick=()=>{grab();const n=st.name.trim();if(n.length<2)return toast('الاسم قصير','bad');store.update('users/'+S.me,{name:n,bio:st.bio.trim(),link:st.link.trim(),photo:st.photo});closeSheet();toast('انحفظ ✓');S.ucache[S.me]&&(S.ucache[S.me].t=0);setTimeout(renderMyProfile,300)}}
 function shareProfile(un){const u=un||S.meDoc.username;const link=location.origin+location.pathname+'#u='+u;if(navigator.share)navigator.share({title:'AM CHAT',text:'تابعني على AM CHAT',url:link}).catch(()=>{});else copyText(link)}
 async function openUserByName(un){const d=await store.get('usernames/'+un).catch(()=>null);if(d&&d.uid)openInfo({type:'user',id:d.uid});else toast('ما لگيت هذا الحساب')}
 
@@ -2181,7 +2293,7 @@ async function joinFlow(cid){let c=null;try{c=await store.get('chats/'+cid)}catc
 S.notes=[];
 function watchNotes(){S.unsub.push(store.watchQuery('notes',{where:[['exp','>',now()]],limit:300},list=>{S.notes=list;renderNotes()}))}
 function renderNotes(){const box=$('#notes');if(!box||!S.me)return;const t=now(),ok=storyCircle();const mine=S.notes.find(n=>n.id===S.me&&n.exp>t);const m=S.meDoc||{};
- const others=S.notes.filter(n=>n.id!==S.me&&n.exp>t&&ok.has(n.id)).sort((a,b)=>(b.at||0)-(a.at||0));
+ const others=S.notes.filter(n=>n.id!==S.me&&n.exp>t&&ok.has(n.id)&&canSee(n.id)).sort((a,b)=>(b.at||0)-(a.at||0));
  let h=`<div class="nt-i me" data-act="note"><div class="nt-b ${mine?'':'add'}">${mine?esc(mine.text):'شاركنا شي…'}</div>${avHTML({id:S.me,name:m.name,photo:m.photo},58)}<span class="nm">${mine?'ملاحظتك':'ملاحظة جديدة'}</span></div>`;
  h+=others.map((n,i)=>{const u=U(n.id);return `<div class="nt-i" data-noteu="${n.id}" style="--d:${(i%5)*.4}s"><div class="nt-b">${esc(n.text)}</div>${avHTML({id:u.id,name:u.name,photo:u.photo},58,isOn(u))}<span class="nm">${esc(firstName(u.name))}</span></div>`}).join('');
  if(!others.length)h+=`<div class="nt-hint">${ico('note')}<span>ملاحظات أصحابك تطلع هنا لمدة 24 ساعة</span></div>`;box.innerHTML=h}
@@ -2201,7 +2313,7 @@ const STABS=[['all','الكل'],['people','الأشخاص'],['groups','المج�
 let srT;function runSearch(){clearTimeout(srT);srT=setTimeout(renderSearch,220)}
 async function renderSearch(){const box=$('#searchRes');if(!box)return;const q=($('#globalSearch').value||'').trim();
  $('#sTabs').innerHTML=q?STABS.map(([k,t])=>`<button data-stab="${k}" class="${S.sTab===k?'on':''}">${t}</button>`).join(''):'';
- if(!q){watchFeed();watchReels();const tiles=[...S.posts.map(p=>({k:'p',p,at:p.at||0})),...S.reels.map((r,i)=>({k:'r',r,i,at:r.at||0}))].sort((a,b)=>b.at-a.at).slice(0,45);
+ if(!q){watchFeed();watchReels();const tiles=[...S.posts.filter(p=>canSee(p.uid)).map(p=>({k:'p',p,at:p.at||0})),...S.reels.map((r,i)=>({k:'r',r,i,at:r.at||0}))].sort((a,b)=>b.at-a.at).slice(0,45);
   let people=[];try{people=(await API.searchUsers('')).slice(0,12)}catch(e){}
   box.innerHTML=(people.length?`<div class="sec-t">ناس ممكن تعرفهم</div><div class="sugg">${people.map(u=>`<div class="sg" data-user="${u.id}">${avHTML({id:u.id,name:u.name,photo:u.photo},64,isOn(u))}<b>${esc(firstName(u.name))}</b><small class="num">@${esc(u.username||'')}</small></div>`).join('')}</div>`:'')+
    `<div class="sec-t">استكشف</div>`+(tiles.length?`<div class="explore">${tiles.map((t,i)=>t.k==='p'?(t.p.type==='image'?`<button data-popen="${t.p.id}" class="${i%7===0?'big':''}"><img src="${t.p.media}" alt="" loading="lazy"></button>`:`<button data-popen="${t.p.id}" class="pt ${i%7===0?'big':''}" style="background:${ST_BG[t.p.bg||0]}"><span>${esc(t.p.text.slice(0,90))}</span></button>`)
@@ -2217,6 +2329,65 @@ async function renderSearch(){const box=$('#searchRes');if(!box)return;const q=(
 /* ================= تحية الرئيسية ================= */
 function greet(){const h=new Date().getHours();return h<5?'سهرانين؟ 🌙':h<12?'صباح الخير ☀️':h<17?'نهارك سعيد 🌤️':h<21?'مساء الخير 🌇':'مساء النور 🌙'}
 
+/* ================= قص الصور ================= */
+function cropImage(file,{ratios=[['مربع',1]],round=false,out=1080,title='قص الصورة',back}={}){return new Promise(res=>{
+ const url=URL.createObjectURL(file);const img=new Image();img.onerror=()=>{toast('ما گدرت أقرا الصورة','bad');res(null)};
+ img.onload=()=>{const RV=v=>v==='orig'?img.naturalWidth/img.naturalHeight:v;let R=RV(ratios[0][1]);
+  openSheet(title,`<div class="crop"><div class="cr-stage ${round?'round':''}" id="crS"><img id="crI" src="${url}" draggable="false" alt=""><div class="cr-grid"><i></i><i></i><i></i><i></i></div></div>
+  ${ratios.length>1?`<div class="cr-r">${ratios.map(([t],i)=>`<button data-cr="${i}" class="${i?'':'on'}">${t}</button>`).join('')}</div>`:''}
+  <div class="cr-z">${ico('image','i sm')}<input type="range" id="crZ" min="1" max="4" step="0.01" value="1">${ico('image','i')}</div><p class="cr-h">اسحب الصورة وكبّرها بإصبعين</p></div>`,
+  `<button class="btn ghost" id="crNo">${back?'رجوع':'إلغاء'}</button><button class="btn pri" style="flex:1" id="crOk">${ico('check')} تم</button>`);
+  const st=$('#crS'),im=$('#crI'),zr=$('#crZ');let W=0,H=0,base=1,z=1,x=0,y=0;const IW=img.naturalWidth,IH=img.naturalHeight;
+  const clamp=()=>{const s=base*z,mx=(IW*s-W)/2,my=(IH*s-H)/2;x=Math.max(-mx,Math.min(mx,x));y=Math.max(-my,Math.min(my,y))};
+  const apply=()=>{const s=base*z;im.style.width=IW*s+'px';im.style.height=IH*s+'px';im.style.transform=`translate(calc(-50% + ${x}px),calc(-50% + ${y}px))`};
+  const layout=()=>{const maxW=Math.min(st.parentElement.clientWidth||320,360);W=maxW;H=W/R;const maxH=Math.min(400,innerHeight*.48);if(H>maxH){H=maxH;W=H*R}st.style.width=W+'px';st.style.height=H+'px';base=Math.max(W/IW,H/IH);clamp();apply()};
+  requestAnimationFrame(()=>requestAnimationFrame(layout));
+  zr.oninput=()=>{z=+zr.value;clamp();apply()};
+  $$('[data-cr]').forEach(b=>b.onclick=()=>{R=RV(ratios[+b.dataset.cr][1]);$$('[data-cr]').forEach(q=>q.classList.toggle('on',q===b));x=y=0;z=1;zr.value=1;layout()});
+  const P=new Map();let g=null;
+  st.addEventListener('pointerdown',e=>{st.setPointerCapture&&st.setPointerCapture(e.pointerId);P.set(e.pointerId,{x:e.clientX,y:e.clientY});const ps=[...P.values()];
+   g=ps.length>=2?{pinch:1,d:Math.hypot(ps[0].x-ps[1].x,ps[0].y-ps[1].y),z0:z}:{x:e.clientX,y:e.clientY,x0:x,y0:y};st.classList.add('drag')});
+  st.addEventListener('pointermove',e=>{if(!P.has(e.pointerId)||!g)return;P.set(e.pointerId,{x:e.clientX,y:e.clientY});const ps=[...P.values()];
+   if(g.pinch&&ps.length>=2){z=Math.max(1,Math.min(4,g.z0*Math.hypot(ps[0].x-ps[1].x,ps[0].y-ps[1].y)/g.d));zr.value=z}else if(!g.pinch){x=g.x0+e.clientX-g.x;y=g.y0+e.clientY-g.y}clamp();apply()});
+  const up=e=>{P.delete(e.pointerId);if(!P.size){g=null;st.classList.remove('drag')}else{const p=[...P.values()][0];g={x:p.x,y:p.y,x0:x,y0:y}}};st.addEventListener('pointerup',up);st.addEventListener('pointercancel',up);
+  st.addEventListener('wheel',e=>{e.preventDefault();z=Math.max(1,Math.min(4,z*(e.deltaY<0?1.08:.93)));zr.value=z;clamp();apply()},{passive:false});
+  $('#crNo').onclick=()=>{URL.revokeObjectURL(url);if(back)back();else closeSheet();res(null)};
+  $('#crOk').onclick=()=>{const s=base*z,left=W/2+x-IW*s/2,top=H/2+y-IH*s/2;const sx=-left/s,sy=-top/s,sw=W/s,sh=H/s;const k=Math.min(1,out/Math.max(sw,sh));
+   const c=document.createElement('canvas');c.width=Math.max(1,Math.round(sw*k));c.height=Math.max(1,Math.round(sh*k));const cx=c.getContext('2d');cx.fillStyle='#fff';cx.fillRect(0,0,c.width,c.height);cx.imageSmoothingQuality='high';cx.drawImage(img,sx,sy,sw,sh,0,0,c.width,c.height);
+   let q=.86,d=c.toDataURL('image/jpeg',q);while(d.length>(store.local?420000:700000)&&q>.42){q-=.1;d=c.toDataURL('image/jpeg',q)}URL.revokeObjectURL(url);res(d)}};img.src=url})}
+const AV_CROP={round:true,out:420,title:'صورة الملف'};
+const POST_RATIOS=[['الأصلي','orig'],['مربع',1],['طولي 4:5',.8],['عرضي 16:9',16/9]];
+
+/* ================= المتابعة ================= */
+S.fol={following:new Map(),followers:new Map()};
+function watchFollows(){S.unsub.push(store.watchQuery('follows',{where:[['from','==',S.me]]},l=>{S.fol.following=new Map(l.map(f=>[f.to,f.status||'ok']));folChanged()}));
+ S.unsub.push(store.watchQuery('follows',{where:[['to','==',S.me]]},l=>{S.fol.followers=new Map(l.map(f=>[f.from,f.status||'ok']));folChanged()}))}
+let folT;function folChanged(){clearTimeout(folT);folT=setTimeout(()=>{if(S.ucache[S.me])S.ucache[S.me].fol=null;renderFeed();renderReelFeed();renderStories();renderNotes();if($('#pane-profile').classList.contains('on'))renderMyProfile();if(S.info&&S.info.type==='user')renderInfo();if($('#pane-settings').classList.contains('on'))renderSettings()},120)}
+const fState=uid=>S.fol.following.get(uid);
+const isBlocked=uid=>(S.prefs.blocked||[]).includes(uid);
+const canSee=uid=>uid===S.me||(!isBlocked(uid)&&(!U(uid).private||fState(uid)==='ok'));
+const reqCount=()=>[...S.fol.followers.values()].filter(s=>s==='pending').length;
+function follow(uid){if(uid===S.me)return;const st=fState(uid);const id=`${S.me}_${uid}`;
+ if(st){store.del('follows/'+id);S.fol.following.delete(uid);toast(st==='pending'?'انلغى الطلب':'لغيت المتابعة')}
+ else{const status=U(uid).private?'pending':'ok';store.set('follows/'+id,{from:S.me,to:uid,status,at:OP.now()});S.fol.following.set(uid,status);vib(10);toast(status==='pending'?'انرسل طلب المتابعة ✓':'صرت تتابعه ✓')}
+ if(S.ucache[uid])S.ucache[uid].fol=null;folChanged()}
+function followBtn(uid,cls=''){const st=fState(uid);return st==='ok'?`<button class="btn ghost ${cls}" data-follow="${uid}">${ico('check')} تتابعه</button>`:st==='pending'?`<button class="btn ghost ${cls}" data-follow="${uid}">${ico('clock')} تم الطلب</button>`:`<button class="btn pri ${cls}" data-follow="${uid}">${ico('uplus')} ${S.fol.followers.get(uid)==='ok'?'تابعه بالمثل':'متابعة'}</button>`}
+async function loadFol(uid){const c=S.ucache[uid]=S.ucache[uid]||{t:0};if(c.fol)return c.fol;const [a,b]=await Promise.all([store.query('follows',{where:[['to','==',uid]]}).catch(()=>[]),store.query('follows',{where:[['from','==',uid]]}).catch(()=>[])]);
+ c.fol={followers:a.filter(f=>(f.status||'ok')==='ok').map(f=>f.from),following:b.filter(f=>(f.status||'ok')==='ok').map(f=>f.to)};return c.fol}
+async function folListSheet(uid,kind){const f=await loadFol(uid);const ids=f[kind]||[];openSheet(kind==='followers'?'المتابعين':'يتابع',ids.length?ids.map(id=>{const u=U(id);return `<div class="mem" data-user="${id}">${avHTML({id,name:u.name,photo:u.photo},46,isOn(u))}<div class="x"><div class="nm">${esc(u.name)}</div><div class="st num">@${esc(u.username||'')}</div></div>${id!==S.me?followBtn(id,'sm'):''}</div>`}).join(''):`<div class="empty">${ico('users')}<div>${kind==='followers'?'ماكو متابعين لحد الآن':'ما يتابع أحد لحد الآن'}</div></div>`)}
+function requestsSheet(){const ids=[...S.fol.followers.entries()].filter(([,s])=>s==='pending').map(([u])=>u);openSheet('طلبات المتابعة',ids.length?ids.map(id=>{const u=U(id);return `<div class="mem" data-user="${id}">${avHTML({id,name:u.name,photo:u.photo},46)}<div class="x"><div class="nm">${esc(u.name)}</div><div class="st num">@${esc(u.username||'')}</div></div><button class="btn pri sm" data-freq="ok:${id}">قبول</button><button class="btn ghost sm" data-freq="no:${id}">${ico('close')}</button></div>`}).join(''):`<div class="empty">${ico('users')}<div>ماكو طلبات</div></div>`)}
+function answerReq(v){const [a,id]=v.split(':');if(a==='ok'){store.update(`follows/${id}_${S.me}`,{status:'ok'});S.fol.followers.set(id,'ok');toast('قبلت الطلب ✓')}else{store.del(`follows/${id}_${S.me}`);S.fol.followers.delete(id)}folChanged();setTimeout(requestsSheet,60)}
+function userMenu(uid){const b=isBlocked(uid),u=U(uid);openSheet(u.name,`<button class="opt" data-um="share"><span class="ic">${ico('share')}</span>مشاركة الحساب</button>${S.fol.followers.get(uid)?`<button class="opt" data-um="rmf"><span class="ic">${ico('users')}</span>شيله من متابعيني</button>`:''}<button class="opt" data-um="block" style="color:var(--bad)"><span class="ic" style="background:rgba(242,89,106,.12);color:var(--bad)">${ico('ban')}</span>${b?'إلغاء الحظر':'حظر'}</button>`);
+ $('#shB').onclick=e=>{const o=e.target.closest('[data-um]');if(!o)return;const a=o.dataset.um;closeSheet();if(a==='share')shareProfile(u.username);else if(a==='rmf'){store.del(`follows/${uid}_${S.me}`);S.fol.followers.delete(uid);folChanged();toast('انشال من متابعينك')}
+  else if(a==='block'){if(b){API.pref({blocked:OP.remove(uid)});toast('انلغى الحظر')}else confirmSheet('حظر '+u.name,'ما راح تشوف منشوراته وقصصه ورسائله، وتنشال المتابعة بينكم.','حظر',()=>{API.pref({blocked:OP.union(uid)});store.del(`follows/${S.me}_${uid}`);store.del(`follows/${uid}_${S.me}`);toast('انحظر');if(S.info&&S.info.id===uid)closeInfo()})}}}
+function blockedSheet(){const ids=S.prefs.blocked||[];openSheet('المحظورين',ids.length?ids.map(id=>{const u=U(id);return `<div class="mem">${avHTML({id,name:u.name,photo:u.photo},42)}<div class="x"><div class="nm">${esc(u.name)}</div></div><button class="btn ghost sm" data-unblock="${id}">إلغاء الحظر</button></div>`}).join(''):`<div class="empty">${ico('ban')}<div>ما حاظر أحد</div></div>`)}
+function setPrivate(on){store.update('users/'+S.me,{private:on});if(!on){[...S.fol.followers.entries()].filter(([,s])=>s==='pending').forEach(([id])=>store.update(`follows/${id}_${S.me}`,{status:'ok'}))}toast(on?'حسابك صار خاص 🔒':'حسابك صار عام')}
+
+/* ================= انتقالات القصص ================= */
+function storyTrans(dir){const fr=$('#story .frame');if(!fr.animate||matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+ fr.animate([{transform:`perspective(1200px) rotateY(${dir*-38}deg) translateX(${dir*14}%) scale(.92)`,opacity:.35,transformOrigin:dir>0?'left center':'right center'},{transform:'none',opacity:1,transformOrigin:dir>0?'left center':'right center'}],{duration:420,easing:'cubic-bezier(.2,.85,.25,1)'})}
+function mediaFade(){const md=$('#stMedia');if(md.animate)md.animate([{opacity:.25,transform:'scale(1.035)'},{opacity:1,transform:'none'}],{duration:280,easing:'ease-out'})}
+
 /* ================= الأحداث ================= */
 const ACT={newchat:()=>newChatSheet(),newgroup:()=>{S.newGroup=null;groupSheet(1)},closesheet:closeSheet,closechat:closeChat,
  info:()=>{if(!S.open)return;S.info?closeInfo():openInfo({type:'chat',id:S.open})},closeinfo:closeInfo,
@@ -2228,12 +2399,12 @@ const ACT={newchat:()=>newChatSheet(),newgroup:()=>{S.newGroup=null;groupSheet(1
  sound:()=>{SND.on=!SND.on;ls.set('amc-snd',SND.on?'1':'0');SND.play('send');toast(SND.on?'الأصوات شغّالة 🔊':'الأصوات مطفية 🔇');renderSettings()},
  wall:()=>{const v=ls.get('amc-wall','1')==='1'?'0':'1';ls.set('amc-wall',v);document.documentElement.dataset.wall=v;renderSettings()},
  notif:()=>enablePush(),pushtest:()=>pushTest(),pbanx:()=>{ls.set('amc-pban-x',String(now()));renderPushBan()},
- hideseen:()=>store.update('users/'+S.me,{hideSeen:!S.meDoc.hideSeen}),editprof:editProfileSheet,rmphoto:()=>store.update('users/'+S.me,{photo:''}),
+ hideseen:()=>store.update('users/'+S.me,{hideSeen:!S.meDoc.hideSeen}),editprof:()=>editProfileSheet(),rmphoto:()=>store.update('users/'+S.me,{photo:''}),
  logout:()=>confirmSheet('تسجيل خروج','متأكد تريد تطلع من حسابك على هذا الجهاز؟','اطلع',async()=>{presence(false);await unregisterPush();S.unsub.forEach(u=>{try{u()}catch(e){}});await auth.signOut();location.hash='';location.reload()}),
  rename:()=>renameGroupSheet(S.info.id),addmem:()=>addMembersSheet(S.info.id),closelb:()=>closeLBnav(),lbshare:()=>shareImage(LB.src),
  addstory:(el,e)=>{e&&e.stopPropagation();addStorySheet()},newpost:()=>newPostSheet(),newreel:()=>newReelSheet(),rvclose:()=>popNav('rv'),shareprof:el=>shareProfile(el.dataset.u),gsettings:()=>groupSettingsSheet(S.info.id),
  ginvite:()=>{const l=location.origin+location.pathname+'#join='+S.info.id;if(navigator.share)navigator.share({title:S.chatMap[S.info.id].title,url:l}).catch(()=>{});else copyText(l)},
- note:()=>noteSheet(),
+ note:()=>noteSheet(),privacc:()=>setPrivate(!S.meDoc.private),freqs:()=>requestsSheet(),blocked:()=>blockedSheet(),
  rmute:()=>{S.reelMuted=!S.reelMuted;$$('.reel video').forEach(v=>v.muted=S.reelMuted);$$('.rl-mute use').forEach(u=>u.setAttribute('href',S.reelMuted?'#i-vol0':'#i-vol'));toast(S.reelMuted?'الصوت مطفي 🔇':'الصوت شغّال 🔊')},stclose:()=>closeStory(),stviews:()=>{SV.paused=true;storyViewers()},stmore:()=>storyMore()};
 function bindEvents(){
  document.addEventListener('click',e=>{const t=e.target;
@@ -2248,6 +2419,9 @@ function bindEvents(){
   if(v=q('data-rlike')){likeReel(v);return}if(v=q('data-rcmt')){commentsSheet('reels',v);return}if(v=q('data-rmore')){reelMore(v);return}
   if(v=q('data-rshare')){const r=allReels().find(x=>x.id===v);if(r)shareToChat({type:'reel',text:'🎬 ريل',reel:{id:r.id,uid:r.uid,thumb:r.thumb||'',caption:(r.caption||'').slice(0,100),w:r.w||0,h:r.h||0}},'انرسل الريل ✓');return}
   if(v=q('data-openreel')){handleHash('#r='+v);return}if(v=q('data-openpost')){(async()=>{let p=findPost(v);if(!p){const d=await store.get('posts/'+v).catch(()=>null);if(d)p={id:v,...d}}if(!p)return toast('هذا المنشور انحذف');openSheet('المنشور',`<div class="feed in-sheet">${postHTML(p)}</div>`)})();return}
+  if(v=q('data-follow')){follow(v);return}if(v=q('data-folk')){const [k,u]=v.split(':');folListSheet(u,k);return}if(v=q('data-freq')){answerReq(v);return}if(v=q('data-umenu')){userMenu(v);return}
+  if(v=q('data-unblock')){API.pref({blocked:OP.remove(v)});toast('انلغى الحظر');setTimeout(()=>{if($('#sheetWrap').classList.contains('on')&&$('#shT').textContent==='المحظورين')blockedSheet();folChanged()},150);return}
+  if(v=q('data-fmode')){S.feedMode=v;renderFeed();return}if(v=q('data-dmp')){store.update('users/'+S.me,{dmPolicy:v});return}
   if(v=q('data-mem')){memberMenu(S.info.id,v);return}if(v=q('data-noteu')){noteView(v);return}if(v=q('data-stab')){S.sTab=v;renderSearch();return}if(v=q('data-gopen')){openChat(v);return}if(v=q('data-rexp')){openReelViewer(S.reels,+v);return}
   const pd=t.closest('[data-pdbl]');if(pd){const id=pd.dataset.pdbl,tn=now();if(S._pdt&&S._pdt.id===id&&tn-S._pdt.t<320){likePost(id,true);burst(pd);S._pdt=null}else S._pdt={id,t:tn};return}
   const rl=t.closest('.reel');if(rl&&!t.closest('button,[data-user]')){const id=rl.dataset.reel,tn=now();if(S._rdt&&S._rdt.id===id&&tn-S._rdt.t<300){clearTimeout(S._rdt.to);likeReel(id,true);burst(rl);S._rdt=null}else{const to=setTimeout(()=>{const vd=rl.querySelector('video');if(!vd)return;if(vd.paused){vd.play().catch(()=>{});rl.classList.remove('paused')}else{vd.pause();rl.classList.add('paused')}},300);S._rdt={id,t:tn,to}}return}
@@ -2296,6 +2470,7 @@ function bindEvents(){
  txt.addEventListener('paste',e=>{const f=[...(e.clipboardData&&e.clipboardData.files||[])].find(f=>f.type.startsWith('image/'));if(f){e.preventDefault();pickImage(f)}});
  setupSendBtn();bindStory();bindLB();bindEdgeBack();
  $('#fileImg').onchange=e=>{pickImage(e.target.files[0]);e.target.value=''};
+ $('#sheet').addEventListener('focusin',e=>{if(e.target.matches('input,textarea'))setTimeout(()=>e.target.scrollIntoView({block:'center',behavior:'smooth'}),320)});
  $('#chatSearch').oninput=()=>renderChatList();$('#globalSearch').oninput=()=>{S.sTab='all';runSearch()};let us;$('#userSearch').oninput=()=>{clearTimeout(us);us=setTimeout(renderContacts,250)};
  const box=$('#msgs');box.addEventListener('scroll',()=>{updFab();if(box.scrollTop<120&&S.hasMore&&!S.loadingMore){S.loadingMore=true;S.msgLimit+=60;watchMsgs(S.open)}if(box.scrollHeight-box.scrollTop-box.clientHeight<90)API.markRead(S.open)},{passive:true});
  $('#fab').onclick=()=>{S.fabN=0;box.scrollTo({top:box.scrollHeight,behavior:'smooth'})};
@@ -2306,15 +2481,16 @@ function bindEvents(){
   if($('#story').classList.contains('on')&&!e.target.closest('input')){if(e.key==='ArrowLeft')showStory(SV.i+1);if(e.key==='ArrowRight')showStory(SV.i-1)}});
  // الكيبورد: نخلي التطبيق دايماً بحجم الجزء الظاهر من الشاشة
  const vv=window.visualViewport;const root=document.documentElement;let vr;
- const vvFix=()=>{cancelAnimationFrame(vr);vr=requestAnimationFrame(()=>{const h=vv?vv.height:innerHeight,t=vv?Math.max(0,vv.offsetTop):0;const b=$('#msgs');const near=S.open&&b.scrollHeight-b.scrollTop-b.clientHeight<160;
-  root.style.setProperty('--vvh',Math.round(h)+'px');root.style.setProperty('--vvt',Math.round(t)+'px');if(near)b.scrollTop=b.scrollHeight;if(window.scrollY||window.scrollX)window.scrollTo(0,0)})};
+ const vvFix=()=>{cancelAnimationFrame(vr);vr=requestAnimationFrame(()=>{const lh=root.clientHeight||innerHeight;const ae=document.activeElement;const typing=!!(ae&&ae.matches&&ae.matches('input:not([type=file]):not([type=range]):not([type=color]),textarea'));const kb=!!vv&&isTouch&&typing&&lh-vv.height>100;
+  const t=kb?Math.max(0,Math.round(vv.offsetTop)):0,bt=kb?Math.max(0,Math.round(lh-vv.height-vv.offsetTop)):0;const b=$('#msgs');const near=S.open&&b.scrollHeight-b.scrollTop-b.clientHeight<160;
+  root.style.setProperty('--vvt',t+'px');root.style.setProperty('--vvb',bt+'px');root.classList.toggle('kb',kb);if(near)b.scrollTop=b.scrollHeight;if(window.scrollY||window.scrollX)window.scrollTo(0,0)})};
  if(vv){vv.addEventListener('resize',vvFix);vv.addEventListener('scroll',vvFix)}addEventListener('resize',vvFix);addEventListener('orientationchange',()=>setTimeout(vvFix,300));vvFix();
  document.addEventListener('focusin',e=>{if(isTouch&&e.target.matches('input:not([type=file]):not([type=range]):not([type=color]),textarea'))root.classList.add('kb')});
  document.addEventListener('focusout',()=>setTimeout(()=>{const a=document.activeElement;if(!a||!a.matches||!a.matches('input,textarea'))root.classList.remove('kb');vvFix();setTimeout(vvFix,250)},30));
  if('serviceWorker' in navigator)navigator.serviceWorker.addEventListener('message',e=>{if(e.data&&e.data.open){if($('#story').classList.contains('on'))closeStory();openChat(e.data.open)}})}
 
 /* ================= PWA + التحديث التلقائي ================= */
-function pwa(){const st=matchMedia('(display-mode: standalone)').matches||navigator.standalone;if(st){const gap=screen.height-innerHeight;if(gap>=4&&gap<40)document.documentElement.style.setProperty('--sab',`max(0px, calc(env(safe-area-inset-bottom,0px) - ${gap}px))`)}
+function pwa(){
  if(!/^https?:/.test(location.protocol))return;if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});
  const chk=async()=>{try{const r=await fetch(location.pathname+'?v='+now(),{cache:'no-store'});const t=await r.text();const m=t.match(/name="app-build" content="([^"]+)"/);if(m&&m[1]!==APP.build){saveDraft();location.reload()}}catch(e){}};setInterval(chk,60000);setTimeout(chk,1500);document.addEventListener('visibilitychange',()=>{if(!document.hidden)chk()})}
 
